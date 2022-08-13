@@ -13,7 +13,7 @@ import Home from './pages/Home.vue';
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <Home msg="Vite + Vue" />
+  <Home msg="React + Vite + Vue + Stater" />
 </template>
 
 <style scoped>

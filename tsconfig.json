@@ -19,16 +19,13 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "incremental": true,
     "baseUrl": ".",
-    "types": ["node"],
+    "types": ["node", "vite/client"],
     "paths": {
       "~/*": ["src/*"]
     }
   },
-
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

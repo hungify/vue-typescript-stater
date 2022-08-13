@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "stylelint-config-recommended-vue",
+    "stylelint-config-recommended-vue/scss",
+    "stylelint-config-prettier-scss",
+    "stylelint-config-prettier"
+  ],
+  "ignoreFiles": ["**/*.js", "**/*.ts"],
+  "defaultSeverity": "error",
+  "rules": {}
+}
