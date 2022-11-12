@@ -1,11 +1,21 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "src/**/*",
+    "src/**/*.vue",
+    "src/@types/*.d.ts",
+    ".eslintrc.*",
+    "vite.config.ts",
+    "vite-env.d.ts",
+    ".commitlint.js"
+  ],
+  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
-    "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -18,14 +28,16 @@
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedParameters": true,
+    "importsNotUsedAsValues": "error",
+    "preserveValueImports": true,
     "noFallthroughCasesInSwitch": true,
     "incremental": true,
     "baseUrl": ".",
     "types": ["node", "vite/client"],
+    "typeRoots": ["node_modules/@types", "src/@types"],
     "paths": {
       "~/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.config.json" }]
 }

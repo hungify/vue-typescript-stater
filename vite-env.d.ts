@@ -6,3 +6,11 @@ declare module '*.vue' {
   const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, any>;
   export default component;
 }
+
+interface ImportMetaEnv {
+  readonly VITE_BASE_API: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
