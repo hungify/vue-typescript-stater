@@ -19,13 +19,15 @@ module.exports = {
   extends: [
     'prettier',
     'eslint:recommended',
-    'plugin:vue/vue3-recommended',
     'plugin:prettier/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:import/typescript',
+    'plugin:vue/base',
+    'plugin:vue/vue3-recommended',
+    'plugin:vue/vue3-strongly-recommended',
     'plugin:vue/vue3-essential',
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/typescript',
   ],
   plugins: ['vue', '@typescript-eslint'],
   rules: {

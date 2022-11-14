@@ -1,14 +1,33 @@
+<script setup lang="ts">
+import { useImmer } from '~/composables/useImmer';
+
+const [count, update] = useImmer({
+  nested: { count: 0 },
+});
+
+const handleIncrease = () => {
+  update((draft) => {
+    draft.nested.count += 1;
+  });
+};
+</script>
+
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>Reduce Reactivity Overhead</h1>
+    <button @click="handleIncrease">Count is {{ count.nested.count }}</button>
   </div>
 </template>
 
 <style>
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
-    display: flex;
     align-items: center;
   }
 }
