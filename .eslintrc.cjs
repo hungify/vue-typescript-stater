@@ -104,5 +104,6 @@ module.exports = {
     'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/v-on-event-hyphenation': 'off',
+    'vue/attribute-hyphenation': 'off',
   },
 };

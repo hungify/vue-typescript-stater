@@ -8,7 +8,7 @@ const app = createApp(App);
 
 app.config.globalProperties.$log = console.log;
 app.mixin({
-  inheritAttrs: true,
+  inheritAttrs: false,
 });
 app.use(router);
 
