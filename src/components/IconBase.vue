@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, defineAsyncComponent, type SVGAttributes, useAttrs, useCssModule, h } from 'vue';
+import type { SVGAttributes } from 'vue';
 import type { IconComponentName } from '~/interfaces/icons';
 
 interface IconProps extends SVGAttributes {

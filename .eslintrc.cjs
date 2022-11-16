@@ -35,6 +35,7 @@ module.exports = {
     'no-unneeded-ternary': 'error',
     'arrow-spacing': 'error',
     'no-confusing-arrow': ['error', { allowParens: true, onlyOneSimpleParam: false }],
+    'no-undef': 'off',
 
     // # TYPESCRIPT
     '@typescript-eslint/naming-convention': [
@@ -97,8 +98,8 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-extraneous-class': 'error',
-    '@typescript-eslint/no-empty-interface': 'error',
     '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
 
     // # VUE
     'vue/no-multiple-template-root': 'off',

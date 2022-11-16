@@ -1,5 +1,4 @@
 import produce, { type Draft } from 'immer';
-import { shallowRef } from 'vue';
 
 export type Updater<S> = (draft: Draft<S>) => void;
 
