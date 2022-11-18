@@ -1,15 +1,25 @@
 import { createApp } from 'vue';
+import { setupRouter } from '~/router';
 import App from './App.vue';
-import router from '~/router';
 
-import '~/styles/main.css';
+import { setupAssets, setupDirectives, setupGlobalMethods } from './plugins';
 
-const app = createApp(App);
+async function bootstrap() {
+  const app = createApp(App);
 
-app.config.globalProperties.$log = console.log;
-app.mixin({
-  inheritAttrs: false,
-});
-app.use(router);
+  app.mixin({
+    inheritAttrs: false,
+  });
 
-app.mount('#app');
+  setupAssets(app);
+
+  setupGlobalMethods(app);
+
+  setupDirectives(app);
+
+  await setupRouter(app);
+
+  app.mount('#app');
+}
+
+bootstrap();
