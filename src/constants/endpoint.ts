@@ -1,5 +1,6 @@
 export enum AuthEndpoint {
-  Login = '/api/auth/login',
-  Register = '/api/auth/register',
-  RefreshToken = '/api/auth/refresh-token',
+  LOGIN = '/api/auth/login',
+  REGISTER = '/api/auth/register',
+  REFRESH_TOKEN = '/api/auth/refresh-token',
+  LOGOUT = '/api/auth/logout',
 }
