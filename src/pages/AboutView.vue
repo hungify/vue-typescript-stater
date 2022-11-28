@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useImmer } from '~/composables/useImmer';
 
-const [count, update] = useImmer({
+const [count, setCount] = useImmer({
   nested: { count: 0 },
 });
 
 const handleIncrease = () => {
-  update((draft) => {
+  setCount((draft) => {
     draft.nested.count += 1;
   });
 };

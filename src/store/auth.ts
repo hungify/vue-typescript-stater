@@ -1,12 +1,11 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
-import { AuthEndpoint } from '~/constants/endpoint';
+import type { LoginRequest, RegisterRequest } from '~/interfaces/auth';
 import type { FormError } from '~/interfaces/error';
-import type { LoginRequest, RegisterRequest } from '~/interfaces/modules/auth';
-import { AuthRequest } from '~/services/auth';
+import { AuthService } from '~/services/auth';
 
 export const useAuthStore = defineStore('auth', () => {
-  const authRequest = new AuthRequest();
+  const authService = new AuthService();
 
   const token = ref({
     accessToken: '',
@@ -16,8 +15,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   const login = async (data: LoginRequest) => {
     try {
-      const response = await authRequest.execute(AuthEndpoint.Login, data);
-      token.value = response.data;
+      const response = await authService.login(data);
+      token.value = response;
     } catch (err) {
       if (err instanceof AxiosError && err.status === 422) {
         formError.value = err.response?.data;
@@ -27,10 +26,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   const register = async (data: RegisterRequest) => {
     try {
-      const response = await authRequest.execute(AuthEndpoint.Login, data);
-      token.value = {
-        ...response.data,
-      };
+      const response = await authService.register(data);
+      token.value = response;
     } catch (err) {
       if (err instanceof AxiosError && err.status === 422) {
         formError.value = err.response?.data;
@@ -39,10 +36,14 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const refreshToken = async () => {
-    const response = await authRequest.execute(AuthEndpoint.RefreshToken, {
-      refreshToken: token.value.refreshToken,
-    });
-    token.value = response.data;
+    const response = await authService.refreshToken();
+    token.value = response;
+  };
+
+  const logout = async () => {
+    const response = await authService.logout();
+    // Toast message here
+    console.log(response);
   };
 
   return {
@@ -52,5 +53,6 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     register,
     refreshToken,
+    logout,
   };
 });
