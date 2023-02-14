@@ -27,9 +27,12 @@ module.exports = {
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
     'plugin:import/typescript',
+    'plugin:promise/recommended',
   ],
   plugins: ['vue', '@typescript-eslint'],
+  ignorePatterns: ['node_modules', 'dist', '*.d.ts'],
   rules: {
     'no-nested-ternary': 'error',
     'no-unneeded-ternary': 'error',
@@ -38,6 +41,9 @@ module.exports = {
     'no-undef': 'off',
 
     // # TYPESCRIPT
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
       {
@@ -106,5 +112,28 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'vue/v-on-event-hyphenation': 'off',
     'vue/attribute-hyphenation': 'off',
+    'vue/component-name-in-template-casing': [
+      'error',
+      'PascalCase',
+      { registeredComponentsOnly: false },
+    ],
+    'vue/custom-event-name-casing': [
+      'error',
+      'camelCase',
+      {
+        ignores: ['/^(click):[a-z]+((d)|([A-Z0-9][a-z0-9]+))*([A-Z])?/'],
+      },
+    ],
+    'vue/no-empty-component-block': 'error',
+    'vue/no-multiple-objects-in-class': 'error',
+    'vue/no-reserved-component-names': 'error',
+    'vue/no-template-target-blank': 'error',
+    'vue/no-useless-mustaches': 'error',
+    'vue/no-useless-v-bind': 'error',
+    'vue/padding-line-between-blocks': 'error',
+    'vue/prefer-separate-static-class': 'error',
+    'vue/prefer-true-attribute-shorthand': 'error',
+    'vue/v-on-function-call': 'error',
+    'vue/no-restricted-class': ['error', '/^(p|m)(l|r)-/'],
   },
 };
