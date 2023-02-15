@@ -8,7 +8,7 @@ export class AuthService extends HttpRequest {
   public login(data: LoginRequest, config?: AxiosRequestConfig) {
     const response = this.axiosRequest({
       method: 'post',
-      path: AuthEndpoint.GET_USER_BY_ID,
+      path: AuthEndpoint.LOGIN,
       requestData: data,
       requestSchema: authSchemaRequest.login,
       responseSchema: authSchemaResponse.login,

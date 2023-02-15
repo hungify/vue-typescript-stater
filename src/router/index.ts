@@ -1,12 +1,15 @@
 import type { App } from 'vue';
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import HomeView from '~/pages/HomeView.vue';
+import Home from '~/pages/home.vue';
 
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
+    component: Home,
+    meta: {
+      layout: 'Default',
+    },
   },
   {
     path: '/about',
@@ -14,7 +17,10 @@ export const routes: RouteRecordRaw[] = [
     // route level code-splitting
     // this generates a separate chunk (About.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('~/pages/AboutView.vue'),
+    component: () => import('~/pages/about.vue'),
+    meta: {
+      layout: 'Default',
+    },
   },
 ];
 
@@ -23,9 +29,9 @@ const router = createRouter({
   routes,
 });
 
-export async function setupRouter(app: App) {
+export const setupRouter = async (app: App) => {
   app.use(router);
   await router.isReady();
-}
+};
 
 export default router;

@@ -44,7 +44,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <component :is="currentIcon" :class="classes" v-bind="attrs" />
+  <Component :is="currentIcon" :class="classes" v-bind="attrs" />
 </template>
 
 <style module>

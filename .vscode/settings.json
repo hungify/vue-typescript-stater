@@ -6,6 +6,5 @@
     "source.fixAll": false
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.validate": ["javascript", "typescript"],
-  "eslint.alwaysShowStatus": true
+  "eslint.validate": ["javascript", "typescript"]
 }

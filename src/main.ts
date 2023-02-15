@@ -1,8 +1,9 @@
-import { createApp } from 'vue';
-import { setupRouter } from '~/router';
 import { createPinia } from 'pinia';
+import { createApp } from 'vue';
 import App from './App.vue';
+import { setupLayouts } from './layouts';
 import { setupAssets, setupDirectives, setupGlobalMethods } from './plugins';
+import { setupRouter } from './router';
 
 async function bootstrap() {
   const app = createApp(App);
@@ -18,6 +19,8 @@ async function bootstrap() {
   setupGlobalMethods(app);
 
   setupDirectives(app);
+
+  setupLayouts(app);
 
   await setupRouter(app);
 
