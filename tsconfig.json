@@ -1,6 +1,6 @@
 {
   "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*", ".eslintrc.*", "vite.config.ts", "vite-env.d.ts", ".commitlint.js"],
+  "include": ["src/**/*", ".eslintrc.*", "vite.config.ts", ".commitlint.js"],
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
@@ -24,7 +24,7 @@
     "noFallthroughCasesInSwitch": true,
     "incremental": true,
     "baseUrl": ".",
-    "typeRoots": ["node_modules/@types", "src/@types"],
+    "typeRoots": ["src/@types"],
     "paths": {
       "~/*": ["src/*"]
     }

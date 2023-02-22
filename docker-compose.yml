@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    image: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - '80:80'
+      - '443:443'
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    volumes:
+      - /cer/letsencrypt:/etc/letsencrypt
+    command: certbot certonly --standalone --agree-tos --no-eff-email --email you@example.com -d localhost

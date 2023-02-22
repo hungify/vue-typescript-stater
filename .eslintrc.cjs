@@ -11,27 +11,33 @@ module.exports = {
     project: './tsconfig.json',
     extraFileExtensions: ['.vue'],
   },
-  globals: {
-    defineProps: 'readonly',
-    defineEmits: 'readonly',
-    withDefaults: 'readonly',
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: [path.resolve(__dirname, '')],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+      typescript: {
+        project: path.resolve(__dirname, './tsconfig.json'),
+      },
+    },
   },
+  plugins: ['vue', '@typescript-eslint', 'prettier', '@typescript-eslint', 'import', 'promise'],
   extends: [
-    'prettier',
     'eslint:recommended',
-    'plugin:prettier/recommended',
-    'plugin:vue/base',
+    'plugin:vue/vue3-essential',
     'plugin:vue/vue3-recommended',
     'plugin:vue/vue3-strongly-recommended',
-    'plugin:vue/vue3-essential',
     '@vue/eslint-config-typescript/recommended',
-    '@vue/eslint-config-prettier',
     'plugin:@typescript-eslint/recommended',
+    '@vue/eslint-config-prettier/skip-formatting',
     'plugin:promise/recommended',
+    'eslint-config-prettier',
+    'prettier',
   ],
-  plugins: ['vue', '@typescript-eslint'],
   ignorePatterns: ['node_modules', 'dist', '*.d.ts'],
   rules: {
+    'prettier/prettier': 'error',
     'no-nested-ternary': 'error',
     'no-unneeded-ternary': 'error',
     'arrow-spacing': 'error',
