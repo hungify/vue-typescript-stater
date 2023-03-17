@@ -1,30 +1,19 @@
-import { createPinia } from 'pinia';
-import { createApp } from 'vue';
 import App from './App.vue';
-import { setupLayouts } from './layouts';
-import { setupAssets, setupDirectives, setupGlobalMethods } from './plugins';
+import { setupAssets, setupDirectives, setupMixins, setupMethods, setupPinia } from './plugins';
 import { setupRouter } from './router';
 
-async function bootstrap() {
-  const app = createApp(App);
+const app = createApp(App);
 
-  app.use(createPinia());
+setupPinia(app);
 
-  app.mixin({
-    inheritAttrs: false,
-  });
+setupMixins(app);
 
-  setupAssets(app);
+setupAssets(app);
 
-  setupGlobalMethods(app);
+setupMethods(app);
 
-  setupDirectives(app);
+setupDirectives(app);
 
-  setupLayouts(app);
+setupRouter(app);
 
-  await setupRouter(app);
-
-  app.mount('#app');
-}
-
-bootstrap();
+app.mount('#app');

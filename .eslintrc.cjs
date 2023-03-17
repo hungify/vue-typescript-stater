@@ -1,5 +1,7 @@
 /* eslint-env node */
 require('@rushstack/eslint-patch/modern-module-resolution');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
 
 module.exports = {
   root: true,
@@ -30,7 +32,7 @@ module.exports = {
     'plugin:vue/vue3-strongly-recommended',
     '@vue/eslint-config-typescript/recommended',
     'plugin:@typescript-eslint/recommended',
-    '@vue/eslint-config-prettier/skip-formatting',
+    '@vue/eslint-config-prettier',
     'plugin:promise/recommended',
     'eslint-config-prettier',
     'prettier',
@@ -48,6 +50,14 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/no-extraneous-class': 'error',
+    '@typescript-eslint/ban-types': 'error',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'warn',
+    '@typescript-eslint/explicit-member-accessibility': 'error',
+    '@typescript-eslint/no-use-before-define': 'warn',
+    '@typescript-eslint/no-var-requires': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
       {
@@ -82,10 +92,6 @@ module.exports = {
         allowTaggedTemplates: true,
       },
     ],
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/explicit-member-accessibility': 'error',
-    '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/member-ordering': [
       'error',
       {
@@ -107,9 +113,6 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
-    '@typescript-eslint/no-extraneous-class': 'error',
-    '@typescript-eslint/ban-types': 'off',
-    '@typescript-eslint/no-empty-interface': 'off',
 
     // # VUE
     'vue/no-multiple-template-root': 'off',

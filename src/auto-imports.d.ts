@@ -4,6 +4,7 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope'];
   const computed: typeof import('vue')['computed'];
   const createApp: typeof import('vue')['createApp'];
+  const createSignal: typeof import('./composables/createSignal')['createSignal'];
   const customRef: typeof import('vue')['customRef'];
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent'];
   const defineComponent: typeof import('vue')['defineComponent'];
@@ -50,6 +51,7 @@ declare global {
   const useAttrs: typeof import('vue')['useAttrs'];
   const useCssModule: typeof import('vue')['useCssModule'];
   const useCssVars: typeof import('vue')['useCssVars'];
+  const useImmer: typeof import('./composables/useImmer')['useImmer'];
   const useLink: typeof import('vue-router')['useLink'];
   const useRoute: typeof import('vue-router')['useRoute'];
   const useRouter: typeof import('vue-router')['useRouter'];
@@ -66,6 +68,7 @@ declare module 'vue' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>;
     readonly computed: UnwrapRef<typeof import('vue')['computed']>;
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>;
+    readonly createSignal: UnwrapRef<typeof import('./composables/createSignal')['createSignal']>;
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>;
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>;
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>;
@@ -112,6 +115,7 @@ declare module 'vue' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>;
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>;
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>;
+    readonly useImmer: UnwrapRef<typeof import('./composables/useImmer')['useImmer']>;
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>;
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>;
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>;

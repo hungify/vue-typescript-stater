@@ -1,13 +1,5 @@
-<script setup lang="ts">
-const route = useRoute();
-
-const currentLayout = computed(() => {
-  return route?.meta?.layout ?? 'Default';
-});
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <Component :is="currentLayout">
-    <RouterView />
-  </Component>
+  <RouterView />
 </template>

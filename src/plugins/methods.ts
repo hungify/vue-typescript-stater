@@ -7,7 +7,7 @@ const globalMethodsArr = [
   },
 ];
 
-export function setupGlobalMethods(app: App) {
+export function setupMethods(app: App) {
   globalMethodsArr.forEach((item) => {
     app.config.globalProperties[item.sign] = item.res;
   });

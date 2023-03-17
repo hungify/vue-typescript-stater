@@ -1,17 +1,9 @@
 import type { App } from 'vue';
 
 export function setupDirectives(app: App) {
-  app.directive('on-click-outside', {
-    beforeMount(el, binding) {
-      el.clickOutsideEvent = function (event: MouseEvent) {
-        if (!(el === event.target || el.contains(event.target))) {
-          binding.value(event);
-        }
-      };
-      document.body.addEventListener('click', el.clickOutsideEvent);
-    },
-    unmounted(el) {
-      document.body.removeEventListener('click', el.clickOutsideEvent);
-    },
+  const directives = import.meta.glob<{ install: (app: App) => void }>('./directives/*.ts');
+  Object.values(directives).forEach(async (directive) => {
+    const { install } = await directive();
+    install(app);
   });
 }

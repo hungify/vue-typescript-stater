@@ -1,33 +1,31 @@
 {
-  "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*", ".eslintrc.*", "vite.config.ts", ".commitlint.js"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "useDefineForClassFields": true,
-    "moduleResolution": "Node",
-    "strict": true,
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedParameters": true,
-    "importsNotUsedAsValues": "error",
-    "preserveValueImports": true,
-    "noFallthroughCasesInSwitch": true,
-    "incremental": true,
     "baseUrl": ".",
-    "typeRoots": ["src/@types"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM", "ESNext"],
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "src/@types/*",
+      "vue/ref-macros",
+      "vite-plugin-pages/client",
+      "vite-plugin-vue-layouts/client",
+      "unplugin-vue-macros/macros-global",
+      "unplugin-vue-define-options/macros-global"
+    ],
     "paths": {
       "~/*": ["src/*"]
     }
   },
-  "references": [{ "path": "./tsconfig.config.json" }]
+  "include": [".eslintrc.*", "vite.config.ts", "src/**/*"],
+  "exclude": ["dist", "node_modules", "cypress"]
 }
