@@ -2,6 +2,10 @@
 import type { SVGAttributes } from 'vue';
 import type { IconComponentName } from '~/interfaces/icons';
 
+defineOptions({
+  inheritAttrs: true,
+});
+
 interface IconProps extends SVGAttributes {
   name: IconComponentName;
   animation?: 'spin' | 'pulse' | 'bounce' | 'none';
@@ -9,7 +13,6 @@ interface IconProps extends SVGAttributes {
 }
 
 const props = withDefaults(defineProps<IconProps>(), {
-  name: 'Tooling',
   stroke: 'currentColor',
   fill: 'none',
   viewBox: '0 0 24 24',
@@ -30,24 +33,19 @@ const currentIcon = computed(() =>
     suspensible: true,
   }),
 );
-const attrs = useAttrs();
 
-const $style = useCssModule();
-
-const classes = computed(() => {
-  return [
-    $style['icon'],
-    $style[`icon--${props.animation}`],
-    $style[`icon--${props.animationSpeed}`],
-  ];
-});
+const classes = computed(() => ({
+  ['icon-base']: true,
+  [`icon--${props.animation}`]: true,
+  [`icon--${props.animationSpeed}`]: true,
+}));
 </script>
 
 <template>
-  <Component :is="currentIcon" :class="classes" v-bind="attrs" />
+  <Component :is="currentIcon" :class="classes" />
 </template>
 
-<style module>
+<style scoped>
 @keyframes spin {
   from {
     transform: rotate(0);
@@ -56,7 +54,7 @@ const classes = computed(() => {
     transform: rotate(360deg);
   }
 }
-.icon {
+.icon-base {
   display: inline-block;
   overflow: hidden;
   vertical-align: middle;

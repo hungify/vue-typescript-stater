@@ -6,7 +6,7 @@ import HttpRequest from '../http';
 
 export class AuthService extends HttpRequest {
   public login(data: LoginRequest, config?: AxiosRequestConfig) {
-    const response = this.axiosRequest({
+    return this.axiosRequest({
       method: 'post',
       path: AuthEndpoint.LOGIN,
       requestData: data,
@@ -14,43 +14,36 @@ export class AuthService extends HttpRequest {
       responseSchema: authSchemaResponse.login,
       config,
     });
-    return response;
   }
 
   public register(data: RegisterRequest, config?: AxiosRequestConfig) {
-    const path = AuthEndpoint.REGISTER;
-    const response = this.axiosRequest({
+    return this.axiosRequest({
       method: 'post',
-      path,
+      path: AuthEndpoint.REGISTER,
       requestData: data,
       requestSchema: authSchemaRequest.register,
       responseSchema: authSchemaResponse.register,
       config,
     });
-    return response;
   }
 
   public refreshToken(config?: AxiosRequestConfig) {
-    const path = AuthEndpoint.REFRESH_TOKEN;
-    const response = this.axiosRequest({
+    return this.axiosRequest({
       method: 'GET',
-      path,
+      path: AuthEndpoint.REFRESH_TOKEN,
       requestSchema: authSchemaRequest.refresh,
       responseSchema: authSchemaResponse.refresh,
       config,
     });
-    return response;
   }
 
   public logout(config?: AxiosRequestConfig) {
-    const path = AuthEndpoint.LOGOUT;
-    const response = this.axiosRequest({
+    return this.axiosRequest({
       method: 'POST',
-      path,
+      path: AuthEndpoint.LOGOUT,
       requestSchema: authSchemaRequest.logout,
       responseSchema: authSchemaResponse.logout,
       config,
     });
-    return response;
   }
 }

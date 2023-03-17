@@ -14,18 +14,10 @@
     "strictNullChecks": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "src/@types/*",
-      "vue/ref-macros",
-      "vite-plugin-pages/client",
-      "vite-plugin-vue-layouts/client",
-      "unplugin-vue-macros/macros-global",
-      "unplugin-vue-define-options/macros-global"
-    ],
     "paths": {
       "~/*": ["src/*"]
     }
   },
-  "include": [".eslintrc.*", "vite.config.ts", "src/**/*"],
+  "include": ["src/**/*", ".eslintrc.*"],
   "exclude": ["dist", "node_modules", "cypress"]
 }

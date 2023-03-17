@@ -10,13 +10,13 @@ import axios from 'axios';
 import type { z } from 'zod';
 import type { AllEndpoint } from '~/interfaces/endpoint';
 
-abstract class BaseRequest {
-  private _instance: AxiosInstance;
-  private _accessToken: string;
+export default abstract class HttpRequest {
+  #instance: AxiosInstance;
+  #accessToken: string;
 
   public constructor(accessToken?: string, configs?: AxiosRequestConfig) {
-    this._accessToken = accessToken || '';
-    this._instance = axios.create({
+    this.#accessToken = accessToken || '';
+    this.#instance = axios.create({
       baseURL: configs?.baseURL ?? import.meta.env.VITE_API_URL,
       ...configs,
     });
@@ -25,7 +25,7 @@ abstract class BaseRequest {
   }
 
   private initializeRequestInterceptor = () => {
-    this._instance.interceptors.request.use(this.handleRequest);
+    this.#instance.interceptors.request.use(this.handleRequest);
   };
 
   private handleRequest = (config: InternalAxiosRequestConfig) => {
@@ -42,19 +42,19 @@ abstract class BaseRequest {
       ...config,
       baseURL: currentUrl.origin,
       url: currentUrl.pathname,
-      Authorization: `Bearer ${this._accessToken}`,
+      Authorization: `Bearer ${this.#accessToken}`,
     };
   };
 
   private initializeResponseInterceptor = () => {
-    this._instance.interceptors.response.use(this.handleResponse, this.handleError);
+    this.#instance.interceptors.response.use(this.handleResponse, this.handleError);
   };
 
   private handleResponse = (response: AxiosResponse) => {
     if (response.headers && response.headers.authorization) {
       const accessToken = response.headers.authorization.split(' ')[1];
       if (accessToken) {
-        this._accessToken = accessToken;
+        this.#accessToken = accessToken;
       }
     }
     return response;
@@ -64,7 +64,7 @@ abstract class BaseRequest {
     const originalRequest = error.config;
     if (originalRequest && error.response?.status === 401) {
       // refresh token here
-      return this._instance(originalRequest);
+      return this.#instance(originalRequest);
     }
   };
 
@@ -97,7 +97,7 @@ abstract class BaseRequest {
       });
     }
 
-    const response = this._instance(axiosRequestConfig);
+    const response = this.#instance(axiosRequestConfig);
     if (import.meta.env.PROD) {
       const result = responseSchema.safeParse(response);
       if (!result.success) {
@@ -110,12 +110,6 @@ abstract class BaseRequest {
   }
 
   public get instance() {
-    return this._instance;
-  }
-}
-
-export default class HttpRequest extends BaseRequest {
-  public constructor(accessToken?: string) {
-    super(accessToken);
+    return this.#instance;
   }
 }

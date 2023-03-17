@@ -1,4 +1,3 @@
-/* eslint-env node */
 require('@rushstack/eslint-patch/modern-module-resolution');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
@@ -37,7 +36,7 @@ module.exports = {
     'eslint-config-prettier',
     'prettier',
   ],
-  ignorePatterns: ['node_modules', 'dist', '*.d.ts'],
+  ignorePatterns: ['node_modules', 'dist', '*.d.ts', 'vite.config.ts'],
   rules: {
     'prettier/prettier': 'error',
     'no-nested-ternary': 'error',
@@ -47,8 +46,6 @@ module.exports = {
     'no-undef': 'off',
 
     // # TYPESCRIPT
-    'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-extraneous-class': 'error',
     '@typescript-eslint/ban-types': 'error',

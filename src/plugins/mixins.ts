@@ -1,7 +1,7 @@
 import type { App } from 'vue';
 
-export function setupMixins(app: App) {
+export const install = (app: App) => {
   app.mixin({
     inheritAttrs: false,
   });
-}
+};
