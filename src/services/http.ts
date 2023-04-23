@@ -9,6 +9,7 @@ import type {
 import axios from 'axios';
 import type { z } from 'zod';
 import type { AllEndpoint } from '~/interfaces/endpoint';
+import { envVariables } from '~/utils/env';
 
 export default abstract class HttpRequest {
   #instance: AxiosInstance;
@@ -17,7 +18,7 @@ export default abstract class HttpRequest {
   public constructor(accessToken?: string, configs?: AxiosRequestConfig) {
     this.#accessToken = accessToken || '';
     this.#instance = axios.create({
-      baseURL: configs?.baseURL ?? import.meta.env.VITE_API_URL,
+      baseURL: configs?.baseURL ?? envVariables.viteBaseApi,
       ...configs,
     });
     this.initializeRequestInterceptor();

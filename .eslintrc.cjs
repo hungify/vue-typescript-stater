@@ -44,6 +44,14 @@ module.exports = {
     'arrow-spacing': 'error',
     'no-confusing-arrow': ['error', { allowParens: true, onlyOneSimpleParam: false }],
     'no-undef': 'off',
+    'no-restricted-properties': [
+      'warn',
+      {
+        object: ['import']['meta'],
+        property: 'env',
+        message: 'Use `envVariables` in `src/utils/env.ts` instead of `import.meta.env`',
+      },
+    ],
 
     // # TYPESCRIPT
     '@typescript-eslint/consistent-type-imports': 'error',
