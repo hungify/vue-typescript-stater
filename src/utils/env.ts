@@ -10,12 +10,11 @@ const envSchema = z.object({
     .or(z.literal('production'))
     .or(z.literal('test'))
     .or(z.literal('staging')),
-
   prod: z.boolean(),
   ssr: z.boolean(),
 
   // custom
-  viteBaseApi: z.string().nonempty().url(),
+  viteBaseApi: z.string().min(1).url(),
 });
 
 type EnvVariables = z.infer<typeof envSchema>;
@@ -32,7 +31,7 @@ export const envVariables = {
 
   // custom
   viteBaseApi: import.meta.env.VITE_BASE_API,
-} satisfies EnvVariables;
+} as EnvVariables;
 
 export const loadEnvVariables = () => {
   envSchema.parse(envVariables);

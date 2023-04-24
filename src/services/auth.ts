@@ -2,7 +2,7 @@ import type { AxiosRequestConfig } from 'axios';
 import { AuthEndpoint } from '~/constants/endpoint';
 import type { LoginRequest, RegisterRequest } from '~/interfaces/auth';
 import { authSchemaRequest, authSchemaResponse } from '~/schemas/auth';
-import HttpRequest from '../http';
+import HttpRequest from './http';
 
 export class AuthService extends HttpRequest {
   public login(data: LoginRequest, config?: AxiosRequestConfig) {

@@ -11,6 +11,11 @@ import type { z } from 'zod';
 import type { AllEndpoint } from '~/interfaces/endpoint';
 import { envVariables } from '~/utils/env';
 
+export interface HttpRequestConfig<T> extends AxiosRequestConfig {
+  data?: T;
+  params?: T;
+}
+
 export default abstract class HttpRequest {
   #instance: AxiosInstance;
   #accessToken: string;
@@ -24,7 +29,6 @@ export default abstract class HttpRequest {
     this.initializeRequestInterceptor();
     this.initializeResponseInterceptor();
   }
-
   private initializeRequestInterceptor = () => {
     this.#instance.interceptors.request.use(this.handleRequest);
   };
@@ -58,7 +62,7 @@ export default abstract class HttpRequest {
         this.#accessToken = accessToken;
       }
     }
-    return response;
+    return response.data;
   };
 
   private handleError = async (error: AxiosError) => {
@@ -67,47 +71,52 @@ export default abstract class HttpRequest {
       // refresh token here
       return this.#instance(originalRequest);
     }
+    throw error;
   };
 
-  public axiosRequest<TRequestSchema extends z.Schema, TResponseSchema extends z.Schema>({
+  public async axiosRequest<TRequestData, TResponseData>({
     method,
     path,
     requestSchema,
     responseSchema,
-    requestData = {},
+    requestData,
     config,
+    shouldReturnFullResponse,
   }: {
     path: AllEndpoint;
     method: Method;
-    requestSchema: TRequestSchema;
-    responseSchema: TResponseSchema;
-    requestData?: z.infer<TRequestSchema>;
-    config?: AxiosRequestConfig;
-  }): Promise<z.infer<TResponseSchema>> {
-    requestSchema.parse(requestData);
+    requestSchema: z.Schema<TRequestData>;
+    responseSchema: z.Schema<TResponseData>;
+    requestData?: TRequestData;
+    config?: HttpRequestConfig<TRequestData>;
+    shouldReturnFullResponse?: boolean;
+  }): Promise<AxiosResponse<TResponseData> | TResponseData> {
+    const data = requestSchema.parse(requestData);
+
     const axiosRequestConfig: AxiosRequestConfig = {
       method,
       url: path,
       ...config,
+      data,
     };
+
     if (method === 'GET' && path.split(':').length > 0) {
-      axiosRequestConfig.urlParams = requestData;
-    } else {
-      Object.assign(axiosRequestConfig, {
-        [method === 'GET' ? 'params' : 'data']: requestData,
-      });
+      axiosRequestConfig.params = data;
+      axiosRequestConfig.data = undefined;
     }
 
-    const response = this.#instance(axiosRequestConfig);
-    if (import.meta.env.PROD) {
+    const response = await this.#instance.request<TResponseData>(axiosRequestConfig);
+
+    if (envVariables.prod) {
       const result = responseSchema.safeParse(response);
       if (!result.success) {
         // request report error to server
         console.error(result.error);
       }
-      return response;
     }
-    return responseSchema.parse(response);
+    responseSchema.parse(response);
+
+    return shouldReturnFullResponse ? response : response.data;
   }
 
   public get instance() {
