@@ -29,6 +29,7 @@ export default abstract class HttpRequest {
     this.initializeRequestInterceptor();
     this.initializeResponseInterceptor();
   }
+
   private initializeRequestInterceptor = () => {
     this.#instance.interceptors.request.use(this.handleRequest);
   };
@@ -62,7 +63,7 @@ export default abstract class HttpRequest {
         this.#accessToken = accessToken;
       }
     }
-    return response.data;
+    return response;
   };
 
   private handleError = async (error: AxiosError) => {
@@ -81,7 +82,41 @@ export default abstract class HttpRequest {
     responseSchema,
     requestData,
     config,
-    shouldReturnFullResponse,
+    shouldReturnFullResponse = false,
+  }: {
+    path: AllEndpoint;
+    method: Method;
+    requestSchema: z.Schema<TRequestData>;
+    responseSchema: z.Schema<TResponseData>;
+    requestData?: TRequestData;
+    config?: HttpRequestConfig<TRequestData>;
+    shouldReturnFullResponse?: false;
+  }): Promise<TResponseData>;
+  public async axiosRequest<TRequestData, TResponseData>({
+    method,
+    path,
+    requestSchema,
+    responseSchema,
+    requestData,
+    config,
+    shouldReturnFullResponse = true,
+  }: {
+    path: AllEndpoint;
+    method: Method;
+    requestSchema: z.Schema<TRequestData>;
+    responseSchema: z.Schema<TResponseData>;
+    requestData?: TRequestData;
+    config?: HttpRequestConfig<TRequestData>;
+    shouldReturnFullResponse?: true;
+  }): Promise<AxiosResponse<TResponseData>>;
+  public async axiosRequest<TRequestData, TResponseData>({
+    method,
+    path,
+    requestSchema,
+    responseSchema,
+    requestData,
+    config,
+    shouldReturnFullResponse = false,
   }: {
     path: AllEndpoint;
     method: Method;

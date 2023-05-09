@@ -1,4 +1,4 @@
-export enum AuthEndpoint {
+export const enum AuthEndpoint {
   LOGIN = '/api/auth/login',
   REGISTER = '/api/auth/register',
   REFRESH_TOKEN = '/api/auth/refresh-token',
