@@ -1,8 +1,9 @@
 import type { AxiosRequestConfig } from 'axios';
-import { AuthEndpoint } from '~/constants/endpoint';
-import type { LoginRequest, RegisterRequest } from '~/interfaces/auth';
-import { authSchemaRequest, authSchemaResponse } from '~/schemas/auth';
+import { AuthEndpoint } from '#/enums/endpoint';
+import type { LoginRequest, RegisterRequest } from '#/types/auth';
+import { authSchemaRequest, authSchemaResponse } from '#/schemas/auth';
 import HttpRequest from './http';
+import { z } from 'zod';
 
 export class AuthService extends HttpRequest {
   public login(data: LoginRequest, config?: AxiosRequestConfig) {
@@ -31,18 +32,20 @@ export class AuthService extends HttpRequest {
     return this.axiosRequest({
       method: 'GET',
       path: AuthEndpoint.REFRESH_TOKEN,
-      requestSchema: authSchemaRequest.refresh,
       responseSchema: authSchemaResponse.refresh,
+      requestData: {},
+      requestSchema: z.object({}),
       config,
     });
   }
 
   public logout(config?: AxiosRequestConfig) {
     return this.axiosRequest({
-      method: 'POST',
+      method: 'DELETE',
       path: AuthEndpoint.LOGOUT,
       requestSchema: authSchemaRequest.logout,
       responseSchema: authSchemaResponse.logout,
+      requestData: {},
       config,
     });
   }

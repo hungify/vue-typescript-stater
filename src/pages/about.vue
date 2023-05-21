@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useImmer } from '~/composables/useImmer';
+import { useImmer } from '#/composables/useImmer';
 
 const [count, setCount] = useImmer({
   nested: { count: 0 },
@@ -36,4 +36,6 @@ const handleIncrease = () => {
 <route lang="yaml">
 meta:
   layout: Default
+
+path: /about/:id
 </route>

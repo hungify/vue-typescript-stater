@@ -4,3 +4,8 @@ export const enum AuthEndpoint {
   REFRESH_TOKEN = '/api/auth/refresh-token',
   LOGOUT = '/api/auth/logout',
 }
+
+export const enum PostEndpoint {
+  GET_POSTS = '/posts',
+  GET_POST = '/posts/:id',
+}

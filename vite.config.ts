@@ -4,7 +4,6 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import Pages from 'vite-plugin-pages';
 import Layouts from 'vite-plugin-vue-layouts';
-import DefineOptions from 'unplugin-vue-define-options/vite';
 import TsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -33,8 +32,6 @@ export default defineConfig({
       include: [/\.vue$/, /\.vue\?vue/],
       dts: 'src/components.d.ts',
     }),
-
-    DefineOptions(),
 
     TsconfigPaths(),
   ],

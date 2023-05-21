@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import type { SVGAttributes } from 'vue';
-import type { IconComponentName } from '~/interfaces/icons';
+import type { IconComponentName } from '#/interfaces/icons';
 
 defineOptions({
   inheritAttrs: true,
 });
 
-interface IconProps extends SVGAttributes {
+interface IconProps extends /* @vue-ignore */ SVGAttributes {
   name: IconComponentName;
   animation?: 'spin' | 'pulse' | 'bounce' | 'none';
   animationSpeed?: 'slow' | 'normal' | 'fast';

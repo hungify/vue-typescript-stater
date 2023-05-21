@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
-import type { LoginRequest, RegisterRequest } from '~/interfaces/auth';
-import type { FormError } from '~/interfaces/error';
-import { AuthService } from '~/services/auth';
+import type { LoginRequest, RegisterRequest } from '#/interfaces/auth';
+import type { FormError } from '#/interfaces/error';
+import { AuthService } from '#/services/auth';
 
 export const useAuthStore = defineStore('auth', () => {
   const authService = new AuthService();

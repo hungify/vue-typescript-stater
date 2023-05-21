@@ -3,7 +3,7 @@ import { setupLayouts } from 'virtual:generated-layouts';
 import { createRouter } from 'vue-router';
 import { createWebHistory } from 'vue-router';
 import type { App } from 'vue';
-import { envVariables } from '~/utils/env';
+import { envVariables } from '#/utils/env';
 
 export const setupRouter = (app: App) => {
   const routes = setupLayouts(generatedRoutes);

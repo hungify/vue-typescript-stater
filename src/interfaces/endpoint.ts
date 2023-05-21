@@ -1,3 +1,3 @@
-import type { AuthEndpoint } from '~/constants/endpoint';
+import type { AuthEndpoint, PostEndpoint } from '#/enums/endpoint';
 
-export type AllEndpoint = AuthEndpoint;
+export type AllEndpoint = AuthEndpoint | PostEndpoint;

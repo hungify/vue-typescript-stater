@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-import type { authSchemaRequest } from '~/schemas/auth';
+import type { authSchemaRequest } from '#/schemas/auth';
 
 export type LoginRequest = z.infer<typeof authSchemaRequest.login>;
 export type RegisterRequest = z.infer<typeof authSchemaRequest.register>;
