@@ -16,10 +16,14 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & NonNullable<unknown>;
 
-export type GetPathParams<T extends string> = {
-  [K in ExtractPathParamsKey<T>]: string;
-};
+export type GetPathParams<T extends string> = ExtractPathParamsKey<T> extends never
+  ? null
+  : {
+      [K in ExtractPathParamsKey<T>]: string;
+    };
 
-export type GetQueryString<T extends string> = {
-  [K in ExtractQueryStringKey<T>]: string;
-};
+export type GetQueryString<T extends string> = ExtractQueryStringKey<T> extends never
+  ? null
+  : {
+      [K in ExtractQueryStringKey<T>]: string;
+    };

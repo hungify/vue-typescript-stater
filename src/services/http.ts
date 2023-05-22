@@ -1,3 +1,6 @@
+import type { AllEndpoint } from '#/interfaces/endpoint';
+import type { GetQueryString, Prettify } from '#/types/utils';
+import { envVariables } from '#/utils/env';
 import type {
   AxiosError,
   AxiosInstance,
@@ -7,23 +10,27 @@ import type {
   Method,
 } from 'axios';
 import axios from 'axios';
-import type { z } from 'zod';
-import { ZodError } from 'zod';
-import type { AllEndpoint } from '#/interfaces/endpoint';
-import type { GetQueryString } from '#/types/utils';
-import { envVariables } from '#/utils/env';
+import { type z, ZodError } from 'zod';
 
-interface HttpRequestConfig<T> extends AxiosRequestConfig {
-  data?: T;
-  params?: T;
+interface HttpRequestConfig<TParams, TData> extends AxiosRequestConfig {
+  data?: TData;
+  params?: TParams;
 }
 
-type CheckForBadRequestData<
+type ZodObjectBuilder<T> = z.ZodObject<Record<keyof T, z.ZodTypeAny>, 'strict', z.ZodTypeAny, T, T>;
+
+type CheckForBadBody<TRequestSchema> = TRequestSchema extends null ? null : TRequestSchema;
+
+type CheckForBadQueryParams<TPath extends AllEndpoint> = GetQueryString<TPath> extends null
+  ? null
+  : Prettify<GetQueryString<TPath>>;
+
+type CheckForBadParamsSchema<
   TPath extends AllEndpoint,
   TRequestSchema,
 > = GetQueryString<TPath> extends TRequestSchema
-  ? GetQueryString<TPath>
-  : 'requestData and requestSchema or query string are not matched. Let use `requestSchema: z.object({}), requestData: {}` for empty request data, query string';
+  ? ZodObjectBuilder<GetQueryString<TPath>>
+  : TRequestSchema;
 
 export default abstract class HttpRequest {
   #instance: AxiosInstance;
@@ -44,21 +51,10 @@ export default abstract class HttpRequest {
   };
 
   private handleRequest = (config: InternalAxiosRequestConfig) => {
-    if (!config.url) {
-      return config;
+    if (this.#accessToken) {
+      config.headers.setAuthorization(`Bearer ${this.#accessToken}`);
     }
-
-    const currentUrl = new URL(config.url, config.baseURL);
-    Object.entries(config.urlParams || {}).forEach(([k, v]) => {
-      currentUrl.pathname = currentUrl.pathname.replace(`:${k}`, encodeURIComponent(v));
-    });
-
-    return {
-      ...config,
-      baseURL: currentUrl.origin,
-      url: currentUrl.pathname,
-      Authorization: `Bearer ${this.#accessToken}`,
-    };
+    return config;
   };
 
   private initializeResponseInterceptor = () => {
@@ -87,29 +83,8 @@ export default abstract class HttpRequest {
   public async axiosRequest<
     TPath extends AllEndpoint,
     TResponseSchema extends z.ZodTypeAny = z.ZodTypeAny,
-    TRequestSchema extends z.ZodTypeAny = z.ZodTypeAny,
-  >({
-    method = 'GET' || 'get',
-    path,
-    requestSchema,
-    responseSchema,
-    requestData,
-    config,
-    shouldReturnFullResponse = true,
-  }: {
-    path: TPath;
-    method: Method;
-    requestSchema: TRequestSchema;
-    requestData: CheckForBadRequestData<TPath, z.infer<TRequestSchema>>;
-    responseSchema: TResponseSchema;
-    config?: HttpRequestConfig<z.infer<TRequestSchema>>;
-    shouldReturnFullResponse?: boolean;
-  }): Promise<AxiosResponse<z.infer<TResponseSchema>>>;
-
-  public async axiosRequest<
-    TPath extends AllEndpoint,
-    TResponseSchema extends z.ZodTypeAny = z.ZodTypeAny,
-    TRequestSchema extends z.ZodTypeAny = z.ZodTypeAny,
+    TRequestDataSchema extends z.ZodTypeAny = z.ZodTypeAny,
+    TRequestParamsSchema extends z.ZodTypeAny = z.ZodTypeAny,
   >({
     method,
     path,
@@ -117,87 +92,70 @@ export default abstract class HttpRequest {
     responseSchema,
     requestData,
     config,
-    shouldReturnFullResponse = true,
   }: {
     path: TPath;
     method: Method;
-    requestSchema: TRequestSchema;
-    requestData: z.infer<TRequestSchema>;
-    responseSchema: TResponseSchema;
-    config?: HttpRequestConfig<z.infer<TRequestSchema>>;
-    shouldReturnFullResponse?: boolean;
-  }): Promise<AxiosResponse<z.infer<TResponseSchema>>>;
-
-  public async axiosRequest<
-    TPath extends AllEndpoint,
-    TResponseSchema extends z.ZodTypeAny = z.ZodTypeAny,
-    TRequestSchema extends z.ZodTypeAny = z.ZodTypeAny,
-  >({
-    method,
-    path,
-    requestSchema,
-    responseSchema,
-    requestData,
-    config,
-    shouldReturnFullResponse = false,
-  }: {
-    path: TPath;
-    method: Method;
-    requestSchema: TRequestSchema;
-    requestData: z.infer<TRequestSchema>;
-    responseSchema: TResponseSchema;
-    config?: HttpRequestConfig<z.infer<TRequestSchema>>;
-    shouldReturnFullResponse?: boolean;
-  }): Promise<z.infer<TResponseSchema>>;
-
-  public async axiosRequest<
-    TPath extends AllEndpoint,
-    TResponseSchema extends z.ZodTypeAny = z.ZodTypeAny,
-    TRequestSchema extends z.ZodTypeAny = z.ZodTypeAny,
-  >({
-    method,
-    path,
-    requestSchema,
-    responseSchema,
-    requestData,
-    config,
-    shouldReturnFullResponse = false,
-  }: {
-    path: TPath;
-    method: Method;
-    requestSchema: TRequestSchema;
-    requestData: z.infer<TRequestSchema>;
-    responseSchema: z.infer<TResponseSchema>;
-    config?: HttpRequestConfig<z.infer<TRequestSchema>>;
-    shouldReturnFullResponse?: boolean;
-  }): Promise<AxiosResponse<z.infer<TResponseSchema>> | z.infer<TResponseSchema>> {
-    const data = requestSchema ? requestSchema.parse(requestData) : requestData;
-
+    requestData: {
+      data: CheckForBadBody<z.infer<TRequestDataSchema>> | null;
+      params: CheckForBadQueryParams<TPath> | null;
+    };
+    requestSchema: {
+      data: TRequestDataSchema | null;
+      params: CheckForBadParamsSchema<TPath, z.infer<TRequestParamsSchema>> | null;
+    };
+    responseSchema: TResponseSchema | null;
+    config?: HttpRequestConfig<z.infer<TRequestParamsSchema>, z.infer<TRequestDataSchema>>;
+  }): Promise<z.infer<TResponseSchema>> {
     const axiosRequestConfig: AxiosRequestConfig = {
+      ...config,
       method,
       url: path,
-      ...config,
-      data,
+      data: requestData.data,
+      params: requestData.params,
     };
 
-    if (method === 'GET' && Object.keys(requestData).length) {
-      axiosRequestConfig.params = data;
-      axiosRequestConfig.data = undefined;
+    if (envVariables.prod) {
+      if (requestSchema.data) {
+        const result = requestSchema.data.safeParse(requestData.data);
+        if (!result.success) {
+          // report request error to the server
+          console.error(result.error);
+        }
+      }
+
+      if (requestSchema.params) {
+        const result = requestSchema.params.safeParse(requestData.params);
+        if (!result.success) {
+          // report request error to the server
+          console.error(result.error);
+        }
+      }
+    } else {
+      if (requestSchema.data) {
+        const res = requestSchema.data.parse(requestData.data);
+        if (res instanceof ZodError) {
+          throw res;
+        }
+      }
+      if (requestSchema.params) {
+        const res = requestSchema.params.parse(requestData.params);
+        if (res instanceof ZodError) {
+          throw res;
+        }
+      }
     }
 
-    const response = await this.#instance.request<z.infer<TResponseSchema>>(axiosRequestConfig);
+    const { data } = await this.#instance.request<z.infer<TResponseSchema>>(axiosRequestConfig);
 
     if (responseSchema) {
       if (envVariables.prod) {
-        const result = responseSchema.safeParse(response);
+        const result = responseSchema.safeParse(data);
         if (!result.success) {
           // request report error to server
           console.error(result.error);
         }
       }
-      const res = shouldReturnFullResponse
-        ? responseSchema.parse(response)
-        : responseSchema.parse(response.data);
+      const res = responseSchema.parse(data);
 
       if (res instanceof ZodError) {
         console.error(res);
@@ -205,7 +163,7 @@ export default abstract class HttpRequest {
       }
     }
 
-    return shouldReturnFullResponse ? response : response.data;
+    return data;
   }
 
   public get instance() {

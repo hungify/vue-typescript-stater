@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
-import type { LoginRequest, RegisterRequest } from '#/interfaces/auth';
+import type { LoginRequest, RegisterRequest } from '#/types/auth';
 import type { FormError } from '#/interfaces/error';
 import { AuthService } from '#/services/auth';
 

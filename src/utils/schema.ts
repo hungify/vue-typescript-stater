@@ -7,3 +7,7 @@ export function makeResponseSchema<T extends z.ZodTypeAny>(schema: T) {
     data: schema,
   });
 }
+
+export function createStrictSchema<T extends z.ZodRawShape>(schema: z.ZodObject<T>) {
+  return schema.strict();
+}

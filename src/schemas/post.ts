@@ -1,5 +1,5 @@
+import { createStrictSchema } from '#/utils/schema';
 import { z } from 'zod';
-import { createStrictSchema } from './base';
 
 const postSchema = createStrictSchema(
   z.object({
@@ -14,8 +14,12 @@ const postSchema = createStrictSchema(
 const postsSchema = z.array(postSchema);
 
 export const postReqSchema = {
-  getPosts: createStrictSchema(z.object({})),
-  getPost: z.object({}).strict(),
+  getPosts: createStrictSchema(
+    z.object({
+      limit: z.string(),
+      page: z.string(),
+    }),
+  ),
 };
 
 export const postResSchema = {

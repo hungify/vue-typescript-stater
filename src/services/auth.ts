@@ -3,15 +3,20 @@ import { AuthEndpoint } from '#/enums/endpoint';
 import type { LoginRequest, RegisterRequest } from '#/types/auth';
 import { authSchemaRequest, authSchemaResponse } from '#/schemas/auth';
 import HttpRequest from './http';
-import { z } from 'zod';
 
 export class AuthService extends HttpRequest {
   public login(data: LoginRequest, config?: AxiosRequestConfig) {
     return this.axiosRequest({
       method: 'post',
       path: AuthEndpoint.LOGIN,
-      requestData: data,
-      requestSchema: authSchemaRequest.login,
+      requestData: {
+        data,
+        params: null,
+      },
+      requestSchema: {
+        data: authSchemaRequest.login,
+        params: null,
+      },
       responseSchema: authSchemaResponse.login,
       config,
     });
@@ -21,8 +26,14 @@ export class AuthService extends HttpRequest {
     return this.axiosRequest({
       method: 'post',
       path: AuthEndpoint.REGISTER,
-      requestData: data,
-      requestSchema: authSchemaRequest.register,
+      requestData: {
+        data,
+        params: null,
+      },
+      requestSchema: {
+        data: authSchemaRequest.register,
+        params: null,
+      },
       responseSchema: authSchemaResponse.register,
       config,
     });
@@ -33,8 +44,14 @@ export class AuthService extends HttpRequest {
       method: 'GET',
       path: AuthEndpoint.REFRESH_TOKEN,
       responseSchema: authSchemaResponse.refresh,
-      requestData: {},
-      requestSchema: z.object({}),
+      requestData: {
+        data: null,
+        params: null,
+      },
+      requestSchema: {
+        params: null,
+        data: null,
+      },
       config,
     });
   }
@@ -43,9 +60,15 @@ export class AuthService extends HttpRequest {
     return this.axiosRequest({
       method: 'DELETE',
       path: AuthEndpoint.LOGOUT,
-      requestSchema: authSchemaRequest.logout,
       responseSchema: authSchemaResponse.logout,
-      requestData: {},
+      requestData: {
+        data: null,
+        params: null,
+      },
+      requestSchema: {
+        params: null,
+        data: null,
+      },
       config,
     });
   }

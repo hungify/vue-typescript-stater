@@ -6,6 +6,6 @@ export const enum AuthEndpoint {
 }
 
 export const enum PostEndpoint {
-  GET_POSTS = '/posts',
-  GET_POST = '/posts/:id',
+  GET_POSTS = '/posts?limit=10&page=0',
+  GET_POST = '/posts/:postId',
 }

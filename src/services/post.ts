@@ -1,17 +1,26 @@
 import { PostEndpoint } from '#/enums/endpoint';
-import HttpRequest from './http';
 import { postReqSchema, postResSchema } from '#/schemas/post';
-import type { AxiosRequestConfig } from 'axios';
 import { makeURLPath } from '#/utils/axios';
+import type { AxiosRequestConfig } from 'axios';
+import HttpRequest from './http';
 
 export class PostService extends HttpRequest {
   public getPosts(config?: AxiosRequestConfig) {
     return this.axiosRequest({
       method: 'GET',
-      path: makeURLPath(PostEndpoint.GET_POSTS, {}),
+      path: makeURLPath(PostEndpoint.GET_POSTS, null),
       responseSchema: postResSchema.getPosts,
-      requestData: {},
-      requestSchema: postReqSchema.getPosts,
+      requestSchema: {
+        params: postReqSchema.getPosts,
+        data: null,
+      },
+      requestData: {
+        params: {
+          limit: '10',
+          page: '0',
+        },
+        data: null,
+      },
       config,
     });
   }
@@ -19,11 +28,17 @@ export class PostService extends HttpRequest {
     return this.axiosRequest({
       method: 'GET',
       path: makeURLPath(PostEndpoint.GET_POST, {
-        id: id.toString(),
+        postId: id.toString(),
       }),
       responseSchema: postResSchema.getPost,
-      requestSchema: postReqSchema.getPost,
-      requestData: {},
+      requestSchema: {
+        params: null,
+        data: null,
+      },
+      requestData: {
+        params: null,
+        data: null,
+      },
       config,
     });
   }
