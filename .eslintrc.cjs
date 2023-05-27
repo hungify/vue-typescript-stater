@@ -63,6 +63,7 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 'error',
     '@typescript-eslint/no-use-before-define': 'warn',
     '@typescript-eslint/no-var-requires': 'error',
+    '@typescript-eslint/prefer-enum-initializers': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
       {

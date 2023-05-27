@@ -116,13 +116,13 @@ export default abstract class HttpRequest {
     if (requestSchema.data) {
       Object.assign(axiosRequestConfig, { data: requestData.data });
       if (envVariables.prod) {
-        const result = requestSchema.data.safeParse(requestData.data);
+        const result = await requestSchema.data.safeParseAsync(requestData.data);
         if (!result.success) {
           // report request error to the server
           console.error(result.error);
         }
       } else {
-        const res = requestSchema.data.parse(requestData.data);
+        const res = await requestSchema.data.parseAsync(requestData.data);
         if (res instanceof ZodError) {
           throw res;
         }
@@ -131,13 +131,13 @@ export default abstract class HttpRequest {
 
     if (requestSchema.params) {
       if (envVariables.prod) {
-        const result = requestSchema.params.safeParse(requestData.params);
+        const result = await requestSchema.params.safeParseAsync(requestData.params);
         if (!result.success) {
           // report request error to the server
           console.error(result.error);
         }
       } else {
-        const res = requestSchema.params.parse(requestData.params);
+        const res = await requestSchema.params.parseAsync(requestData.params);
         if (res instanceof ZodError) {
           throw res;
         }
@@ -148,13 +148,13 @@ export default abstract class HttpRequest {
 
     if (responseSchema) {
       if (envVariables.prod) {
-        const result = responseSchema.safeParse(data);
+        const result = await responseSchema.safeParseAsync(data);
         if (!result.success) {
           // request report error to server
           console.error(result.error);
         }
       }
-      const res = responseSchema.parse(data);
+      const res = await responseSchema.parseAsync(data);
 
       if (res instanceof ZodError) {
         console.error(res);
