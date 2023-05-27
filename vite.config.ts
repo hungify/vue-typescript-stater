@@ -5,8 +5,14 @@ import Components from 'unplugin-vue-components/vite';
 import Pages from 'vite-plugin-pages';
 import Layouts from 'vite-plugin-vue-layouts';
 import TsconfigPaths from 'vite-tsconfig-paths';
+import { fileURLToPath } from 'url';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '#': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   plugins: [
     Vue({
       include: [/\.vue$/, /\.md$/],

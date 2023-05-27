@@ -1,5 +1,3 @@
-import type { ExtractPathParamsKey, ExtractQueryStringKey } from './url';
-
 export type Modify<T, R> = Omit<T, keyof R> & R;
 
 export type Split<S extends string, SEP extends string> = S extends `${infer K}${SEP}${infer R}`
@@ -16,14 +14,10 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & NonNullable<unknown>;
 
-export type GetPathParams<T extends string> = ExtractPathParamsKey<T> extends never
-  ? null
-  : {
-      [K in ExtractPathParamsKey<T>]: string;
-    };
+export type ReplaceFirstString<
+  S extends string,
+  From extends string,
+  To extends string,
+> = S extends `${infer Prefix}${From}${infer Suffix}` ? `${Prefix}${To}${Suffix}` : S;
 
-export type GetQueryString<T extends string> = ExtractQueryStringKey<T> extends never
-  ? null
-  : {
-      [K in ExtractQueryStringKey<T>]: string;
-    };
+export type Merge<F, S> = Omit<F, keyof S> & S;

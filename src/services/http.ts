@@ -1,6 +1,9 @@
 import type { AllEndpoint } from '#/interfaces/endpoint';
-import type { GetQueryString, Prettify } from '#/types/utils';
+import type { GetQueryParams } from '#/types/url';
+import type { Prettify } from '#/types/utils';
+import type { ToZod } from '#/types/zod';
 import { envVariables } from '#/utils/env';
+import { normalizePath } from '#/utils/http';
 import type {
   AxiosError,
   AxiosInstance,
@@ -10,27 +13,24 @@ import type {
   Method,
 } from 'axios';
 import axios from 'axios';
-import { type z, ZodError } from 'zod';
+import type { z } from 'zod';
+import { ZodError } from 'zod';
 
 interface HttpRequestConfig<TParams, TData> extends AxiosRequestConfig {
   data?: TData;
   params?: TParams;
 }
 
-type ZodObjectBuilder<T> = z.ZodObject<Record<keyof T, z.ZodTypeAny>, 'strict', z.ZodTypeAny, T, T>;
-
 type CheckForBadBody<TRequestSchema> = TRequestSchema extends null ? null : TRequestSchema;
 
-type CheckForBadQueryParams<TPath extends AllEndpoint> = GetQueryString<TPath> extends null
+type CheckForBadQueryParams<TPath extends AllEndpoint> = GetQueryParams<TPath> extends null
   ? null
-  : Prettify<GetQueryString<TPath>>;
+  : Prettify<GetQueryParams<TPath>>;
 
 type CheckForBadParamsSchema<
   TPath extends AllEndpoint,
   TRequestSchema,
-> = GetQueryString<TPath> extends TRequestSchema
-  ? ZodObjectBuilder<GetQueryString<TPath>>
-  : TRequestSchema;
+> = GetQueryParams<TPath> extends TRequestSchema ? ToZod<GetQueryParams<TPath>> : TRequestSchema;
 
 export default abstract class HttpRequest {
   #instance: AxiosInstance;
@@ -109,35 +109,34 @@ export default abstract class HttpRequest {
     const axiosRequestConfig: AxiosRequestConfig = {
       ...config,
       method,
-      url: path,
-      data: requestData.data,
+      url: normalizePath(path),
       params: requestData.params,
     };
 
-    if (envVariables.prod) {
-      if (requestSchema.data) {
+    if (requestSchema.data) {
+      Object.assign(axiosRequestConfig, { data: requestData.data });
+      if (envVariables.prod) {
         const result = requestSchema.data.safeParse(requestData.data);
         if (!result.success) {
           // report request error to the server
           console.error(result.error);
         }
-      }
-
-      if (requestSchema.params) {
-        const result = requestSchema.params.safeParse(requestData.params);
-        if (!result.success) {
-          // report request error to the server
-          console.error(result.error);
-        }
-      }
-    } else {
-      if (requestSchema.data) {
+      } else {
         const res = requestSchema.data.parse(requestData.data);
         if (res instanceof ZodError) {
           throw res;
         }
       }
-      if (requestSchema.params) {
+    }
+
+    if (requestSchema.params) {
+      if (envVariables.prod) {
+        const result = requestSchema.params.safeParse(requestData.params);
+        if (!result.success) {
+          // report request error to the server
+          console.error(result.error);
+        }
+      } else {
         const res = requestSchema.params.parse(requestData.params);
         if (res instanceof ZodError) {
           throw res;
