@@ -6,6 +6,7 @@ import Pages from 'vite-plugin-pages';
 import Layouts from 'vite-plugin-vue-layouts';
 import TsconfigPaths from 'vite-tsconfig-paths';
 import { fileURLToPath } from 'url';
+import Checker from 'vite-plugin-checker';
 
 export default defineConfig({
   resolve: {
@@ -40,5 +41,9 @@ export default defineConfig({
     }),
 
     TsconfigPaths(),
+
+    Checker({
+      typescript: true,
+    }),
   ],
 });
