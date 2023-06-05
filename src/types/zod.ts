@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { z } from 'zod';
 
 type IsAny<T> = [any extends T ? 'true' : 'false'] extends ['true'] ? true : false;

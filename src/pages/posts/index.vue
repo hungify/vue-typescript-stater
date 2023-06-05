@@ -12,8 +12,8 @@ onMounted(async () => {
   posts.value = data;
 });
 
-const goToDetail = (post: Post) => {
-  router.push(`/posts/${encodeURIComponent(post.id)}`);
+const goToDetail = async (post: Post) => {
+  await router.push(`/posts/${encodeURIComponent(post.id)}`);
 };
 </script>
 

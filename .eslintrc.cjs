@@ -23,7 +23,15 @@ module.exports = {
       },
     },
   },
-  plugins: ['vue', '@typescript-eslint', 'prettier', '@typescript-eslint', 'import', 'promise'],
+  plugins: [
+    'vue',
+    '@typescript-eslint',
+    'prettier',
+    '@typescript-eslint',
+    'import',
+    'promise',
+    'unicorn',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-essential',
@@ -54,6 +62,7 @@ module.exports = {
     ],
 
     // # TYPESCRIPT
+    '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-extraneous-class': 'error',
     '@typescript-eslint/ban-types': 'error',

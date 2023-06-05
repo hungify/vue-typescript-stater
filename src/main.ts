@@ -1,13 +1,13 @@
-import App from './App.vue';
-import { type App as AppVue } from 'vue';
+import { type App } from 'vue';
 import { setupRouter } from './router';
 import { loadEnvVariables } from './utils/env';
+import AppVue from './App.vue';
 
-const bootstrap = async () => {
+const bootstrap = () => {
   loadEnvVariables();
-  const app = createApp(App);
+  const app = createApp(AppVue);
 
-  const plugins = import.meta.glob<{ install: (app: AppVue) => void }>('./plugins/*.ts');
+  const plugins = import.meta.glob<{ install: (app: App) => void }>('./plugins/*.ts');
   Object.values(plugins).forEach(async (plugin) => {
     const { install } = await plugin();
     install(app);

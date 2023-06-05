@@ -1,4 +1,4 @@
-import type { GetPathParams } from '#/types/url';
+import type { ExtractPathParams } from '#/types/url';
 import type { Prettify } from '#/types/utils';
 import type { AxiosResponse } from 'axios';
 
@@ -25,17 +25,17 @@ export function isAxiosResponse<T>(value: unknown): value is AxiosResponse<T> {
  *
  * @template TUrl - The type of the URL path.
  * @param {TUrl} url - The base URL path.
- * @param {TUrl<GetPathParams<TUrl>>} paramsUrl - An object containing key-value pairs representing the dynamic parameters and their values.
+ * @param {TUrl<ExtractPathParams<TUrl>>} paramsUrl - An object containing key-value pairs representing the dynamic parameters and their values.
  * @returns {TUrl} - The final URL path with dynamic parameters replaced.
  */
 export function makePathParams<TUrl extends string>(
   url: TUrl,
-  paramsUrl: Prettify<GetPathParams<TUrl>>,
+  paramsUrl: Prettify<ExtractPathParams<TUrl>>,
 ): TUrl {
   let finalUrl = url;
 
   for (const key in paramsUrl) {
-    const value = paramsUrl[key] as string;
+    const value = paramsUrl[key as keyof typeof paramsUrl] as string;
     finalUrl = finalUrl.replace(`:${key}`, encodeURIComponent(value)) as TUrl;
   }
 

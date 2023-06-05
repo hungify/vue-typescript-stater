@@ -1,6 +1,5 @@
 import type { AllEndpoint } from '#/interfaces/endpoint';
-import type { GetQueryParams } from '#/types/url';
-import type { Prettify } from '#/types/utils';
+import type { ExtractQueryParams } from '#/types/url';
 import type { ToZod } from '#/types/zod';
 import { envVariables } from '#/utils/env';
 import { normalizePath } from '#/utils/http';
@@ -23,14 +22,16 @@ interface HttpRequestConfig<TParams, TData> extends AxiosRequestConfig {
 
 type CheckForBadBody<TRequestSchema> = TRequestSchema extends null ? null : TRequestSchema;
 
-type CheckForBadQueryParams<TPath extends AllEndpoint> = GetQueryParams<TPath> extends null
+type CheckForBadQueryParams<TPath extends AllEndpoint> = ExtractQueryParams<TPath> extends null
   ? null
-  : Prettify<GetQueryParams<TPath>>;
+  : ExtractQueryParams<TPath>;
 
 type CheckForBadParamsSchema<
   TPath extends AllEndpoint,
   TRequestSchema,
-> = GetQueryParams<TPath> extends TRequestSchema ? ToZod<GetQueryParams<TPath>> : TRequestSchema;
+> = ExtractQueryParams<TPath> extends TRequestSchema
+  ? ToZod<ExtractQueryParams<TPath>>
+  : TRequestSchema;
 
 export default abstract class HttpRequest {
   #instance: AxiosInstance;

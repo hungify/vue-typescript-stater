@@ -8,7 +8,7 @@ export class PostService extends HttpRequest {
   public getPosts(config?: AxiosRequestConfig) {
     return this.axiosRequest({
       method: 'GET',
-      path: makePathParams(PostEndpoint.GET_POSTS, null),
+      path: makePathParams(PostEndpoint.GET_POSTS, {}),
       responseSchema: postResSchema.getPosts,
       requestSchema: {
         params: postReqSchema.getPosts,
