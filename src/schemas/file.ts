@@ -1,5 +1,5 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const fileSchema = z.custom<File>((file) => {
-  return file instanceof File;
-});
+  return file instanceof File
+})

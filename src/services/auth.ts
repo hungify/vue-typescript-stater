@@ -1,8 +1,8 @@
-import type { AxiosRequestConfig } from 'axios';
-import { AuthEndpoint } from '#/enums/endpoint';
-import type { LoginRequest, RegisterRequest } from '#/types/auth';
-import { authSchemaRequest, authSchemaResponse } from '#/schemas/auth';
-import HttpRequest from './http';
+import type { AxiosRequestConfig } from 'axios'
+import { AuthEndpoint } from '#/enums/endpoint'
+import type { LoginRequest, RegisterRequest } from '#/types/auth'
+import { authSchemaRequest, authSchemaResponse } from '#/schemas/auth'
+import HttpRequest from './http'
 
 export class AuthService extends HttpRequest {
   public login(data: LoginRequest, config?: AxiosRequestConfig) {
@@ -11,15 +11,15 @@ export class AuthService extends HttpRequest {
       path: AuthEndpoint.LOGIN,
       requestData: {
         data,
-        params: null,
+        params: null
       },
       requestSchema: {
         data: authSchemaRequest.login,
-        params: null,
+        params: null
       },
       responseSchema: authSchemaResponse.login,
-      config,
-    });
+      config
+    })
   }
 
   public register(data: RegisterRequest, config?: AxiosRequestConfig) {
@@ -28,15 +28,15 @@ export class AuthService extends HttpRequest {
       path: AuthEndpoint.REGISTER,
       requestData: {
         data,
-        params: null,
+        params: null
       },
       requestSchema: {
         data: authSchemaRequest.register,
-        params: null,
+        params: null
       },
       responseSchema: authSchemaResponse.register,
-      config,
-    });
+      config
+    })
   }
 
   public refreshToken(config?: AxiosRequestConfig) {
@@ -46,14 +46,14 @@ export class AuthService extends HttpRequest {
       responseSchema: authSchemaResponse.refresh,
       requestData: {
         data: null,
-        params: null,
+        params: null
       },
       requestSchema: {
         params: null,
-        data: null,
+        data: null
       },
-      config,
-    });
+      config
+    })
   }
 
   public logout(config?: AxiosRequestConfig) {
@@ -63,13 +63,13 @@ export class AuthService extends HttpRequest {
       responseSchema: authSchemaResponse.logout,
       requestData: {
         data: null,
-        params: null,
+        params: null
       },
       requestSchema: {
         params: null,
-        data: null,
+        data: null
       },
-      config,
-    });
+      config
+    })
   }
 }

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { PostService } from '#/services/post';
-import type { Post } from '#/types/post';
+import { PostService } from '#/services/post'
+import type { Post } from '#/types/post'
 
-const post = ref<Post>();
+const post = ref<Post>()
 
-const route = useRoute();
+const route = useRoute()
 
 onMounted(async () => {
-  const postService = new PostService();
+  const postService = new PostService()
   if (route.params.id) {
-    const data = await postService.getPost(Number(route.params.id));
-    post.value = data;
+    const data = await postService.getPost(Number(route.params.id))
+    post.value = data
   }
-});
+})
 </script>
 
 <template>

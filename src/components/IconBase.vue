@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import type { SVGAttributes } from 'vue';
-import type { IconComponentName } from '#/interfaces/icons';
+import type { SVGAttributes } from 'vue'
+import type { IconComponentName } from '#/interfaces/icons'
 
 defineOptions({
-  inheritAttrs: true,
-});
+  inheritAttrs: true
+})
 
 interface IconProps extends /* @vue-ignore */ SVGAttributes {
-  name: IconComponentName;
-  animation?: 'spin' | 'pulse' | 'bounce' | 'none';
-  animationSpeed?: 'slow' | 'normal' | 'fast';
+  name: IconComponentName
+  animation?: 'spin' | 'pulse' | 'bounce' | 'none'
+  animationSpeed?: 'slow' | 'normal' | 'fast'
 }
 
 const props = withDefaults(defineProps<IconProps>(), {
@@ -22,23 +22,23 @@ const props = withDefaults(defineProps<IconProps>(), {
   strokeLinejoin: 'round',
   strokeWidth: '2',
   animation: 'none',
-  animationSpeed: 'normal',
-});
+  animationSpeed: 'normal'
+})
 
 const currentIcon = computed(() =>
   defineAsyncComponent({
     loader: () => import(`./icons/Icon${props.name}.vue`),
     delay: 200,
     timeout: 3000,
-    suspensible: true,
-  }),
-);
+    suspensible: true
+  })
+)
 
 const classes = computed(() => ({
   ['icon-base']: true,
   [`icon--${props.animation}`]: true,
-  [`icon--${props.animationSpeed}`]: true,
-}));
+  [`icon--${props.animationSpeed}`]: true
+}))
 </script>
 
 <template>

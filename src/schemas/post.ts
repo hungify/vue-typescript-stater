@@ -1,13 +1,13 @@
-import { createImageSchema, createStrictSchema } from '#/utils/schema';
-import { z } from 'zod';
+import { createImageSchema, createStrictSchema } from '#/utils/schema'
+import { z } from 'zod'
 
 const postSchema = createStrictSchema({
   userId: z.number(),
   id: z.number(),
   title: z.string(),
   completed: z.boolean().optional(),
-  body: z.string(),
-});
+  body: z.string()
+})
 
 const createPostSchema = createStrictSchema({
   userId: z.number(),
@@ -15,20 +15,20 @@ const createPostSchema = createStrictSchema({
   body: z.string(),
   image: createImageSchema({
     mineType: {
-      value: ['image/jpeg', 'image/png', 'image/jpg'],
-    },
-  }),
-});
+      value: ['image/jpeg', 'image/png', 'image/jpg']
+    }
+  })
+})
 
 export const postReqSchema = {
   getPosts: createStrictSchema({
     limit: z.string(),
-    page: z.string(),
-  }),
-};
+    page: z.string()
+  })
+}
 
 export const postResSchema = {
   getPosts: z.array(postSchema),
   getPost: postSchema,
-  createPost: createPostSchema,
-};
+  createPost: createPostSchema
+}

@@ -1,6 +1,6 @@
-require('@rushstack/eslint-patch/modern-module-resolution');
+require('@rushstack/eslint-patch/modern-module-resolution')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   root: true,
@@ -9,29 +9,29 @@ module.exports = {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
-    project: './tsconfig.json',
-    extraFileExtensions: ['.vue'],
+    project: './tsconfig.app.json',
+    extraFileExtensions: ['.vue']
   },
   settings: {
     'import/resolver': {
       node: {
         paths: [path.resolve(__dirname, '')],
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
       },
       typescript: {
-        project: path.resolve(__dirname, './tsconfig.json'),
-      },
-    },
+        project: path.resolve(__dirname, './tsconfig.json')
+      }
+    }
   },
   plugins: ['vue', 'prettier', '@typescript-eslint', 'import', 'promise', 'unicorn'],
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
-    '@vue/eslint-config-typescript/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:promise/recommended',
     'plugin:prettier/recommended',
-    '@vue/eslint-config-prettier/skip-formatting',
+    '@vue/eslint-config-typescript',
+    '@vue/eslint-config-prettier/skip-formatting'
   ],
   ignorePatterns: ['node_modules', 'dist', '*.d.ts', 'vite.config.ts'],
   rules: {
@@ -46,8 +46,8 @@ module.exports = {
       {
         object: ['import']['meta'],
         property: 'env',
-        message: 'Use `envVariables` in `src/utils/env.ts` instead of `import.meta.env`',
-      },
+        message: 'Use `envVariables` in `src/utils/env.ts` instead of `import.meta.env`'
+      }
     ],
 
     // # TYPESCRIPT
@@ -66,35 +66,35 @@ module.exports = {
       'error',
       {
         selector: 'interface',
-        format: ['PascalCase'],
+        format: ['PascalCase']
       },
       {
         selector: 'typeAlias',
-        format: ['PascalCase'],
+        format: ['PascalCase']
       },
       {
         selector: 'enumMember',
-        format: ['UPPER_CASE'],
+        format: ['UPPER_CASE']
       },
       {
         selector: 'class',
-        format: ['PascalCase'],
-      },
+        format: ['PascalCase']
+      }
     ],
     '@typescript-eslint/consistent-type-assertions': [
       'error',
       {
         assertionStyle: 'as',
-        objectLiteralTypeAssertions: 'allow',
-      },
+        objectLiteralTypeAssertions: 'allow'
+      }
     ],
     '@typescript-eslint/no-unused-expressions': [
       'error',
       {
         allowShortCircuit: true,
         allowTernary: true,
-        allowTaggedTemplates: true,
-      },
+        allowTaggedTemplates: true
+      }
     ],
     '@typescript-eslint/member-ordering': [
       'error',
@@ -105,17 +105,17 @@ module.exports = {
           'field',
           'abstract-method',
           'constructor',
-          'method',
-        ],
-      },
+          'method'
+        ]
+      }
     ],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
-        caughtErrorsIgnorePattern: '^_',
-      },
+        caughtErrorsIgnorePattern: '^_'
+      }
     ],
 
     // # VUE
@@ -126,14 +126,14 @@ module.exports = {
     'vue/component-name-in-template-casing': [
       'error',
       'PascalCase',
-      { registeredComponentsOnly: false },
+      { registeredComponentsOnly: false }
     ],
     'vue/custom-event-name-casing': [
       'error',
       'camelCase',
       {
-        ignores: ['/^(click):[a-z]+((d)|([A-Z0-9][a-z0-9]+))*([A-Z])?/'],
-      },
+        ignores: ['/^(click):[a-z]+((d)|([A-Z0-9][a-z0-9]+))*([A-Z])?/']
+      }
     ],
     'vue/no-multiple-objects-in-class': 'error',
     'vue/no-reserved-component-names': 'error',
@@ -144,6 +144,6 @@ module.exports = {
     'vue/prefer-separate-static-class': 'error',
     'vue/prefer-true-attribute-shorthand': 'error',
     'vue/v-on-function-call': 'error',
-    'vue/no-restricted-class': ['error', '/^(p|m)(l|r)-/'],
-  },
-};
+    'vue/no-restricted-class': ['error', '/^(p|m)(l|r)-/']
+  }
+}

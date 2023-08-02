@@ -1,4 +1,4 @@
-import type { z } from 'zod';
-import type { postResSchema } from '#/schemas/post';
+import type { z } from 'zod'
+import type { postResSchema } from '#/schemas/post'
 
-export type Post = z.infer<typeof postResSchema.getPost>;
+export type Post = z.infer<typeof postResSchema.getPost>

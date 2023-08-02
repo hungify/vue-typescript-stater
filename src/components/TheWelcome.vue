@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconBase from './IconBase.vue';
-import WelcomeItem from './WelcomeItem.vue';
+import IconBase from './IconBase.vue'
+import WelcomeItem from './WelcomeItem.vue'
 </script>
 
 <template>

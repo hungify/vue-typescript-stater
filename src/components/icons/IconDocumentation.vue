@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineOptions({
-  inheritAttrs: true,
-});
+  inheritAttrs: true
+})
 </script>
 
 <template>

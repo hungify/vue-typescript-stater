@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-properties */
-import { z } from 'zod';
+import { z } from 'zod'
 
 const envSchema = z.object({
   // base
@@ -14,12 +14,12 @@ const envSchema = z.object({
   ssr: z.boolean(),
 
   // custom
-  viteBaseApi: z.string().min(1).url(),
-});
+  viteBaseApi: z.string().min(1).url()
+})
 
-type EnvVariables = z.infer<typeof envSchema>;
+type EnvVariables = z.infer<typeof envSchema>
 
-type Mode = 'development' | 'production' | 'test' | 'staging';
+type Mode = 'development' | 'production' | 'test' | 'staging'
 
 export const envVariables = {
   // base
@@ -30,9 +30,9 @@ export const envVariables = {
   ssr: import.meta.env.SSR,
 
   // custom
-  viteBaseApi: import.meta.env.VITE_BASE_API,
-} as EnvVariables;
+  viteBaseApi: import.meta.env.VITE_BASE_API
+} as EnvVariables
 
 export const loadEnvVariables = () => {
-  envSchema.parse(envVariables);
-};
+  envSchema.parse(envVariables)
+}

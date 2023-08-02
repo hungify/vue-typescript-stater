@@ -1,7 +1,7 @@
-import logo from './logo.svg';
+import logo from './logo.svg'
 
 const IMAGES = {
-  logo,
-};
+  logo
+}
 
-export default IMAGES;
+export default IMAGES

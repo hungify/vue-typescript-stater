@@ -1,6 +1,6 @@
-import type { ExtractPathParams } from '#/types/url';
-import type { Prettify } from '#/types/utils';
-import type { AxiosResponse } from 'axios';
+import type { ExtractPathParams } from '#/types/url'
+import type { Prettify } from '#/types/utils'
+import type { AxiosResponse } from 'axios'
 
 /**
  * Type guard function to check whether a value is an AxiosResponse.
@@ -17,7 +17,7 @@ export function isAxiosResponse<T>(value: unknown): value is AxiosResponse<T> {
     'statusText' in value &&
     'headers' in value &&
     'config' in value
-  );
+  )
 }
 
 /**
@@ -30,16 +30,16 @@ export function isAxiosResponse<T>(value: unknown): value is AxiosResponse<T> {
  */
 export function makePathParams<TUrl extends string>(
   url: TUrl,
-  paramsUrl: Prettify<ExtractPathParams<TUrl>>,
+  paramsUrl: Prettify<ExtractPathParams<TUrl>>
 ): TUrl {
-  let finalUrl = url;
+  let finalUrl = url
 
   for (const key in paramsUrl) {
-    const value = paramsUrl[key as keyof typeof paramsUrl] as string;
-    finalUrl = finalUrl.replace(`:${key}`, encodeURIComponent(value)) as TUrl;
+    const value = paramsUrl[key as keyof typeof paramsUrl] as string
+    finalUrl = finalUrl.replace(`:${key}`, encodeURIComponent(value)) as TUrl
   }
 
-  return finalUrl;
+  return finalUrl
 }
 
 /**
@@ -48,5 +48,5 @@ export function makePathParams<TUrl extends string>(
  * @returns {string} - The normalized path.
  */
 export const normalizePath = (url: string) => {
-  return url.split('?')[0];
-};
+  return url.split('?')[0]
+}
