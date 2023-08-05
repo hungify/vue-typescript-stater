@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
+  ? I
+  : never
+
 export type Modify<T, R> = Omit<T, keyof R> & R
 
 export type Split<S extends string, SEP extends string> = S extends `${infer K}${SEP}${infer R}`
@@ -20,7 +26,7 @@ export type ReplaceFirstString<
   To extends string
 > = S extends `${infer Prefix}${From}${infer Suffix}` ? `${Prefix}${To}${Suffix}` : S
 
-export type Merge<F, S, R = Omit<F, keyof S> & S> = { [k in keyof R]: R[k] }
+export type MergeObject<F, S, R = Omit<F, keyof S> & S> = { [k in keyof R]: R[k] }
 
 export type KeysOfValue<T, TCondition> = {
   [K in keyof T]: T[K] extends TCondition ? K : never
@@ -33,3 +39,7 @@ export type DeepKeysOfValue<T, TCondition> = {
     ? `${K & string}.${DeepKeysOfValue<T[K], TCondition> & string}`
     : never
 }[keyof T]
+
+export type MergeUnion<TObject> = UnionToIntersection<TObject> extends infer O
+  ? { [K in keyof O]: O[K] }
+  : never

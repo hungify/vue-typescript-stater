@@ -6,6 +6,6 @@ export const enum AuthEndpoint {
 }
 
 export const enum PostEndpoint {
-  GET_POSTS = '/posts?limit=limit&page=page&search=?search', // add ? in front of query params field to make it optional, otherwise don't add it to make it required
+  GET_POSTS = '/posts?limit=number&page=number&search=(string)', // wrap in parenthesis to make it optional
   GET_POST = '/posts/:postId'
 }

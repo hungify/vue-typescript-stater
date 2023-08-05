@@ -16,8 +16,8 @@ export class PostService extends HttpRequest {
       },
       requestData: {
         params: {
-          limit: '10',
-          page: '0'
+          limit: 10,
+          page: 1
         },
         data: null
       },

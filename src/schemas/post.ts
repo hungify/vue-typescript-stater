@@ -22,8 +22,8 @@ const createPostSchema = createStrictSchema({
 
 export const postReqSchema = {
   getPosts: createStrictSchema({
-    limit: z.string(),
-    page: z.string()
+    limit: z.number(),
+    page: z.number()
   })
 }
 

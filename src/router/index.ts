@@ -1,5 +1,5 @@
-import generatedRoutes from '~pages'
-import { setupLayouts } from 'virtual:generated-layouts'
+import setupLayouts from 'virtual:generated-layouts'
+import generatedRoutes from 'virtual:generated-pages'
 import { createRouter } from 'vue-router'
 import { createWebHistory } from 'vue-router'
 import type { App } from 'vue'
