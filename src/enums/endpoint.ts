@@ -6,6 +6,6 @@ export const enum AuthEndpoint {
 }
 
 export const enum PostEndpoint {
-  GET_POSTS = '/posts?limit=number&page=number&search=(string)', // wrap in parenthesis to make it optional
-  GET_POST = '/posts/:postId'
+  GET_POSTS = '/posts?[limit:number]&[page:number]&[search:?string]', // ? means optional
+  GET_POST = '/posts/[postId:number]'
 }

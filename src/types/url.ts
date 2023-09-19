@@ -1,38 +1,57 @@
-import type { MergeUnion, Split } from './utils'
+import type { Split, MergeUnion, ReplaceFirstString, InferPrimitivesType } from './utils'
 
-type InferType<T> = T extends 'string'
-  ? string
-  : T extends 'number'
-  ? number
-  : T extends 'boolean'
-  ? boolean
-  : never
+// Void ? split url into path and query params
+type NormalizeQueryUrl<TQuery extends string> = ReplaceFirstString<TQuery, '?', '@'>
 
-type ArrayQueryParams<TQuery extends string> = Split<TQuery, '?'>
+type RawQueryPath<TQuery extends string> = Split<NormalizeQueryUrl<TQuery>, '@'>[0]
 
 type ExtractParamKeys<TQuery extends string> =
-  ArrayQueryParams<TQuery>[0] extends `${infer Start}/:${infer Param}/${infer Rest}`
-    ? ExtractParamKeys<Start> | ExtractParamKeys<Rest> | Param
-    : ArrayQueryParams<TQuery>[0] extends `${infer Start}/:${infer Param}`
-    ? ExtractParamKeys<Start> | Param
-    : never
+  RawQueryPath<TQuery> extends `${infer Start}/${infer Rest}`
+    ? ExtractParamKeys<Start> & ExtractParamKeys<Rest>
+    : TQuery extends `[${infer Param}]`
+    ? Param extends `${infer Name}:${infer Type}`
+      ? { [K in Name]: InferPrimitivesType<Type> }
+      : { [K in Param]: string }
+    : NonNullable<unknown>
 
-type QueryElements<TQuery extends string> = ArrayQueryParams<TQuery> extends [string, string]
-  ? Split<ArrayQueryParams<TQuery>[1], '&'>
+export type ExtractPathParams<TQuery extends string> = ExtractParamKeys<
+  RawQueryPath<TQuery>
+> extends infer Keys
+  ? {
+      [K in keyof Keys]: Keys[K]
+    }
   : never
+
+type RawQueryParams<TQuery extends string> = Split<NormalizeQueryUrl<TQuery>, '@'>[1]
+
+type QueryElements<TQuery extends string> = Split<RawQueryParams<TQuery>, '&'>
 
 type QueryParams<TQuery extends string> = QueryElements<TQuery> extends infer Element
   ? Element extends string[]
     ? {
-        [QueryElement in Element[number]]: QueryElement extends `${infer Key}=(${infer Type})`
-          ? Partial<Record<Key, InferType<Type>>>
-          : QueryElement extends `${infer Key}=${infer Type}`
-          ? Record<Key, InferType<Type>>
+        [QueryElement in Element[number]]: QueryElement extends `[${infer Key}?:${infer Type}]`
+          ? {
+              [K in Key]?: InferPrimitivesType<Type>
+            }
+          : QueryElement extends `[${infer Key}:${infer Type}]`
+          ? {
+              [K in Key]: InferPrimitivesType<Type>
+            }
           : never
       }[Element[number]]
     : never
   : never
 
-export type ExtractPathParams<TQuery extends string> = Record<ExtractParamKeys<TQuery>, string>
-
 export type ExtractQueryParams<TQuery extends string> = MergeUnion<QueryParams<TQuery>>
+
+// type ExtractQueryParams<TQuery extends string> = TQuery extends
+//   | `${infer Start}&${infer Rest}`
+//   | `${string}?${infer End}`
+//   ? ExtractQueryParams<Start> & ExtractQueryParams<Rest> & ExtractQueryParams<End>
+//   : TQuery extends `[${infer Param}]`
+//   ? Param extends `${infer Name}:${infer Type}`
+//     ? {
+//         [K in Name]: Type extends 'number' ? number : string
+//       }
+//     : { [K in Param]: string }
+//   : NonNullable<unknown>

@@ -43,3 +43,11 @@ export type DeepKeysOfValue<T, TCondition> = {
 export type MergeUnion<TObject> = UnionToIntersection<TObject> extends infer O
   ? { [K in keyof O]: O[K] }
   : never
+
+export type InferPrimitivesType<T> = T extends 'string'
+  ? string
+  : T extends 'number'
+  ? number
+  : T extends 'boolean'
+  ? boolean
+  : never

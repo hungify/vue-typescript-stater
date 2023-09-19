@@ -1,4 +1,4 @@
-import type { AllEndpoint } from '#/interfaces/endpoint'
+import type { AllEndpoint } from '#/types/endpoint'
 import type { ExtractQueryParams } from '#/types/url'
 import type { ToZod } from '#/types/zod'
 import { envVariables } from '#/utils/env'
