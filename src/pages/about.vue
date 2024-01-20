@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useImmer } from '#/composables/useImmer'
-
 const [count, setCount] = useImmer({
-  nested: { count: 0 }
+  nested: { count: 0 },
 })
 
 const handleIncrease = () => {

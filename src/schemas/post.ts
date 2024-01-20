@@ -1,34 +1,23 @@
-import { createImageSchema, createStrictSchema } from '#/utils/schema'
-import { z } from 'zod'
+import v from 'valibot'
 
-const postSchema = createStrictSchema({
-  userId: z.number(),
-  id: z.number(),
-  title: z.string(),
-  completed: z.boolean().optional(),
-  body: z.string()
-})
+class PostSchema {
+  public getPost() {
+    return v.object({
+      userId: v.number(),
+      id: v.number(),
+      title: v.string(),
+      completed: v.boolean(),
+      body: v.string(),
+    })
+  }
 
-const createPostSchema = createStrictSchema({
-  userId: z.number(),
-  title: z.string(),
-  body: z.string(),
-  image: createImageSchema({
-    mineType: {
-      value: ['image/jpeg', 'image/png', 'image/jpg']
-    }
-  })
-})
+  public getPosts() {
+    return v.array(this.getPost())
+  }
 
-export const postReqSchema = {
-  getPosts: createStrictSchema({
-    limit: z.number(),
-    page: z.number()
-  })
+  public createPost() {
+    return this.getPost()
+  }
 }
 
-export const postResSchema = {
-  getPosts: z.array(postSchema),
-  getPost: postSchema,
-  createPost: createPostSchema
-}
+export const postSchema = new PostSchema()

@@ -3,10 +3,7 @@
 /// <reference types="unplugin-vue-components/vite" />
 /// <reference types="vite-plugin-pages/client" />
 /// <reference types="vite-plugin-vue-layouts/client" />
-
-declare interface Window {
-  // extend the window
-}
+/// <reference types="unplugin-icons/types/vue" />
 
 declare module '*.vue' {
   import { type DefineComponent } from 'vue'
@@ -24,5 +21,7 @@ declare module 'vue-router' {
   }
   interface RouteMeta extends BaseRouteMeta {}
 }
+
+declare interface Window {}
 
 export {}

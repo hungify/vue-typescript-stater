@@ -12,34 +12,34 @@ export class PostService extends HttpRequest {
       responseSchema: postResSchema.getPosts,
       requestSchema: {
         params: postReqSchema.getPosts,
-        data: null
+        data: null,
       },
       requestData: {
         params: {
           limit: 10,
-          page: 1
+          page: 1,
         },
-        data: null
+        data: null,
       },
-      config
+      config,
     })
   }
   public getPost(id: number, config?: AxiosRequestConfig) {
     return this.axiosRequest({
       method: 'GET',
       path: makePathParams(PostEndpoint.GET_POST, {
-        postId: id
+        postId: id,
       }),
       responseSchema: postResSchema.getPost,
       requestSchema: {
         params: null,
-        data: null
+        data: null,
       },
       requestData: {
         params: null,
-        data: null
+        data: null,
       },
-      config
+      config,
     })
   }
 }

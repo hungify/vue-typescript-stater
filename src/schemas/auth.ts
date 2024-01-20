@@ -1,49 +1,69 @@
-import { z } from 'zod'
+import v from 'valibot'
 
-const loginRequestSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6)
-})
+class AuthSchema {
+  get loginRequest() {
+    return v.object({
+      email: v.string('Your email must be a string.', [
+        v.minLength(1, 'Please enter your email.'),
+        v.email('The email address is badly formatted.'),
+      ]),
+      password: v.string('Your password must be a string.', [
+        v.minLength(1, 'Please enter your password.'),
+        v.minLength(8, 'Your password must have 8 characters or more.'),
+      ]),
+    })
+  }
 
-const loginResponseSchema = z.object({
-  accessToken: z.string(),
-  refreshToken: z.string()
-})
+  get loginResponse() {
+    return v.object({
+      accessToken: v.string(),
+      refreshToken: v.string(),
+    })
+  }
 
-const registerRequestSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  name: z.string().min(2)
-})
+  get registerRequest() {
+    return v.object({
+      email: v.string('Your email must be a string.', [
+        v.minLength(1, 'Please enter your email.'),
+        v.email('The email address is badly formatted.'),
+      ]),
+      password: v.string('Your password must be a string.', [
+        v.minLength(1, 'Please enter your password.'),
+        v.minLength(8, 'Your password must have 8 characters or more.'),
+      ]),
+      name: v.string('Your name must be a string.', [
+        v.minLength(1, 'Please enter your name.'),
+      ]),
+    })
+  }
 
-const registerResponseSchema = z.object({
-  accessToken: z.string(),
-  refreshToken: z.string()
-})
+  get registerResponse() {
+    return v.object({
+      accessToken: v.string(),
+      refreshToken: v.string(),
+    })
+  }
 
-const refreshRequestSchema = z.object({})
+  get refreshRequest() {
+    return v.object({})
+  }
 
-const refreshResponseSchema = z.object({
-  accessToken: z.string(),
-  refreshToken: z.string()
-})
+  get refreshResponse() {
+    return v.object({
+      accessToken: v.string(),
+      refreshToken: v.string(),
+    })
+  }
 
-const logoutRequestSchema = z.object({})
+  get logoutRequest() {
+    return v.object({})
+  }
 
-const logoutResponseSchema = z.object({
-  message: z.string()
-})
-
-export const authSchemaRequest = {
-  login: loginRequestSchema,
-  register: registerRequestSchema,
-  refresh: refreshRequestSchema,
-  logout: logoutRequestSchema
+  get logoutResponse() {
+    return v.object({
+      message: v.string(),
+    })
+  }
 }
 
-export const authSchemaResponse = {
-  login: loginResponseSchema,
-  register: registerResponseSchema,
-  refresh: refreshResponseSchema,
-  logout: logoutResponseSchema
-}
+export const authSchema = new AuthSchema()

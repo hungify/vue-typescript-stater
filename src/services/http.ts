@@ -1,37 +1,19 @@
 import type { AllEndpoint } from '#/types/endpoint'
-import type { ExtractQueryParams } from '#/types/url'
-import type { ToZod } from '#/types/zod'
-import { envVariables } from '#/utils/env'
-import { normalizePath } from '#/utils/http'
 import type {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
-  Method
+  Method,
 } from 'axios'
 import axios from 'axios'
-import type { z } from 'zod'
-import { ZodError } from 'zod'
+import * as v from 'valibot'
 
 interface HttpRequestConfig<TParams, TData> extends AxiosRequestConfig {
   data?: TData
   params?: TParams
 }
-
-type CheckForBadBody<TRequestSchema> = TRequestSchema extends null ? null : TRequestSchema
-
-type CheckForBadQueryParams<TPath extends AllEndpoint> = ExtractQueryParams<TPath> extends null
-  ? null
-  : ExtractQueryParams<TPath>
-
-type CheckForBadParamsSchema<
-  TPath extends AllEndpoint,
-  TRequestSchema
-> = ExtractQueryParams<TPath> extends TRequestSchema
-  ? ToZod<ExtractQueryParams<TPath>>
-  : TRequestSchema
 
 export default abstract class HttpRequest {
   #instance: AxiosInstance
@@ -41,7 +23,7 @@ export default abstract class HttpRequest {
     this.#accessToken = accessToken || ''
     this.#instance = axios.create({
       baseURL: configs?.baseURL ?? envVariables.viteBaseApi,
-      ...configs
+      ...configs,
     })
     this.initializeRequestInterceptor()
     this.initializeResponseInterceptor()
@@ -59,7 +41,10 @@ export default abstract class HttpRequest {
   }
 
   private initializeResponseInterceptor = () => {
-    this.#instance.interceptors.response.use(this.handleResponse, this.handleError)
+    this.#instance.interceptors.response.use(
+      this.handleResponse,
+      this.handleError,
+    )
   }
 
   private handleResponse = (response: AxiosResponse) => {
@@ -72,7 +57,7 @@ export default abstract class HttpRequest {
     return response
   }
 
-  private handleError = async (error: AxiosError) => {
+  private handleError = (error: AxiosError) => {
     const originalRequest = error.config
     if (originalRequest && error.response?.status === 401) {
       // refresh token here
@@ -83,84 +68,82 @@ export default abstract class HttpRequest {
 
   public async axiosRequest<
     TPath extends AllEndpoint,
-    TResponseSchema extends z.ZodTypeAny = z.ZodTypeAny,
-    TRequestDataSchema extends z.ZodTypeAny = z.ZodTypeAny,
-    TRequestParamsSchema extends z.ZodTypeAny = z.ZodTypeAny
+    TResponseSchema extends v.UnknownSchema = v.UnknownSchema,
+    TRequestDataSchema extends v.UnknownSchema = v.UnknownSchema,
+    TRequestParamsSchema extends v.UnknownSchema = v.UnknownSchema,
   >({
     method,
     path,
     requestSchema,
     responseSchema,
     requestData,
-    config
+    config,
   }: {
     path: TPath
     method: Method
     requestData: {
-      data: CheckForBadBody<z.infer<TRequestDataSchema>> | null
-      params: CheckForBadQueryParams<TPath> | null
+      data: v.Output<TRequestDataSchema>
+      params: TRequestParamsSchema
     }
     requestSchema: {
-      data: TRequestDataSchema | null
-      params: CheckForBadParamsSchema<TPath, z.infer<TRequestParamsSchema>> | null
+      data: TRequestDataSchema
+      params: TRequestParamsSchema
     }
-    responseSchema: TResponseSchema | null
-    config?: HttpRequestConfig<z.infer<TRequestParamsSchema>, z.infer<TRequestDataSchema>>
-  }): Promise<z.infer<TResponseSchema>> {
+    responseSchema: TResponseSchema
+    config?: AxiosRequestConfig
+  }) {
     const axiosRequestConfig: AxiosRequestConfig = {
       ...config,
       method,
       url: normalizePath(path),
-      params: requestData.params
+      params: requestData.params,
     }
 
     if (requestSchema.data) {
       Object.assign(axiosRequestConfig, { data: requestData.data })
       if (envVariables.prod) {
-        const result = await requestSchema.data.safeParseAsync(requestData.data)
+        const result = await v.safeParseAsync(
+          requestSchema.data,
+          requestData.data,
+        )
         if (!result.success) {
-          // report request error to the server
-          console.error(result.error)
+          console.error(result)
         }
       } else {
-        const res = await requestSchema.data.parseAsync(requestData.data)
-        if (res instanceof ZodError) {
-          throw res
-        }
+        const res = await v.parseAsync(requestSchema.data, requestData.data)
+        console.log(res)
       }
     }
 
     if (requestSchema.params) {
       if (envVariables.prod) {
-        const result = await requestSchema.params.safeParseAsync(requestData.params)
+        const result = await v.safeParseAsync(
+          requestSchema.params,
+          requestData.params,
+        )
         if (!result.success) {
           // report request error to the server
-          console.error(result.error)
+          console.error(result)
         }
       } else {
-        const res = await requestSchema.params.parseAsync(requestData.params)
-        if (res instanceof ZodError) {
-          throw res
-        }
+        const res = await v.parseAsync(requestSchema.params, requestData.params)
+        console.log(res)
       }
     }
 
-    const { data } = await this.#instance.request<z.infer<TResponseSchema>>(axiosRequestConfig)
+    const { data } = await this.#instance.request(axiosRequestConfig)
 
     if (responseSchema) {
       if (envVariables.prod) {
-        const result = await responseSchema.safeParseAsync(data)
+        const result = await v.safeParseAsync(responseSchema, data)
         if (!result.success) {
           // request report error to server
-          console.error(result.error)
+          console.error(result)
         }
       }
-      const res = await responseSchema.parseAsync(data)
+      const res = await v.parseAsync(responseSchema, data)
 
-      if (res instanceof ZodError) {
-        console.error(res)
-        throw res
-      }
+      console.error(res)
     }
 
     return data

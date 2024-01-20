@@ -1,7 +1,9 @@
-import type { z } from 'zod'
-import type { authSchemaRequest } from '#/schemas/auth'
+import type { authSchema } from '#/schemas/auth'
+import * as v from 'valibot'
 
-export type LoginRequest = z.infer<typeof authSchemaRequest.login>
-export type RegisterRequest = z.infer<typeof authSchemaRequest.register>
-export type RefreshRequest = z.infer<typeof authSchemaRequest.refresh>
-export type LogoutRequest = z.infer<typeof authSchemaRequest.logout>
+export namespace AuthSchema {
+  export type LoginRequest = v.Output<typeof authSchema.loginRequest>
+  export type RegisterRequest = v.Output<typeof authSchema.registerRequest>
+  export type RefreshRequest = v.Output<typeof authSchema.refreshRequest>
+  export type LogoutRequest = v.Output<typeof authSchema.logoutRequest>
+}
