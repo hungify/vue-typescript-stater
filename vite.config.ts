@@ -5,12 +5,17 @@ import Components from 'unplugin-vue-components/vite'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import VueDevTools from 'vite-plugin-vue-devtools'
-import TsconfigPaths from 'vite-tsconfig-paths'
 import Checker from 'vite-plugin-checker'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
+import { fileURLToPath } from 'url'
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '#': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   plugins: [
     VueRouter(),
     Vue({
@@ -42,7 +47,5 @@ export default defineConfig({
     Checker({
       vueTsc: true,
     }),
-
-    TsconfigPaths(),
   ],
 })

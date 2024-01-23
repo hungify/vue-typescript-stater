@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PostService } from '#/services/post'
+import { postService } from '#/services/post'
 import type { PostOutput } from '#/types/post'
 
 const posts = ref<PostOutput.Post[]>([])
@@ -7,9 +7,10 @@ const posts = ref<PostOutput.Post[]>([])
 const router = useRouter()
 
 onMounted(async () => {
-  const postService = new PostService()
-  const data = await postService.getPosts()
-  posts.value = data
+  const [err, data] = await toPromise(postService.getPosts())
+  if (!err) {
+    posts.value = data
+  }
 })
 
 const goToDetail = async (post: PostOutput.Post) => {

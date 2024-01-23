@@ -3,7 +3,7 @@ import type { AxiosRequestConfig } from 'axios'
 import HttpRequest from './http'
 import { postSchema } from '#/schemas/post'
 
-export class PostService extends HttpRequest {
+class PostService extends HttpRequest {
   public getPosts(config?: AxiosRequestConfig) {
     return this.axiosRequest({
       method: 'GET',
@@ -15,8 +15,8 @@ export class PostService extends HttpRequest {
       },
       requestData: {
         queryParams: {
-          limit: 10,
-          page: 1,
+          _limit: 10,
+          _start: 1,
         },
         data: null,
       },
@@ -42,3 +42,5 @@ export class PostService extends HttpRequest {
     })
   }
 }
+
+export const postService = new PostService()

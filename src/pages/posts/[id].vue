@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PostService } from '#/services/post'
+import { postService } from '#/services/post'
 import type { PostOutput } from '#/types/post'
 
 const post = ref<PostOutput.Post>()
@@ -7,10 +7,13 @@ const post = ref<PostOutput.Post>()
 const route = useRoute()
 
 onMounted(async () => {
-  const postService = new PostService()
   if ('id' in route.params) {
-    const data = await postService.getPost(Number(route.params.id))
-    post.value = data
+    const [err, data] = await toPromise(
+      postService.getPost(Number(route.params.id)),
+    )
+    if (!err) {
+      post.value = data
+    }
   }
 })
 </script>

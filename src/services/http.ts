@@ -48,7 +48,7 @@ export default abstract class HttpRequest {
         this.#accessToken = accessToken
       }
     }
-    return response
+    return response.data
   }
 
   private handleError = (error: AxiosError) => {
@@ -62,12 +62,13 @@ export default abstract class HttpRequest {
 
   public async axiosRequest<
     const Endpoint extends keyof Endpoints,
-    const Method extends Endpoints[Endpoint]['method'],
-    const QueryParams extends Endpoints[Endpoint]['queryParams'],
-    const ResponseSchema extends Endpoints[Endpoint]['schema']['response'],
-    const RequestDataSchema extends Endpoints[Endpoint]['schema']['body'],
-    const RequestQueryParamsSchema extends
+    Method extends Endpoints[Endpoint]['method'],
+    QueryParams extends Endpoints[Endpoint]['queryParams'],
+    ResponseSchema extends Endpoints[Endpoint]['schema']['response'],
+    RequestDataSchema extends Endpoints[Endpoint]['schema']['body'],
+    RequestQueryParamsSchema extends
       Endpoints[Endpoint]['schema']['queryParams'],
+    ResponseOutput extends v.Output<ResponseSchema>,
   >({
     method,
     endpoint,
@@ -104,13 +105,19 @@ export default abstract class HttpRequest {
         const result = await v.safeParseAsync(
           requestSchema.data,
           requestData.data,
+          {
+            abortEarly: true,
+            abortPipeEarly: true,
+          },
         )
         if (!result.success) {
           console.error(result)
         }
       } else {
-        const res = await v.parseAsync(requestSchema.data, requestData.data)
-        console.log(res)
+        await v.parseAsync(requestSchema.data, requestData.data, {
+          abortEarly: true,
+          abortPipeEarly: true,
+        })
       }
     }
 
@@ -119,33 +126,39 @@ export default abstract class HttpRequest {
         const result = await v.safeParseAsync(
           requestSchema.queryParams,
           requestData.queryParams,
+          {
+            abortEarly: true,
+            abortPipeEarly: true,
+          },
         )
         if (!result.success) {
           // report request error to the server
           console.error(result)
         }
       } else {
-        const res = await v.parseAsync(
-          requestSchema.queryParams,
-          requestData.queryParams,
-        )
-        console.log(res)
+        await v.parseAsync(requestSchema.queryParams, requestData.queryParams, {
+          abortEarly: true,
+          abortPipeEarly: true,
+        })
       }
     }
 
-    const { data } = await this.#instance.request(axiosRequestConfig)
+    const data = await this.#instance.request<unknown, ResponseOutput>(
+      axiosRequestConfig,
+    )
 
     if (responseSchema) {
       if (envVariables.prod) {
-        const result = await v.safeParseAsync(responseSchema, data)
+        const result = await v.safeParseAsync(responseSchema, data, {
+          abortEarly: true,
+          abortPipeEarly: true,
+        })
         if (!result.success) {
           // request report error to server
           console.error(result)
         }
       }
-      const res = await v.parseAsync(responseSchema, data)
-
-      console.error(res)
+      await v.parseAsync(responseSchema, data)
     }
 
     return data

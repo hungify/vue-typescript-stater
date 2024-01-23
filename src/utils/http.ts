@@ -14,22 +14,29 @@ export function isAxiosResponse<T>(value: unknown): value is AxiosResponse<T> {
   )
 }
 
-export function makePathParams<TUrl extends AllEndpoint>(
-  url: TUrl,
-  paramsUrl: ExtractPathParams<TUrl>,
-): TUrl {
-  let finalUrl = String(url)
-  if (paramsUrl && Object.keys(paramsUrl).length > 0) {
-    finalUrl = Object.entries<string>(paramsUrl).reduce<string>(
-      (path, [key, value]) => path.replace(`[${key}]`, value),
+export function makePathParams<Endpoint extends AllEndpoint>(
+  endpoint: Endpoint,
+  params: ExtractPathParams<Endpoint>,
+): Endpoint {
+  let url = String(endpoint.split(' ')[1])
+
+  if (params && Object.keys(params).length > 0) {
+    url = Object.entries(params).reduce(
+      (path, [key, value]) =>
+        path.replace(
+          new RegExp(`\\[${key}:${typeof value}\\]`, 'g'),
+          String(value),
+        ),
       url,
     )
   }
-  finalUrl = url.replace(/(\(|\)|\/?\[[^\\/]+\])/g, '')
 
-  return finalUrl as TUrl
+  url = url.replace(/(\(|\)|\/?\[[^\/]+\])/g, '')
+
+  return url as Endpoint
 }
 
-export const normalizePath = (url: string) => {
-  return url.split('?')[0]
+export const normalizePath = (endpoint: AllEndpoint) => {
+  const endpoints = endpoint.split(' ')
+  return endpoints.length == 2 ? endpoints[1].split('?')[0] : endpoints[0]
 }

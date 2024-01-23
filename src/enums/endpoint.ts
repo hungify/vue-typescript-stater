@@ -6,6 +6,6 @@ export enum AuthEndpoint {
 }
 
 export enum PostEndpoint {
-  GET_POSTS = 'GET /posts?[limit:number]&[page:number]', // ? means optional
+  GET_POSTS = 'GET /posts?[_start:number]&[_limit:number]', // ? means optional
   GET_POST = 'GET /posts/[postId:number]',
 }

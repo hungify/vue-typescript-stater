@@ -1,20 +1,20 @@
-import v from 'valibot'
+import * as v from 'valibot'
 
 class PostSchema {
   get post() {
     return v.object({
-      userId: v.number(),
-      id: v.number(),
-      title: v.string(),
-      completed: v.boolean(),
-      body: v.string(),
+      userId: v.number('userId must be a number'),
+      id: v.number('id must be a number'),
+      title: v.string('title must be a string'),
+      completed: v.optional(v.boolean("completed must be a boolean or 'null'")),
+      body: v.string('body must be a string'),
     })
   }
 
   get getPostsParams() {
     return v.object({
-      limit: v.number(),
-      page: v.number(),
+      _limit: v.number('_limit must be a number'),
+      _start: v.number('_start must be a number'),
     })
   }
   get getPostsResponse() {
