@@ -45,7 +45,7 @@ class AuthSchema {
   }
 
   get refreshRequest() {
-    return v.object({})
+    return v.null_()
   }
 
   get refreshResponse() {
@@ -56,7 +56,7 @@ class AuthSchema {
   }
 
   get logoutRequest() {
-    return v.object({})
+    return v.null_()
   }
 
   get logoutResponse() {

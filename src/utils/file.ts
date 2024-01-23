@@ -10,18 +10,18 @@ export const isImageFile = (file: File) => {
       img.onload = function () {
         if (img.width > 0 && img.height > 0) {
           resolve({
-            success: true
+            success: true,
           })
         } else {
           resolve({
-            success: false
+            success: false,
           })
         }
       }
 
       img.onerror = function () {
         resolve({
-          success: false
+          success: false,
         })
       }
       img.src = event.target?.result as string

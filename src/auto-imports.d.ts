@@ -124,10 +124,8 @@ declare module 'vue' {
     readonly chai: UnwrapRef<typeof import('vitest')['chai']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
-    readonly createImageSchema: UnwrapRef<typeof import('./utils/schema')['createImageSchema']>
     readonly createPinia: UnwrapRef<typeof import('pinia')['createPinia']>
     readonly createSignal: UnwrapRef<typeof import('./composables/createSignal')['createSignal']>
-    readonly createStrictSchema: UnwrapRef<typeof import('./utils/schema')['createStrictSchema']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
@@ -153,7 +151,6 @@ declare module 'vue' {
     readonly it: UnwrapRef<typeof import('vitest')['it']>
     readonly loadEnvVariables: UnwrapRef<typeof import('./utils/env')['loadEnvVariables']>
     readonly makePathParams: UnwrapRef<typeof import('./utils/http')['makePathParams']>
-    readonly makeResponseSchema: UnwrapRef<typeof import('./utils/schema')['makeResponseSchema']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
     readonly mapState: UnwrapRef<typeof import('pinia')['mapState']>
@@ -225,10 +222,8 @@ declare module '@vue/runtime-core' {
     readonly chai: UnwrapRef<typeof import('vitest')['chai']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
-    readonly createImageSchema: UnwrapRef<typeof import('./utils/schema')['createImageSchema']>
     readonly createPinia: UnwrapRef<typeof import('pinia')['createPinia']>
     readonly createSignal: UnwrapRef<typeof import('./composables/createSignal')['createSignal']>
-    readonly createStrictSchema: UnwrapRef<typeof import('./utils/schema')['createStrictSchema']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
@@ -254,7 +249,6 @@ declare module '@vue/runtime-core' {
     readonly it: UnwrapRef<typeof import('vitest')['it']>
     readonly loadEnvVariables: UnwrapRef<typeof import('./utils/env')['loadEnvVariables']>
     readonly makePathParams: UnwrapRef<typeof import('./utils/http')['makePathParams']>
-    readonly makeResponseSchema: UnwrapRef<typeof import('./utils/schema')['makeResponseSchema']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
     readonly mapState: UnwrapRef<typeof import('pinia')['mapState']>

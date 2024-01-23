@@ -1,19 +1,19 @@
 import { AxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import type { LoginRequest, RegisterRequest } from '#/types/auth'
 import type { FormError } from '#/interfaces/error'
 import { AuthService } from '#/services/auth'
+import type { AuthOutput } from '#/types/auth'
 
 export const useAuthStore = defineStore('auth', () => {
   const authService = new AuthService()
 
   const token = ref({
     accessToken: '',
-    refreshToken: ''
+    refreshToken: '',
   })
   const formError = ref<FormError>()
 
-  const login = async (data: LoginRequest) => {
+  const login = async (data: AuthOutput.LoginRequest) => {
     try {
       const response = await authService.login(data)
       token.value = response
@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const register = async (data: RegisterRequest) => {
+  const register = async (data: AuthOutput.RegisterRequest) => {
     try {
       const response = await authService.register(data)
       token.value = response
@@ -53,6 +53,6 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     register,
     refreshToken,
-    logout
+    logout,
   }
 })

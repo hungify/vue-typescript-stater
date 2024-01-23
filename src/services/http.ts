@@ -1,19 +1,13 @@
-import type { AllEndpoint } from '#/types/endpoint'
+import type { Endpoints } from '#/types/endpoints'
 import type {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
-  Method,
 } from 'axios'
 import axios from 'axios'
 import * as v from 'valibot'
-
-interface HttpRequestConfig<TParams, TData> extends AxiosRequestConfig {
-  data?: TData
-  params?: TParams
-}
 
 export default abstract class HttpRequest {
   #instance: AxiosInstance
@@ -48,7 +42,7 @@ export default abstract class HttpRequest {
   }
 
   private handleResponse = (response: AxiosResponse) => {
-    if (response.headers && response.headers.authorization) {
+    if (response.headers.authorization) {
       const accessToken = response.headers.authorization.split(' ')[1]
       if (accessToken) {
         this.#accessToken = accessToken
@@ -67,36 +61,41 @@ export default abstract class HttpRequest {
   }
 
   public async axiosRequest<
-    TPath extends AllEndpoint,
-    TResponseSchema extends v.UnknownSchema = v.UnknownSchema,
-    TRequestDataSchema extends v.UnknownSchema = v.UnknownSchema,
-    TRequestParamsSchema extends v.UnknownSchema = v.UnknownSchema,
+    const Endpoint extends keyof Endpoints,
+    const Method extends Endpoints[Endpoint]['method'],
+    const QueryParams extends Endpoints[Endpoint]['queryParams'],
+    const ResponseSchema extends Endpoints[Endpoint]['schema']['response'],
+    const RequestDataSchema extends Endpoints[Endpoint]['schema']['body'],
+    const RequestQueryParamsSchema extends
+      Endpoints[Endpoint]['schema']['queryParams'],
   >({
     method,
-    path,
+    endpoint,
+    requestData,
     requestSchema,
     responseSchema,
-    requestData,
     config,
   }: {
-    path: TPath
+    endpoint: Endpoint
     method: Method
     requestData: {
-      data: v.Output<TRequestDataSchema>
-      params: TRequestParamsSchema
+      data: RequestDataSchema extends v.BaseSchema
+        ? v.Output<RequestDataSchema>
+        : null
+      queryParams: QueryParams
     }
     requestSchema: {
-      data: TRequestDataSchema
-      params: TRequestParamsSchema
+      data: RequestDataSchema
+      queryParams: RequestQueryParamsSchema
     }
-    responseSchema: TResponseSchema
+    responseSchema: ResponseSchema
     config?: AxiosRequestConfig
   }) {
     const axiosRequestConfig: AxiosRequestConfig = {
       ...config,
       method,
-      url: normalizePath(path),
-      params: requestData.params,
+      url: normalizePath(endpoint),
+      params: requestData.queryParams,
     }
 
     if (requestSchema.data) {
@@ -115,18 +114,21 @@ export default abstract class HttpRequest {
       }
     }
 
-    if (requestSchema.params) {
+    if (requestSchema.queryParams) {
       if (envVariables.prod) {
         const result = await v.safeParseAsync(
-          requestSchema.params,
-          requestData.params,
+          requestSchema.queryParams,
+          requestData.queryParams,
         )
         if (!result.success) {
           // report request error to the server
           console.error(result)
         }
       } else {
-        const res = await v.parseAsync(requestSchema.params, requestData.params)
+        const res = await v.parseAsync(
+          requestSchema.queryParams,
+          requestData.queryParams,
+        )
         console.log(res)
       }
     }

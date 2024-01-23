@@ -1,76 +1,70 @@
-import type { AxiosRequestConfig } from 'axios'
 import HttpRequest from './http'
-import { AuthEndpoint } from '#/enums/endpoint'
 import { authSchema } from '#/schemas/auth'
-import type { AuthSchema } from '#/types/auth'
-import * as v from 'valibot'
+import type { AuthOutput } from '#/types/auth'
+import { AuthEndpoint } from '#/enums/endpoint'
 
 export class AuthService extends HttpRequest {
-  public login(data: AuthSchema.LoginRequest, config?: AxiosRequestConfig) {
+  public login(data: AuthOutput.LoginRequest) {
     return this.axiosRequest({
-      method: 'post',
-      path: AuthEndpoint.LOGIN,
+      method: 'POST',
+      endpoint: AuthEndpoint.LOGIN,
       requestData: {
         data,
-        params: v.any(),
+        queryParams: null,
       },
       requestSchema: {
         data: authSchema.loginRequest,
-        params: v.any(),
+        queryParams: null,
       },
       responseSchema: authSchema.loginResponse,
-      config,
     })
   }
 
-  // public register(data: RegisterRequest, config?: AxiosRequestConfig) {
-  //   return this.axiosRequest({
-  //     method: 'post',
-  //     path: AuthEndpoint.REGISTER,
-  //     requestData: {
-  //       data,
-  //       params: null,
-  //     },
-  //     requestSchema: {
-  //       data: authSchema.registerRequest,
-  //       params: null,
-  //     },
-  //     responseSchema: authSchema.registerResponse,
-  //     config,
-  //   })
-  // }
+  public register(data: AuthOutput.RegisterRequest) {
+    return this.axiosRequest({
+      method: 'POST',
+      endpoint: AuthEndpoint.REGISTER,
+      requestData: {
+        data,
+        queryParams: null,
+      },
+      requestSchema: {
+        data: authSchema.registerRequest,
+        queryParams: null,
+      },
+      responseSchema: authSchema.registerResponse,
+    })
+  }
 
-  // public refreshToken(config?: AxiosRequestConfig) {
-  //   return this.axiosRequest({
-  //     method: 'GET',
-  //     path: AuthEndpoint.REFRESH_TOKEN,
-  //     responseSchema: authSchema.refreshResponse,
-  //     requestData: {
-  //       data: null,
-  //       params: null,
-  //     },
-  //     requestSchema: {
-  //       params: null,
-  //       data: null,
-  //     },
-  //     config,
-  //   })
-  // }
+  public refreshToken() {
+    return this.axiosRequest({
+      method: 'GET',
+      endpoint: AuthEndpoint.REFRESH_TOKEN,
+      responseSchema: authSchema.refreshResponse,
+      requestData: {
+        data: null,
+        queryParams: null,
+      },
+      requestSchema: {
+        queryParams: null,
+        data: null,
+      },
+    })
+  }
 
-  // public logout(config?: AxiosRequestConfig) {
-  //   return this.axiosRequest({
-  //     method: 'DELETE',
-  //     path: AuthEndpoint.LOGOUT,
-  //     responseSchema: authSchema.logoutResponse,
-  //     requestData: {
-  //       data: null,
-  //       params: null,
-  //     },
-  //     requestSchema: {
-  //       params: null,
-  //       data: null,
-  //     },
-  //     config,
-  //   })
-  // }
+  public logout() {
+    return this.axiosRequest({
+      method: 'DELETE',
+      endpoint: AuthEndpoint.LOGOUT,
+      responseSchema: authSchema.logoutResponse,
+      requestData: {
+        queryParams: null,
+        data: null,
+      },
+      requestSchema: {
+        data: null,
+        queryParams: null,
+      },
+    })
+  }
 }

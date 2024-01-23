@@ -1,23 +1,24 @@
-/* eslint-disable no-restricted-properties */
-import { z } from 'zod'
+import * as v from 'valibot'
 
-const envSchema = z.object({
+const envSchema = v.object({
   // base
-  baseUrl: z.string().min(1),
-  dev: z.boolean(),
-  mode: z
-    .literal('development')
-    .or(z.literal('production'))
-    .or(z.literal('test'))
-    .or(z.literal('staging')),
-  prod: z.boolean(),
-  ssr: z.boolean(),
+  baseUrl: v.string(),
+  dev: v.boolean(),
+  mode: v.union([
+    v.literal('development'),
+    v.literal('production'),
+    v.literal('test'),
+    v.literal('staging'),
+  ]),
+
+  prod: v.boolean(),
+  ssr: v.boolean(),
 
   // custom
-  viteBaseApi: z.string().min(1).url()
+  viteBaseApi: v.string(),
 })
 
-type EnvVariables = z.infer<typeof envSchema>
+type EnvVariables = v.Output<typeof envSchema>
 
 type Mode = 'development' | 'production' | 'test' | 'staging'
 
@@ -30,9 +31,9 @@ export const envVariables = {
   ssr: import.meta.env.SSR,
 
   // custom
-  viteBaseApi: import.meta.env.VITE_BASE_API
+  viteBaseApi: import.meta.env.VITE_BASE_API,
 } as EnvVariables
 
 export const loadEnvVariables = () => {
-  envSchema.parse(envVariables)
+  v.parse(envSchema, envVariables)
 }

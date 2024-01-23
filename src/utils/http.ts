@@ -1,4 +1,4 @@
-import type { AllEndpoint } from '#/types/endpoint'
+import type { AllEndpoint } from '#/types/endpoints'
 import type { ExtractPathParams } from '#/types/url'
 import type { AxiosResponse } from 'axios'
 
@@ -16,13 +16,13 @@ export function isAxiosResponse<T>(value: unknown): value is AxiosResponse<T> {
 
 export function makePathParams<TUrl extends AllEndpoint>(
   url: TUrl,
-  paramsUrl: ExtractPathParams<TUrl>
+  paramsUrl: ExtractPathParams<TUrl>,
 ): TUrl {
   let finalUrl = String(url)
   if (paramsUrl && Object.keys(paramsUrl).length > 0) {
     finalUrl = Object.entries<string>(paramsUrl).reduce<string>(
       (path, [key, value]) => path.replace(`[${key}]`, value),
-      url
+      url,
     )
   }
   finalUrl = url.replace(/(\(|\)|\/?\[[^\\/]+\])/g, '')

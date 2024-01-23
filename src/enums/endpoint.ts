@@ -1,11 +1,11 @@
-export const enum AuthEndpoint {
-  LOGIN = '/api/auth/login',
-  REGISTER = '/api/auth/register',
-  REFRESH_TOKEN = '/api/auth/refresh-token',
-  LOGOUT = '/api/auth/logout',
+export enum AuthEndpoint {
+  LOGIN = 'POST /api/auth/login',
+  REGISTER = 'POST /api/auth/register',
+  REFRESH_TOKEN = 'GET /api/auth/refresh-token',
+  LOGOUT = 'DELETE /api/auth/logout',
 }
 
-export const enum PostEndpoint {
-  GET_POSTS = '/posts?[limit:number]&[page:number]', // ? means optional
-  GET_POST = '/posts/[postId:number]',
+export enum PostEndpoint {
+  GET_POSTS = 'GET /posts?[limit:number]&[page:number]', // ? means optional
+  GET_POST = 'GET /posts/[postId:number]',
 }
