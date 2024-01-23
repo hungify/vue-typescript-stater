@@ -17,7 +17,7 @@ declare global {
   const createApp: typeof import('vue')['createApp']
   const createImageSchema: typeof import('./utils/schema')['createImageSchema']
   const createPinia: typeof import('pinia')['createPinia']
-  const createSignal: typeof import('./composables/createSignal')['createSignal']
+  const createSignal: typeof import('./composables/create-signal')['createSignal']
   const createStrictSchema: typeof import('./utils/schema')['createStrictSchema']
   const customRef: typeof import('vue')['customRef']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
@@ -128,7 +128,7 @@ declare module 'vue' {
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly createPinia: UnwrapRef<typeof import('pinia')['createPinia']>
-    readonly createSignal: UnwrapRef<typeof import('./composables/createSignal')['createSignal']>
+    readonly createSignal: UnwrapRef<typeof import('./composables/create-signal')['createSignal']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
@@ -226,7 +226,7 @@ declare module '@vue/runtime-core' {
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly createPinia: UnwrapRef<typeof import('pinia')['createPinia']>
-    readonly createSignal: UnwrapRef<typeof import('./composables/createSignal')['createSignal']>
+    readonly createSignal: UnwrapRef<typeof import('./composables/create-signal')['createSignal']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>

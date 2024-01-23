@@ -1,4 +1,4 @@
-import * as v from 'valibot'
+import type * as v from 'valibot'
 import type { AuthEndpoint, PostEndpoint } from '#/enums/endpoint'
 import type { ExtractMethod, ExtractQueryParams } from '#/types/url'
 import type { AuthEndpoints } from './auth'

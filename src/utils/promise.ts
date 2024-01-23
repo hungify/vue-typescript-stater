@@ -6,14 +6,14 @@ export function toPromise<T, U = Error>(
 ): Promise<[U, undefined] | [null, T]> {
   return promise
     .then<[null, T]>((data: T) => [null, data])
-    .catch<[U, undefined]>((err: U) => {
+    .catch<[U, undefined]>((error: U) => {
       if (errorExt) {
-        const parsedError = Object.assign({}, err, errorExt)
+        const parsedError = Object.assign({}, error, errorExt)
 
         return [parsedError, undefined]
       }
-      if (isAxiosError(err)) return [err.response?.data, undefined]
+      if (isAxiosError(error)) return [error.response?.data, undefined]
 
-      return [err, undefined]
+      return [error, undefined]
     })
 }

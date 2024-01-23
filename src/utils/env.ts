@@ -34,7 +34,7 @@ export const envVariables = {
 
   // custom
   viteBaseApi: import.meta.env.VITE_BASE_API,
-} as EnvVariables
+} satisfies EnvVariables
 
 export const loadEnvVariables = () => {
   v.parse(envSchema, envVariables)

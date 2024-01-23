@@ -19,8 +19,8 @@ import {
   parseColors,
   runSVGO,
 } from '@iconify/tools'
-import type { IconifyJSON, IconifyMetaData } from '@iconify/types'
 import { getIcons, minifyIconSet, stringToIcon } from '@iconify/utils'
+import type { IconifyJSON, IconifyMetaData } from '@iconify/types'
 
 // Installation: npm install --save-dev @iconify/tools @iconify/utils @iconify/json @iconify/iconify
 
@@ -87,7 +87,7 @@ const target = join(__dirname, 'icons-bundle.js')
     await fs.mkdir(dir, {
       recursive: true,
     })
-  } catch (err) {
+  } catch {
     //
   }
 
@@ -140,8 +140,8 @@ const target = join(__dirname, 'icons-bundle.js')
       for (const key in content) {
         if (key === 'prefix' && content.prefix === 'tabler') {
           for (const k in content.icons)
-            content.icons[k].body = content.icons[k].body.replace(
-              /stroke-width="2"/g,
+            content.icons[k].body = content.icons[k].body.replaceAll(
+              'stroke-width="2"',
               'stroke-width="1.5"',
             )
         }
@@ -196,9 +196,9 @@ const target = join(__dirname, 'icons-bundle.js')
 
           // Optimise
           await runSVGO(svg)
-        } catch (err) {
+        } catch (error) {
           // Invalid icon
-          console.error(`Error parsing ${name} from ${source.dir}:`, err)
+          console.error(`Error parsing ${name} from ${source.dir}:`, error)
           iconSet.remove(name)
 
           return
@@ -220,8 +220,8 @@ const target = join(__dirname, 'icons-bundle.js')
   await fs.writeFile(target, bundle, 'utf8')
 
   console.log(`Saved ${target} (${bundle.length} bytes)`)
-})().catch((err) => {
-  console.error(err)
+})().catch((error) => {
+  console.error(error)
 })
 
 /**

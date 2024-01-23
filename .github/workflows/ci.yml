@@ -24,7 +24,7 @@ jobs:
         run: yarn install
       - name: Prettier
         run: yarn run format
-      - name: Eslint check
-        run: yarn run lint:fix
+      - name: Eslint
+        run: yarn run lint
       - name: Type check
         run: yarn run type-check

@@ -23,7 +23,7 @@ export function makePathParams<Endpoint extends AllEndpoint>(
   if (params && Object.keys(params).length > 0) {
     url = Object.entries(params).reduce(
       (path, [key, value]) =>
-        path.replace(
+        path.replaceAll(
           new RegExp(`\\[${key}:${typeof value}\\]`, 'g'),
           String(value),
         ),
@@ -31,12 +31,12 @@ export function makePathParams<Endpoint extends AllEndpoint>(
     )
   }
 
-  url = url.replace(/(\(|\)|\/?\[[^\/]+\])/g, '')
+  url = url.replaceAll(/(\(|\)|\/?\[[^/]+])/g, '')
 
   return url as Endpoint
 }
 
 export const normalizePath = (endpoint: AllEndpoint) => {
   const endpoints = endpoint.split(' ')
-  return endpoints.length == 2 ? endpoints[1].split('?')[0] : endpoints[0]
+  return endpoints.length === 2 ? endpoints[1].split('?')[0] : endpoints[0]
 }

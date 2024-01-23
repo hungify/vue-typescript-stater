@@ -14,7 +14,7 @@ export function createSignal<T>(value?: T): Signal<T | undefined>
 export function createSignal<T>(value: T, options?: SignalOptions<T>): Signal<T>
 export function createSignal<T>(
   value: T,
-  options?: SignalOptions<T | undefined>
+  options?: SignalOptions<T | undefined>,
 ): Signal<T | undefined> {
   const s = shallowRef<T>(value)
 

@@ -1,8 +1,7 @@
-import { type App } from 'vue'
 import { setupRouter } from './router'
 import { loadEnvVariables } from './utils/env'
 import AppVue from './App.vue'
-import '#/styles/main.css?global'
+import type { App } from 'vue'
 
 const bootstrap = () => {
   loadEnvVariables()
@@ -12,11 +11,11 @@ const bootstrap = () => {
     './plugins/*.ts',
   )
 
-  for (const plugin in plugins) {
-    if (Object.prototype.hasOwnProperty.call(plugins, plugin)) {
-      plugins[plugin]().then((mod) => mod.install(app))
-    }
-  }
+  Object.values(plugins).forEach(async (plugin) => {
+    const { install } = await plugin()
+    install(app)
+  })
+
   setupRouter(app)
   app.mount('#app')
 }

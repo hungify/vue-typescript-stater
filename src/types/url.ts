@@ -1,9 +1,9 @@
 import type {
-  Split,
+  HasAnyKeys,
+  InferPrimitivesType,
   MergeUnion,
   ReplaceFirstString,
-  InferPrimitivesType,
-  HasAnyKeys,
+  Split,
 } from './utils'
 
 export type ExtractMethod<TQuery extends string> = Split<TQuery, ' '>[0]

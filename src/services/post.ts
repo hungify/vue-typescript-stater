@@ -1,6 +1,6 @@
-import { PostEndpoint } from '#/enums/endpoint'
-import type { AxiosRequestConfig } from 'axios'
 import HttpRequest from './http'
+import type { AxiosRequestConfig } from 'axios'
+import { PostEndpoint } from '#/enums/endpoint'
 import { postSchema } from '#/schemas/post'
 
 class PostService extends HttpRequest {

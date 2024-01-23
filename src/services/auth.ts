@@ -1,10 +1,10 @@
 import HttpRequest from './http'
-import { authSchema } from '#/schemas/auth'
 import type { AuthOutput } from '#/types/auth'
+import { authSchema } from '#/schemas/auth'
 import { AuthEndpoint } from '#/enums/endpoint'
 
-export class AuthService extends HttpRequest {
-  public login(data: AuthOutput.LoginRequest) {
+class AuthService extends HttpRequest {
+  public login(data: AuthOutput['LoginRequest']) {
     return this.axiosRequest({
       method: 'POST',
       endpoint: AuthEndpoint.LOGIN,
@@ -20,7 +20,7 @@ export class AuthService extends HttpRequest {
     })
   }
 
-  public register(data: AuthOutput.RegisterRequest) {
+  public register(data: AuthOutput['RegisterRequest']) {
     return this.axiosRequest({
       method: 'POST',
       endpoint: AuthEndpoint.REGISTER,
@@ -68,3 +68,4 @@ export class AuthService extends HttpRequest {
     })
   }
 }
+export const authService = new AuthService()

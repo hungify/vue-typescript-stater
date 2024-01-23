@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
+    "composite": false,
     "target": "ES2022",
     "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
     "declaration": false,
     "declarationMap": false,
     "sourceMap": false,
-    "composite": false,
-    "strict": true,
-    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
   },

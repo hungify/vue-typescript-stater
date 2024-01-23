@@ -4,10 +4,10 @@ export const isImageFile = (file: File) => {
   }>((resolve, reject) => {
     const reader = new FileReader()
 
-    reader.onload = function (event) {
+    reader.addEventListener('load', function (event) {
       const img = new Image()
 
-      img.onload = function () {
+      img.addEventListener('load', function () {
         if (img.width > 0 && img.height > 0) {
           resolve({
             success: true,
@@ -17,19 +17,20 @@ export const isImageFile = (file: File) => {
             success: false,
           })
         }
-      }
+      })
 
-      img.onerror = function () {
+      img.addEventListener('error', function () {
         resolve({
           success: false,
         })
-      }
-      img.src = event.target?.result as string
-    }
+      })
 
-    reader.onerror = function () {
+      img.src = event.target?.result as string
+    })
+
+    reader.addEventListener('error', function () {
       reject(new Error('Failed to read the file'))
-    }
+    })
 
     reader.readAsDataURL(file)
   })

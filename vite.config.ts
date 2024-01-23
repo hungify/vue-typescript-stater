@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -8,7 +9,6 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 import Checker from 'vite-plugin-checker'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
-import { fileURLToPath } from 'url'
 
 export default defineConfig({
   resolve: {

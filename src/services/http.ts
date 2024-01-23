@@ -1,14 +1,14 @@
-import type { Endpoints } from '#/types/endpoints'
-import type {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from 'axios'
-import axios from 'axios'
 import * as v from 'valibot'
+import axios, {
+  type AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from 'axios'
+import type { Endpoints } from '#/types/endpoints'
 
+// eslint-disable-next-line import/no-default-export
 export default abstract class HttpRequest {
   #instance: AxiosInstance
   #accessToken: string

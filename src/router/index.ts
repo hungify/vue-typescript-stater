@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import type { App } from 'vue'
-import { envVariables } from '#/utils/env'
 import { routes } from 'vue-router/auto/routes'
 import { setupLayouts } from 'virtual:generated-layouts'
+import type { App } from 'vue'
+import { envVariables } from '#/utils/env'
 
 export const setupRouter = (app: App) => {
   const router = createRouter({

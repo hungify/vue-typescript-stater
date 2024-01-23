@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { postService } from '#/services/post'
 import type { PostOutput } from '#/types/post'
+import { postService } from '#/services/post'
 
 const post = ref<PostOutput.Post>()
 

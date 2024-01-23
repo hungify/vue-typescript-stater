@@ -1,28 +1,28 @@
+import type * as v from 'valibot'
 import type { PostEndpoint } from '#/enums/endpoint'
 import type { postSchema } from '#/schemas/post'
-import * as v from 'valibot'
 import type { Operation } from './endpoints'
 
-export namespace PostOutput {
-  export type GetPostsResponse = v.Output<typeof postSchema.getPostsResponse>
-  export type GetPostsRequest = v.Output<typeof postSchema.getPostsParams>
-  export type GetPostsParams = v.Output<typeof postSchema.getPostsParams>
+export interface PostOutput {
+  GetPostsResponse: v.Output<typeof postSchema.getPostsResponse>
+  GetPostsRequest: v.Output<typeof postSchema.getPostsParams>
+  GetPostsParams: v.Output<typeof postSchema.getPostsParams>
 
-  export type GetPostResponse = v.Output<typeof postSchema.getPostResponse>
+  GetPostResponse: v.Output<typeof postSchema.getPostResponse>
 
-  export type Post = v.Output<typeof postSchema.post>
+  Post: v.Output<typeof postSchema.post>
 }
 
 export interface PostEndpoints {
   [PostEndpoint.GET_POSTS]: Operation<
     PostEndpoint.GET_POSTS,
-    PostOutput.GetPostsResponse,
+    PostOutput['GetPostsResponse'],
     null
   >
 
   [PostEndpoint.GET_POST]: Operation<
     PostEndpoint.GET_POST,
-    PostOutput.GetPostResponse,
+    PostOutput['GetPostResponse'],
     null
   >
 }
