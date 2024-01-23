@@ -8,19 +8,14 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 import TsconfigPaths from 'vite-tsconfig-paths'
 import Checker from 'vite-plugin-checker'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
-import { fileURLToPath, URL } from 'url'
+import VueRouter from 'unplugin-vue-router/vite'
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      '#': fileURLToPath(new URL('./src', import.meta.url)),
-    },
-  },
   plugins: [
+    VueRouter(),
     Vue({
       include: [/\.vue$/, /\.md$/],
     }),
-
     Pages({
       extensions: ['vue', 'md'],
     }),
@@ -30,9 +25,9 @@ export default defineConfig({
     }),
 
     AutoImport({
-      imports: ['vue', 'vue-router', 'pinia', 'vitest', VueRouterAutoImports],
+      imports: ['vue', 'pinia', 'vitest', VueRouterAutoImports],
       dts: 'src/auto-imports.d.ts',
-      dirs: ['src/composables', 'src/stores', 'src/plugins', 'src/utils'],
+      dirs: ['src/composables', 'src/stores', 'src/utils'],
       vueTemplate: true,
     }),
 
@@ -45,7 +40,7 @@ export default defineConfig({
     VueDevTools(),
 
     Checker({
-      typescript: true,
+      vueTsc: true,
     }),
 
     TsconfigPaths(),

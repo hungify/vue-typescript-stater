@@ -1,7 +1,7 @@
 import v from 'valibot'
 
 class PostSchema {
-  protected get basePost() {
+  get post() {
     return v.object({
       userId: v.number(),
       id: v.number(),
@@ -18,11 +18,11 @@ class PostSchema {
     })
   }
   get getPostsResponse() {
-    return v.array(this.basePost)
+    return v.array(this.post)
   }
 
   get getPostResponse() {
-    return this.basePost
+    return this.post
   }
 }
 

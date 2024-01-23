@@ -188,7 +188,7 @@ const target = join(__dirname, 'icons-bundle.js')
             // If icon is not monotone, remove this code
             await parseColors(svg, {
               defaultColor: 'currentColor',
-              callback: (attr, colorStr, color) => {
+              callback: (_, colorStr, color) => {
                 return !color || isEmptyColor(color) ? colorStr : 'currentColor'
               },
             })

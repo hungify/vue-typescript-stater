@@ -141,7 +141,6 @@ declare module 'vue' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
-    readonly install: UnwrapRef<typeof import('./plugins/pinia')['install']>
     readonly isAxiosResponse: UnwrapRef<typeof import('./utils/http')['isAxiosResponse']>
     readonly isImageFile: UnwrapRef<typeof import('./utils/file')['isImageFile']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
@@ -198,7 +197,6 @@ declare module 'vue' {
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useImmer: UnwrapRef<typeof import('./composables/useImmer')['useImmer']>
-    readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
@@ -239,7 +237,6 @@ declare module '@vue/runtime-core' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
-    readonly install: UnwrapRef<typeof import('./plugins/pinia')['install']>
     readonly isAxiosResponse: UnwrapRef<typeof import('./utils/http')['isAxiosResponse']>
     readonly isImageFile: UnwrapRef<typeof import('./utils/file')['isImageFile']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
@@ -296,7 +293,6 @@ declare module '@vue/runtime-core' {
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useImmer: UnwrapRef<typeof import('./composables/useImmer')['useImmer']>
-    readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>

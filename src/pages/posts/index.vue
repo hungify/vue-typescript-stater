@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { PostService } from '#/services/post'
-import type { Post } from '#/types/post'
+import type { PostOutput } from '#/types/post'
 
-const posts = ref<Post[]>([])
+const posts = ref<PostOutput.Post[]>([])
 
 const router = useRouter()
 
@@ -12,7 +12,7 @@ onMounted(async () => {
   posts.value = data
 })
 
-const goToDetail = async (post: Post) => {
+const goToDetail = async (post: PostOutput.Post) => {
   await router.push(`/posts/${encodeURIComponent(post.id)}`)
 }
 </script>

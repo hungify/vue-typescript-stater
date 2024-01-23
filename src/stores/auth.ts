@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import type { FormError } from '#/interfaces/error'
+import type { FormError } from '#/types/error'
 import { AuthService } from '#/services/auth'
 import type { AuthOutput } from '#/types/auth'
 

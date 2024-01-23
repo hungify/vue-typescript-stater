@@ -9,6 +9,8 @@ export namespace PostOutput {
   export type GetPostsParams = v.Output<typeof postSchema.getPostsParams>
 
   export type GetPostResponse = v.Output<typeof postSchema.getPostResponse>
+
+  export type Post = v.Output<typeof postSchema.post>
 }
 
 export interface PostEndpoints {
