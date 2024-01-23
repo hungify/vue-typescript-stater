@@ -15,7 +15,9 @@ const envSchema = v.object({
   ssr: v.boolean(),
 
   // custom
-  viteBaseApi: v.string(),
+  viteBaseApi: v.string('Not set VITE_BASE_API', [
+    v.url("VITE_BASE_API isn't a valid url"),
+  ]),
 })
 
 type EnvVariables = v.Output<typeof envSchema>

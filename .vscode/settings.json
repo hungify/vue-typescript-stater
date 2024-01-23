@@ -8,5 +8,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "eslint.validate": ["javascript", "typescript"],
   "eslint.experimental.useFlatConfig": true,
-  "typescript.preferences.autoImportFileExcludePatterns": ["vue-router"]
+  "typescript.preferences.autoImportFileExcludePatterns": ["vue-router"],
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }
