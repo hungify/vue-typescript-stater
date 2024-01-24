@@ -2,7 +2,7 @@
 import type { PostOutput } from '#/types/post'
 import { postService } from '#/services/post'
 
-const post = ref<PostOutput.Post>()
+const post = ref<PostOutput['Post']>()
 
 const route = useRoute()
 

@@ -79,3 +79,7 @@ export type InferPrimitivesType<T extends string> =
 
 export type HasAnyKeys<T extends Record<string, unknown>> =
   keyof T extends never ? false : true
+
+export type TypeOfClassMethod<T, M extends keyof T> = T[M] extends Function
+  ? T[M]
+  : never

@@ -10,7 +10,7 @@ export interface SignalOptions<T> {
   equals?: false | ((prev: T, next: T) => boolean)
 }
 
-export function createSignal<T>(value?: T): Signal<T | undefined>
+export function createSignal<T>(value?: T): Signal<T>
 export function createSignal<T>(value: T, options?: SignalOptions<T>): Signal<T>
 export function createSignal<T>(
   value: T,

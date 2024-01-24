@@ -5,10 +5,7 @@ import type { AuthEndpoints } from './auth'
 import type { PostEndpoints } from './post'
 import type { Split } from './utils'
 
-export type AllEndpoint =
-  | `${AuthEndpoint}`
-  | `${PostEndpoint}`
-  | (string & NonNullable<unknown>)
+export type AllEndpoint = `${AuthEndpoint}` | `${PostEndpoint}` | (string & {})
 
 export type Operation<
   Endpoint extends AllEndpoint,

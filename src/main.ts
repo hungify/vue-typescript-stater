@@ -2,8 +2,9 @@ import { setupRouter } from './router'
 import { loadEnvVariables } from './utils/env'
 import AppVue from './App.vue'
 import type { App } from 'vue'
+import '#/styles/main.css?global'
 
-const bootstrap = () => {
+const bootstrap = async () => {
   loadEnvVariables()
   const app = createApp(AppVue)
 
@@ -11,10 +12,10 @@ const bootstrap = () => {
     './plugins/*.ts',
   )
 
-  Object.values(plugins).forEach(async (plugin) => {
+  for (const plugin of Object.values(plugins)) {
     const { install } = await plugin()
     install(app)
-  })
+  }
 
   setupRouter(app)
   app.mount('#app')

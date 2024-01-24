@@ -12,5 +12,6 @@ export const stringReplacement = ({
   pattern,
 }: StringReplacement) => {
   const parts = input.split(pattern)
-  return parts.map((part) => replacements[part] || part)
+  if (parts.length === 1) return input
+  return parts.map((part) => replacements[part] || part).join('')
 }

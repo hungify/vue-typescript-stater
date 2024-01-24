@@ -26,8 +26,11 @@ class PostService extends HttpRequest {
   public getPost(id: number, config?: AxiosRequestConfig) {
     return this.axiosRequest({
       method: 'GET',
-      endpoint: makePathParams(PostEndpoint.GET_POST, {
-        postId: id,
+      endpoint: makePathParams({
+        endpoint: PostEndpoint.GET_POST,
+        params: {
+          postId: id,
+        },
       }),
       responseSchema: postSchema.getPostResponse,
       requestSchema: {

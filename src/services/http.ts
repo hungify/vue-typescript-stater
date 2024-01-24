@@ -163,8 +163,4 @@ export default abstract class HttpRequest {
 
     return data
   }
-
-  public get instance() {
-    return this.#instance
-  }
 }

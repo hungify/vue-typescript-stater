@@ -2,6 +2,7 @@ import type * as v from 'valibot'
 import type { PostEndpoint } from '#/enums/endpoint'
 import type { postSchema } from '#/schemas/post'
 import type { Operation } from './endpoints'
+import type { postService } from '#/services/post'
 
 export interface PostOutput {
   GetPostsResponse: v.Output<typeof postSchema.getPostsResponse>
@@ -26,3 +27,5 @@ export interface PostEndpoints {
     null
   >
 }
+
+export type PostServiceType = typeof postService

@@ -1,18 +1,19 @@
 {
   "compilerOptions": {
     "composite": true,
-    "target": "ES2020",
+    "target": "ES2021",
     "jsx": "preserve",
     "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "useDefineForClassFields": true,
     /* Paths */
     "baseUrl": ".",
-    "module": "ESNext",
-    /* Bundler mode */
-    "moduleResolution": "bundler",
     "paths": {
       "#/*": ["src/*"],
     },
+    /* Bundler mode */
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     /* Linting */
@@ -25,5 +26,5 @@
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
   },
-  "exclude": ["dist", "node_modules"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
 }
