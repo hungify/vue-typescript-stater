@@ -5,7 +5,7 @@ import colors from 'picocolors'
 
 // get $1 from commit-msg script
 const msgPath = process.argv[2]
-const msg = readFileSync(msgPath, 'utf-8').trim()
+const msg = readFileSync(msgPath!, 'utf-8').trim()
 
 const releaseRE = /^v\d/
 const commitRE =
