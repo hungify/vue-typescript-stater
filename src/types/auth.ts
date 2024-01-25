@@ -2,7 +2,6 @@ import type * as v from 'valibot'
 import type { AuthEndpoint } from '#/enums/endpoint'
 import type { authSchema } from '#/schemas/auth'
 import type { Operation } from './endpoints'
-import type { authService } from '#/services/auth'
 
 export interface AuthOutput {
   LoginRequest: v.Output<typeof authSchema.loginRequest>
@@ -38,5 +37,3 @@ export interface AuthEndpoints {
     AuthOutput['LogoutRequest']
   >
 }
-
-export type AuthServiceType = typeof authService

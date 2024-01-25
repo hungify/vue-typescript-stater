@@ -2,7 +2,6 @@ import { setupRouter } from './router'
 import { loadEnvVariables } from './utils/env'
 import AppVue from './App.vue'
 import type { App } from 'vue'
-import '#/styles/main.css?global'
 
 const bootstrap = async () => {
   loadEnvVariables()

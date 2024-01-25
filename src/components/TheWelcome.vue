@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue'
 import WelcomeItem from './WelcomeItem.vue'
 </script>
 
 <template>
   <WelcomeItem>
-    <template #icon> icon account </template>
+    <template #icon>
+      <Icon icon="custom-documentation" />
+    </template>
     <template #heading>Documentation</template>
 
     Vue’s
@@ -15,7 +18,7 @@ import WelcomeItem from './WelcomeItem.vue'
   </WelcomeItem>
 
   <WelcomeItem>
-    <template #icon> icon tooling </template>
+    <template #icon> <Icon icon="custom-tooling" /> </template>
     <template #heading>Tooling</template>
 
     This project is served and bundled with
@@ -55,7 +58,9 @@ import WelcomeItem from './WelcomeItem.vue'
   </WelcomeItem>
 
   <WelcomeItem>
-    <template #icon> icon ecosystem </template>
+    <template #icon>
+      <Icon icon="custom-ecosystem" />
+    </template>
     <template #heading>Ecosystem</template>
 
     Get official tools and libraries for your project:
@@ -90,7 +95,7 @@ import WelcomeItem from './WelcomeItem.vue'
   </WelcomeItem>
 
   <WelcomeItem>
-    <template #icon> icon documentation </template>
+    <template #icon> <Icon icon="custom-community" /> </template>
     <template #heading>Community</template>
 
     Got stuck? Ask your question on
@@ -117,7 +122,9 @@ import WelcomeItem from './WelcomeItem.vue'
   </WelcomeItem>
 
   <WelcomeItem>
-    <template #icon> icon support </template>
+    <template #icon>
+      <Icon icon="custom-support" />
+    </template>
     <template #heading>Support Vue</template>
 
     As an independent project, Vue relies on community backing for its
