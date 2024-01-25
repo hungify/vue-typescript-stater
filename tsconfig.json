@@ -13,7 +13,6 @@
     /* Bundler mode */
     "module": "ESNext",
     "moduleResolution": "bundler",
-
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     /* Linting */
