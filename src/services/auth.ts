@@ -3,7 +3,8 @@ import type { AuthOutput } from '#/types/auth'
 import { authSchema } from '#/schemas/auth'
 import { AuthEndpoint } from '#/enums/endpoint'
 
-class AuthService extends HttpRequest {
+// eslint-disable-next-line import/no-default-export
+export default class AuthService extends HttpRequest {
   public login(data: AuthOutput['LoginRequest']) {
     return this.axiosRequest({
       method: 'POST',
