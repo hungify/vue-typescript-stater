@@ -13,7 +13,7 @@
     "lint:staged": "lint-staged",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "postinstall": "simple-git-hooks",
+    "prepare": "simple-git-hooks",
     "format": "prettier --write src/",
     "test:unit": "vitest",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
@@ -62,14 +62,14 @@
     "vue-tsc": "^1.8.27"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged && pnpm type-check",
-    "commit-msg": "node scripts/verify-commit.js"
+    "pre-commit": "npx lint-staged && npm run type:check",
+    "commit-msg": "node src/scripts/verify-commit.js"
   },
   "lint-staged": {
     "src/**/*.{js,ts,vue}": [
       "npm run lint",
       "npm run format",
-      "bash -c 'npm run type-check'"
+      "npm run type:check"
     ]
   },
   "prettier": "@sxzz/prettier-config"

@@ -1,22 +1,13 @@
-import { setupRouter } from './router'
 import { loadEnvVariables } from './utils/env'
-import AppVue from './App.vue'
-import type { App } from 'vue'
+import App from './App.vue'
+import { registerPlugins } from './plugins'
 
-const bootstrap = async () => {
+const bootstrap = () => {
   loadEnvVariables()
-  const app = createApp(AppVue)
+  const app = createApp(App)
 
-  const plugins = import.meta.glob<{ install: (app: App) => void }>(
-    './plugins/*.ts',
-  )
+  registerPlugins(app)
 
-  for (const plugin of Object.values(plugins)) {
-    const { install } = await plugin()
-    install(app)
-  }
-
-  setupRouter(app)
   app.mount('#app')
 }
 
