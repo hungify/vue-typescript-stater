@@ -9,6 +9,5 @@ export const setupRouter = (app: App) => {
     history: createWebHistory(envVariables.baseUrl),
     routes: setupLayouts(routes),
   })
-
   app.use(router)
 }
