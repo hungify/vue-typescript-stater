@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * This is an advanced example for creating icon bundles for Iconify SVG Framework.
  *

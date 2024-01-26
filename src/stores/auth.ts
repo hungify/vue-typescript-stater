@@ -39,9 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const logout = async () => {
-    const response = await authService.logout()
-    // Toast message here
-    console.log(response)
+    await authService.logout()
   }
 
   return {

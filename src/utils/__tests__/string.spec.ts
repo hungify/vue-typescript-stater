@@ -1,5 +1,5 @@
+import { describe, expect, it } from 'vitest'
 import { stringReplacement } from '../string'
-import { describe, it, expect } from 'vitest'
 
 describe('stringReplacement', () => {
   it('replaces matching patterns with corresponding replacements', () => {
@@ -8,7 +8,7 @@ describe('stringReplacement', () => {
       name: 'John',
       city: 'New York',
     }
-    const pattern = /\{([^}]+)\}/g
+    const pattern = /{([^}]+)}/g
 
     const result = stringReplacement({ input, replacements, pattern })
 
@@ -21,7 +21,7 @@ describe('stringReplacement', () => {
       '{name}': 'John',
       '{city}': 'New York',
     }
-    const pattern = /\{([^}]+)\}/g
+    const pattern = /{([^}]+)}/g
 
     const result = stringReplacement({ input, replacements, pattern })
 

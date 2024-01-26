@@ -7,12 +7,12 @@
     "useDefineForClassFields": true,
     /* Paths */
     "baseUrl": ".",
-    "paths": {
-      "#/*": ["src/*"],
-    },
     /* Bundler mode */
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "paths": {
+      "#/*": ["src/*"],
+    },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     /* Linting */
