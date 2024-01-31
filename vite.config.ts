@@ -9,6 +9,7 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 import Checker from 'vite-plugin-checker'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
+import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
   resolve: {
@@ -17,10 +18,14 @@ export default defineConfig({
     },
   },
   plugins: [
+    UnoCSS(),
+
     VueRouter(),
+
     Vue({
       include: [/\.vue$/, /\.md$/],
     }),
+
     Pages({
       extensions: ['vue', 'md'],
     }),

@@ -20,9 +20,7 @@ onMounted(async () => {
 
 <template>
   <div v-if="post">
-    <h4>{{ post.title }}</h4>
-    <p>{{ post.id }}</p>
-    <p>{{ post.userId }}</p>
+    <TheCard :id="post.id" :title="post.title" :body="post.body" />
   </div>
   <div v-else>
     <p>Post not found</p>

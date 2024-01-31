@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   k: infer I,
 ) => void
@@ -79,7 +77,3 @@ export type InferPrimitivesType<T extends string> =
 
 export type HasAnyKeys<T extends Record<string, unknown>> =
   keyof T extends never ? false : true
-
-export type TypeOfClassMethod<T, M extends keyof T> = T[M] extends Function
-  ? T[M]
-  : never

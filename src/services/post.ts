@@ -1,10 +1,14 @@
 import HttpRequest from './http'
 import type { AxiosRequestConfig } from 'axios'
+import type { PostOutput } from '#/types/post'
 import { PostEndpoint } from '#/enums/endpoint'
 import { postSchema } from '#/schemas/post'
 
 class PostService extends HttpRequest {
-  public getPosts(config?: AxiosRequestConfig) {
+  public getPosts(
+    queryParams: PostOutput['GetPostsRequest'],
+    config?: AxiosRequestConfig,
+  ) {
     return this.axiosRequest({
       method: 'GET',
       endpoint: PostEndpoint.GET_POSTS,
@@ -14,10 +18,7 @@ class PostService extends HttpRequest {
         data: null,
       },
       requestData: {
-        queryParams: {
-          _limit: 10,
-          _start: 1,
-        },
+        queryParams,
         data: null,
       },
       config,

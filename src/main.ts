@@ -4,6 +4,7 @@ import { registerPlugins } from './plugins'
 
 const bootstrap = () => {
   loadEnvVariables()
+
   const app = createApp(App)
 
   registerPlugins(app)
