@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   k: infer I,
 ) => void
@@ -20,8 +22,10 @@ export type Split<
 export type LooseAutoComplete<T extends string> = T | Omit<string, T>
 
 export type Prettify<T> = {
-  [K in keyof T]: T[K]
-} & NonNullable<unknown>
+  [KeyType in keyof T]: T[KeyType] extends object
+    ? Prettify<T[KeyType]>
+    : T[KeyType]
+} & {}
 
 export type ReplaceFirstString<
   S extends string,
@@ -52,28 +56,13 @@ export type MergeUnion<TObject> =
     ? { [K in keyof O]: O[K] }
     : never
 
-type StringUnionToUnion<
-  T extends string,
-  Separator extends string = '|',
-> = T extends `${infer Letter}${Separator}${infer Rest}`
-  ? Letter | StringUnionToUnion<Rest>
-  : T
-
-interface Primitives {
-  string: string
-  number: number
-  boolean: boolean
-  bigint: bigint
-  undefined: undefined
-  null: null
-}
-
-export type InferPrimitivesType<T extends string> =
-  StringUnionToUnion<T> extends infer U
-    ? U extends keyof Primitives
-      ? Primitives[U]
-      : U
-    : never
+export type InferPrimitivesType<T> = T extends 'string'
+  ? string
+  : T extends 'number'
+    ? number
+    : T extends 'boolean'
+      ? boolean
+      : never
 
 export type HasAnyKeys<T extends Record<string, unknown>> =
   keyof T extends never ? false : true
