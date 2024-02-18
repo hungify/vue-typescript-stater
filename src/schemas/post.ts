@@ -1,34 +1,29 @@
-import { createImageSchema, createStrictSchema } from '#/utils/schema'
-import { z } from 'zod'
+import * as v from 'valibot'
 
-const postSchema = createStrictSchema({
-  userId: z.number(),
-  id: z.number(),
-  title: z.string(),
-  completed: z.boolean().optional(),
-  body: z.string()
-})
+class PostSchema {
+  get post() {
+    return v.object({
+      userId: v.number('userId must be a number'),
+      id: v.number('id must be a number'),
+      title: v.string('title must be a string'),
+      completed: v.optional(v.boolean("completed must be a boolean or 'null'")),
+      body: v.string('body must be a string'),
+    })
+  }
 
-const createPostSchema = createStrictSchema({
-  userId: z.number(),
-  title: z.string(),
-  body: z.string(),
-  image: createImageSchema({
-    mineType: {
-      value: ['image/jpeg', 'image/png', 'image/jpg']
-    }
-  })
-})
+  get getPostsParams() {
+    return v.object({
+      _limit: v.number('_limit must be a number'),
+      _start: v.number('_start must be a number'),
+    })
+  }
+  get getPostsResponse() {
+    return v.array(this.post)
+  }
 
-export const postReqSchema = {
-  getPosts: createStrictSchema({
-    limit: z.number(),
-    page: z.number()
-  })
+  get getPostResponse() {
+    return this.post
+  }
 }
 
-export const postResSchema = {
-  getPosts: z.array(postSchema),
-  getPost: postSchema,
-  createPost: createPostSchema
-}
+export const postSchema = new PostSchema()

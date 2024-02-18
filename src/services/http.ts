@@ -1,38 +1,14 @@
-import type { AllEndpoint } from '#/types/endpoint'
-import type { ExtractQueryParams } from '#/types/url'
-import type { ToZod } from '#/types/zod'
-import { envVariables } from '#/utils/env'
-import { normalizePath } from '#/utils/http'
-import type {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-  Method
+import * as v from 'valibot'
+import axios, {
+  type AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
 } from 'axios'
-import axios from 'axios'
-import type { z } from 'zod'
-import { ZodError } from 'zod'
+import type { Endpoints } from '#/types/endpoints'
 
-interface HttpRequestConfig<TParams, TData> extends AxiosRequestConfig {
-  data?: TData
-  params?: TParams
-}
-
-type CheckForBadBody<TRequestSchema> = TRequestSchema extends null ? null : TRequestSchema
-
-type CheckForBadQueryParams<TPath extends AllEndpoint> = ExtractQueryParams<TPath> extends null
-  ? null
-  : ExtractQueryParams<TPath>
-
-type CheckForBadParamsSchema<
-  TPath extends AllEndpoint,
-  TRequestSchema
-> = ExtractQueryParams<TPath> extends TRequestSchema
-  ? ToZod<ExtractQueryParams<TPath>>
-  : TRequestSchema
-
+// eslint-disable-next-line import/no-default-export
 export default abstract class HttpRequest {
   #instance: AxiosInstance
   #accessToken: string
@@ -41,7 +17,7 @@ export default abstract class HttpRequest {
     this.#accessToken = accessToken || ''
     this.#instance = axios.create({
       baseURL: configs?.baseURL ?? envVariables.viteBaseApi,
-      ...configs
+      ...configs,
     })
     this.initializeRequestInterceptor()
     this.initializeResponseInterceptor()
@@ -59,20 +35,23 @@ export default abstract class HttpRequest {
   }
 
   private initializeResponseInterceptor = () => {
-    this.#instance.interceptors.response.use(this.handleResponse, this.handleError)
+    this.#instance.interceptors.response.use(
+      this.handleResponse,
+      this.handleError,
+    )
   }
 
   private handleResponse = (response: AxiosResponse) => {
-    if (response.headers && response.headers.authorization) {
+    if (response.headers.authorization) {
       const accessToken = response.headers.authorization.split(' ')[1]
       if (accessToken) {
         this.#accessToken = accessToken
       }
     }
-    return response
+    return response.data
   }
 
-  private handleError = async (error: AxiosError) => {
+  private handleError = (error: AxiosError) => {
     const originalRequest = error.config
     if (originalRequest && error.response?.status === 401) {
       // refresh token here
@@ -82,91 +61,106 @@ export default abstract class HttpRequest {
   }
 
   public async axiosRequest<
-    TPath extends AllEndpoint,
-    TResponseSchema extends z.ZodTypeAny = z.ZodTypeAny,
-    TRequestDataSchema extends z.ZodTypeAny = z.ZodTypeAny,
-    TRequestParamsSchema extends z.ZodTypeAny = z.ZodTypeAny
+    const Endpoint extends keyof Endpoints,
+    Method extends Endpoints[Endpoint]['method'],
+    QueryParams extends Endpoints[Endpoint]['queryParams'],
+    ResponseSchema extends Endpoints[Endpoint]['schema']['response'],
+    RequestDataSchema extends Endpoints[Endpoint]['schema']['body'],
+    RequestQueryParamsSchema extends
+      Endpoints[Endpoint]['schema']['queryParams'],
+    ResponseOutput extends v.Output<ResponseSchema>,
   >({
     method,
-    path,
+    endpoint,
+    requestData,
     requestSchema,
     responseSchema,
-    requestData,
-    config
+    config,
   }: {
-    path: TPath
+    endpoint: Endpoint
     method: Method
     requestData: {
-      data: CheckForBadBody<z.infer<TRequestDataSchema>> | null
-      params: CheckForBadQueryParams<TPath> | null
+      data: RequestDataSchema extends v.BaseSchema
+        ? v.Output<RequestDataSchema>
+        : null
+      queryParams: QueryParams
     }
     requestSchema: {
-      data: TRequestDataSchema | null
-      params: CheckForBadParamsSchema<TPath, z.infer<TRequestParamsSchema>> | null
+      data: RequestDataSchema
+      queryParams: RequestQueryParamsSchema
     }
-    responseSchema: TResponseSchema | null
-    config?: HttpRequestConfig<z.infer<TRequestParamsSchema>, z.infer<TRequestDataSchema>>
-  }): Promise<z.infer<TResponseSchema>> {
+    responseSchema: ResponseSchema
+    config?: AxiosRequestConfig
+  }) {
     const axiosRequestConfig: AxiosRequestConfig = {
       ...config,
       method,
-      url: normalizePath(path),
-      params: requestData.params
+      url: normalizePath(endpoint),
+      params: requestData.queryParams,
     }
 
     if (requestSchema.data) {
       Object.assign(axiosRequestConfig, { data: requestData.data })
       if (envVariables.prod) {
-        const result = await requestSchema.data.safeParseAsync(requestData.data)
+        const result = await v.safeParseAsync(
+          requestSchema.data,
+          requestData.data,
+          {
+            abortEarly: true,
+            abortPipeEarly: true,
+          },
+        )
         if (!result.success) {
-          // report request error to the server
-          console.error(result.error)
+          console.error(result)
         }
       } else {
-        const res = await requestSchema.data.parseAsync(requestData.data)
-        if (res instanceof ZodError) {
-          throw res
-        }
+        await v.parseAsync(requestSchema.data, requestData.data, {
+          abortEarly: true,
+          abortPipeEarly: true,
+        })
       }
     }
 
-    if (requestSchema.params) {
+    if (requestSchema.queryParams) {
       if (envVariables.prod) {
-        const result = await requestSchema.params.safeParseAsync(requestData.params)
+        const result = await v.safeParseAsync(
+          requestSchema.queryParams,
+          requestData.queryParams,
+          {
+            abortEarly: true,
+            abortPipeEarly: true,
+          },
+        )
         if (!result.success) {
           // report request error to the server
-          console.error(result.error)
+          console.error(result)
         }
       } else {
-        const res = await requestSchema.params.parseAsync(requestData.params)
-        if (res instanceof ZodError) {
-          throw res
-        }
+        await v.parseAsync(requestSchema.queryParams, requestData.queryParams, {
+          abortEarly: true,
+          abortPipeEarly: true,
+        })
       }
     }
 
-    const { data } = await this.#instance.request<z.infer<TResponseSchema>>(axiosRequestConfig)
+    const data = await this.#instance.request<unknown, ResponseOutput>(
+      axiosRequestConfig,
+    )
 
     if (responseSchema) {
       if (envVariables.prod) {
-        const result = await responseSchema.safeParseAsync(data)
+        const result = await v.safeParseAsync(responseSchema, data, {
+          abortEarly: true,
+          abortPipeEarly: true,
+        })
         if (!result.success) {
           // request report error to server
-          console.error(result.error)
+          console.error(result)
         }
       }
-      const res = await responseSchema.parseAsync(data)
-
-      if (res instanceof ZodError) {
-        console.error(res)
-        throw res
-      }
+      await v.parseAsync(responseSchema, data)
     }
 
     return data
-  }
-
-  public get instance() {
-    return this.#instance
   }
 }

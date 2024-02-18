@@ -1,75 +1,71 @@
-import type { AxiosRequestConfig } from 'axios'
-import { AuthEndpoint } from '#/enums/endpoint'
-import type { LoginRequest, RegisterRequest } from '#/types/auth'
-import { authSchemaRequest, authSchemaResponse } from '#/schemas/auth'
 import HttpRequest from './http'
+import type { AuthOutput } from '#/types/auth'
+import { authSchema } from '#/schemas/auth'
+import { AuthEndpoint } from '#/enums/endpoint'
 
-export class AuthService extends HttpRequest {
-  public login(data: LoginRequest, config?: AxiosRequestConfig) {
+class AuthService extends HttpRequest {
+  public login(data: AuthOutput['LoginRequest']) {
     return this.axiosRequest({
-      method: 'post',
-      path: AuthEndpoint.LOGIN,
+      method: 'POST',
+      endpoint: AuthEndpoint.LOGIN,
       requestData: {
         data,
-        params: null
+        queryParams: null,
       },
       requestSchema: {
-        data: authSchemaRequest.login,
-        params: null
+        data: authSchema.loginRequest,
+        queryParams: null,
       },
-      responseSchema: authSchemaResponse.login,
-      config
+      responseSchema: authSchema.loginResponse,
     })
   }
 
-  public register(data: RegisterRequest, config?: AxiosRequestConfig) {
+  public register(data: AuthOutput['RegisterRequest']) {
     return this.axiosRequest({
-      method: 'post',
-      path: AuthEndpoint.REGISTER,
+      method: 'POST',
+      endpoint: AuthEndpoint.REGISTER,
       requestData: {
         data,
-        params: null
+        queryParams: null,
       },
       requestSchema: {
-        data: authSchemaRequest.register,
-        params: null
+        data: authSchema.registerRequest,
+        queryParams: null,
       },
-      responseSchema: authSchemaResponse.register,
-      config
+      responseSchema: authSchema.registerResponse,
     })
   }
 
-  public refreshToken(config?: AxiosRequestConfig) {
+  public refreshToken() {
     return this.axiosRequest({
       method: 'GET',
-      path: AuthEndpoint.REFRESH_TOKEN,
-      responseSchema: authSchemaResponse.refresh,
+      endpoint: AuthEndpoint.REFRESH_TOKEN,
+      responseSchema: authSchema.refreshResponse,
       requestData: {
         data: null,
-        params: null
+        queryParams: null,
       },
       requestSchema: {
-        params: null,
-        data: null
+        queryParams: null,
+        data: null,
       },
-      config
     })
   }
 
-  public logout(config?: AxiosRequestConfig) {
+  public logout() {
     return this.axiosRequest({
       method: 'DELETE',
-      path: AuthEndpoint.LOGOUT,
-      responseSchema: authSchemaResponse.logout,
+      endpoint: AuthEndpoint.LOGOUT,
+      responseSchema: authSchema.logoutResponse,
       requestData: {
+        queryParams: null,
         data: null,
-        params: null
       },
       requestSchema: {
-        params: null,
-        data: null
+        data: null,
+        queryParams: null,
       },
-      config
     })
   }
 }
+export const authService = new AuthService()

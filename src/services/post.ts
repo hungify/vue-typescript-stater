@@ -1,45 +1,50 @@
-import { PostEndpoint } from '#/enums/endpoint'
-import { postReqSchema, postResSchema } from '#/schemas/post'
-import type { AxiosRequestConfig } from 'axios'
 import HttpRequest from './http'
-import { makePathParams } from '#/utils/http'
+import type { AxiosRequestConfig } from 'axios'
+import type { PostOutput } from '#/types/post'
+import { PostEndpoint } from '#/enums/endpoint'
+import { postSchema } from '#/schemas/post'
 
-export class PostService extends HttpRequest {
-  public getPosts(config?: AxiosRequestConfig) {
+class PostService extends HttpRequest {
+  public getPosts(
+    queryParams: PostOutput['GetPostsRequest'],
+    config?: AxiosRequestConfig,
+  ) {
     return this.axiosRequest({
       method: 'GET',
-      path: makePathParams(PostEndpoint.GET_POSTS, {}),
-      responseSchema: postResSchema.getPosts,
+      endpoint: PostEndpoint.GET_POSTS,
+      responseSchema: postSchema.getPostsResponse,
       requestSchema: {
-        params: postReqSchema.getPosts,
-        data: null
+        queryParams: postSchema.getPostsParams,
+        data: null,
       },
       requestData: {
-        params: {
-          limit: 10,
-          page: 1
-        },
-        data: null
+        queryParams,
+        data: null,
       },
-      config
+      config,
     })
   }
   public getPost(id: number, config?: AxiosRequestConfig) {
     return this.axiosRequest({
       method: 'GET',
-      path: makePathParams(PostEndpoint.GET_POST, {
-        postId: id
+      endpoint: makePathParams({
+        endpoint: PostEndpoint.GET_POST,
+        params: {
+          postId: id,
+        },
       }),
-      responseSchema: postResSchema.getPost,
+      responseSchema: postSchema.getPostResponse,
       requestSchema: {
-        params: null,
-        data: null
+        queryParams: null,
+        data: null,
       },
       requestData: {
-        params: null,
-        data: null
+        queryParams: null,
+        data: null,
       },
-      config
+      config,
     })
   }
 }
+
+export const postService = new PostService()

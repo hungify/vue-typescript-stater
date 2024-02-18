@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import { PostService } from '#/services/post'
-import type { Post } from '#/types/post'
+import type { PostOutput } from '#/types/post'
+import { postService } from '#/services/post'
 
-const posts = ref<Post[]>([])
-
-const router = useRouter()
+const posts = ref<PostOutput['Post'][]>([])
 
 onMounted(async () => {
-  const postService = new PostService()
-  const data = await postService.getPosts()
-  posts.value = data
+  const [err, data] = await toPromise(
+    postService.getPosts({ _limit: 10, _start: 0 }),
+  )
+  if (!err) {
+    posts.value = data
+  }
 })
-
-const goToDetail = async (post: Post) => {
-  await router.push(`/posts/${encodeURIComponent(post.id)}`)
-}
 </script>
 
 <template>
   <div v-for="post in posts" :key="post.id">
-    <h4 @click="goToDetail(post)">{{ post.title }}</h4>
-    <p>{{ post.id }}</p>
-    <p>{{ post.userId }}</p>
+    <RouterLink :to="`/posts/${post.id}`">{{ post.title }} </RouterLink>
   </div>
 </template>
 

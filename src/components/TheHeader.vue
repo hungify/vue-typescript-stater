@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IMAGES from '#/assets'
+import logo from '../assets/images/logo.png'
 import HelloWorld from './HelloWorld.vue'
 </script>
 
@@ -10,13 +10,14 @@ import HelloWorld from './HelloWorld.vue'
         <img src="/vite.svg" class="logo vite" alt="Vite logo" />
       </a>
       <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">
-        <img :src="IMAGES.logo" class="logo vue" alt="Vue logo" />
+        <img :src="logo" class="logo vue" alt="Vue logo" />
       </a>
     </header>
     <HelloWorld msg="Vue Typescript !" />
     <nav>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/posts">Posts</RouterLink>
     </nav>
   </div>
 </template>

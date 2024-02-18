@@ -1,25 +1,26 @@
 <script setup lang="ts">
-import { PostService } from '#/services/post'
-import type { Post } from '#/types/post'
+import type { PostOutput } from '#/types/post'
+import { postService } from '#/services/post'
 
-const post = ref<Post>()
+const post = ref<PostOutput['Post']>()
 
 const route = useRoute()
 
 onMounted(async () => {
-  const postService = new PostService()
-  if (route.params.id) {
-    const data = await postService.getPost(Number(route.params.id))
-    post.value = data
+  if ('id' in route.params) {
+    const [err, data] = await toPromise(
+      postService.getPost(Number(route.params.id)),
+    )
+    if (!err) {
+      post.value = data
+    }
   }
 })
 </script>
 
 <template>
   <div v-if="post">
-    <h4>{{ post.title }}</h4>
-    <p>{{ post.id }}</p>
-    <p>{{ post.userId }}</p>
+    <TheCard :id="post.id" :title="post.title" :body="post.body" />
   </div>
   <div v-else>
     <p>Post not found</p>

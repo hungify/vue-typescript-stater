@@ -1,11 +1,34 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2021",
+    "jsx": "preserve",
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "useDefineForClassFields": true,
+    /* Paths */
+    "baseUrl": ".",
+    /* Bundler mode */
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "#/*": ["src/*"],
     },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    /* Linting */
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "typed-router.d.ts",
+  ],
 }
