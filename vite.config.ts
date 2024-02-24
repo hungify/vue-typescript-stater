@@ -10,6 +10,7 @@ import Checker from 'vite-plugin-checker'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
 import UnoCSS from 'unocss/vite'
+import WebfontDownload from 'vite-plugin-webfont-dl'
 
 export default defineConfig({
   resolve: {
@@ -52,5 +53,7 @@ export default defineConfig({
     Checker({
       vueTsc: true,
     }),
+
+    WebfontDownload(),
   ],
 })
