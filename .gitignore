@@ -41,3 +41,6 @@ coverage
 
 # Generated files
 generated/**/*.ts
+
+# Plugins
+plugins/assets/iconify-bundle.js

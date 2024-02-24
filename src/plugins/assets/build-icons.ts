@@ -62,6 +62,7 @@ const __dirname = new URL('.', import.meta.url).pathname
 
 // File to save bundle to
 const target = join(__dirname, 'iconify-bundle.js')
+
 /**
  * Remove metadata from icon set
  */
