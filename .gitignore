@@ -38,3 +38,6 @@ coverage
 !.env.example
 
 .eslintcache
+
+# Generated files
+generated/**/*.ts
