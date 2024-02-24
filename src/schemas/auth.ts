@@ -1,4 +1,5 @@
 import v from 'valibot'
+import type { AuthOutput } from '#/types/auth'
 
 class AuthSchema {
   get loginRequest() {
@@ -11,14 +12,15 @@ class AuthSchema {
         v.minLength(1, 'Please enter your password.'),
         v.minLength(8, 'Your password must have 8 characters or more.'),
       ]),
-    })
+    }) satisfies v.BaseSchema<AuthOutput['loginRequest']>
   }
 
   get loginResponse() {
     return v.object({
+      idToken: v.string(),
       accessToken: v.string(),
       refreshToken: v.string(),
-    })
+    }) satisfies v.BaseSchema<AuthOutput['loginResponse']>
   }
 
   get registerRequest() {
@@ -31,38 +33,30 @@ class AuthSchema {
         v.minLength(1, 'Please enter your password.'),
         v.minLength(8, 'Your password must have 8 characters or more.'),
       ]),
-      name: v.string('Your name must be a string.', [
+      fullName: v.string('Your name must be a string.', [
         v.minLength(1, 'Please enter your name.'),
       ]),
-    })
+    }) satisfies v.BaseSchema<AuthOutput['registerRequest']>
   }
 
   get registerResponse() {
     return v.object({
-      accessToken: v.string(),
-      refreshToken: v.string(),
-    })
-  }
-
-  get refreshRequest() {
-    return v.null_()
+      message: v.string(),
+    }) satisfies v.BaseSchema<AuthOutput['registerResponse']>
   }
 
   get refreshResponse() {
     return v.object({
+      idToken: v.string(),
       accessToken: v.string(),
       refreshToken: v.string(),
-    })
-  }
-
-  get logoutRequest() {
-    return v.null_()
+    }) satisfies v.BaseSchema<AuthOutput['refreshResponse']>
   }
 
   get logoutResponse() {
     return v.object({
       message: v.string(),
-    })
+    }) satisfies v.BaseSchema<AuthOutput['logoutResponse']>
   }
 }
 
