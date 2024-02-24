@@ -3,6 +3,7 @@
 /// <reference types="vite-plugin-pages/client" />
 /// <reference types="vite-plugin-vue-layouts/client" />
 /// <reference types="unplugin-icons/types/vue" />
+/// <reference types="unplugin-vue-router/client" />
 /// <reference types="vite/client" />
 
 import '@total-typescript/ts-reset'
