@@ -1,39 +1,11 @@
-import type * as v from 'valibot'
-import type { AuthEndpoint } from '#/enums/endpoint'
-import type { authSchema } from '#/schemas/auth'
-import type { Operation } from './endpoints'
+import type { paths } from '#/generated/api-schema'
 
 export interface AuthOutput {
-  LoginRequest: v.Output<typeof authSchema.loginRequest>
-  RegisterRequest: v.Output<typeof authSchema.registerRequest>
-  RefreshRequest: v.Output<typeof authSchema.refreshRequest>
-  LogoutRequest: v.Output<typeof authSchema.logoutRequest>
+  loginRequest: paths['/auth/login']['post']['requestBody']['content']['application/json']
+  registerRequest: paths['/auth/register']['post']['requestBody']['content']['application/json']
 
-  LoginResponse: v.Output<typeof authSchema.loginResponse>
-  RegisterResponse: v.Output<typeof authSchema.registerResponse>
-  RefreshResponse: v.Output<typeof authSchema.refreshResponse>
-  LogoutResponse: v.Output<typeof authSchema.logoutResponse>
-}
-
-export interface AuthEndpoints {
-  [AuthEndpoint.LOGIN]: Operation<
-    AuthEndpoint.LOGIN,
-    AuthOutput['LoginResponse'],
-    AuthOutput['LoginRequest']
-  >
-  [AuthEndpoint.REGISTER]: Operation<
-    AuthEndpoint.REGISTER,
-    AuthOutput['RefreshResponse'],
-    AuthOutput['RegisterRequest']
-  >
-  [AuthEndpoint.REFRESH_TOKEN]: Operation<
-    AuthEndpoint.REFRESH_TOKEN,
-    AuthOutput['RefreshResponse'],
-    AuthOutput['RefreshRequest']
-  >
-  [AuthEndpoint.LOGOUT]: Operation<
-    AuthEndpoint.LOGOUT,
-    AuthOutput['LogoutResponse'],
-    AuthOutput['LogoutRequest']
-  >
+  loginResponse: paths['/auth/login']['post']['responses']['200']['content']['application/json']
+  registerResponse: paths['/auth/register']['post']['responses']['201']['content']['application/json']
+  refreshResponse: paths['/auth/refresh-token']['get']['responses']['200']['content']['application/json']
+  logoutResponse: paths['/auth/logout']['delete']['responses']['200']['content']['application/json']
 }

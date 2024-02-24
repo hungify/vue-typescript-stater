@@ -38,3 +38,9 @@ coverage
 !.env.example
 
 .eslintcache
+
+# Generated files
+generated/**/*.ts
+
+# Plugins
+plugins/assets/iconify-bundle.js

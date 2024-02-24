@@ -92,6 +92,7 @@ declare global {
   const triggerRef: typeof import('vue')['triggerRef']
   const unref: typeof import('vue')['unref']
   const useAttrs: typeof import('vue')['useAttrs']
+  const useAuthMutation: typeof import('./composables/use-auth-mutation')['useAuthMutation']
   const useAuthStore: typeof import('./stores/auth')['useAuthStore']
   const useAxios: typeof import('./composables/use-axios')['useAxios']
   const useCssModule: typeof import('vue')['useCssModule']
@@ -145,7 +146,6 @@ declare module 'vue' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
-    readonly isAxiosResponse: UnwrapRef<typeof import('./utils/http')['isAxiosResponse']>
     readonly isImageFile: UnwrapRef<typeof import('./utils/file')['isImageFile']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
@@ -153,7 +153,6 @@ declare module 'vue' {
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly it: UnwrapRef<typeof import('vitest')['it']>
     readonly loadEnvVariables: UnwrapRef<typeof import('./utils/env')['loadEnvVariables']>
-    readonly makePathParams: UnwrapRef<typeof import('./utils/http')['makePathParams']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
     readonly mapState: UnwrapRef<typeof import('pinia')['mapState']>
@@ -161,7 +160,6 @@ declare module 'vue' {
     readonly mapWritableState: UnwrapRef<typeof import('pinia')['mapWritableState']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
-    readonly normalizePath: UnwrapRef<typeof import('./utils/http')['normalizePath']>
     readonly objectKeys: UnwrapRef<typeof import('./utils/object')['objectKeys']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
@@ -192,7 +190,6 @@ declare module 'vue' {
     readonly stringReplacement: UnwrapRef<typeof import('./utils/string')['stringReplacement']>
     readonly suite: UnwrapRef<typeof import('vitest')['suite']>
     readonly test: UnwrapRef<typeof import('vitest')['test']>
-    readonly toPromise: UnwrapRef<typeof import('./utils/promise')['toPromise']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
@@ -200,7 +197,7 @@ declare module 'vue' {
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useAuthStore: UnwrapRef<typeof import('./stores/auth')['useAuthStore']>
+    readonly useAuthMutation: UnwrapRef<typeof import('./composables/use-auth-mutation')['useAuthMutation']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
@@ -243,7 +240,6 @@ declare module '@vue/runtime-core' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
-    readonly isAxiosResponse: UnwrapRef<typeof import('./utils/http')['isAxiosResponse']>
     readonly isImageFile: UnwrapRef<typeof import('./utils/file')['isImageFile']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
@@ -251,7 +247,6 @@ declare module '@vue/runtime-core' {
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly it: UnwrapRef<typeof import('vitest')['it']>
     readonly loadEnvVariables: UnwrapRef<typeof import('./utils/env')['loadEnvVariables']>
-    readonly makePathParams: UnwrapRef<typeof import('./utils/http')['makePathParams']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
     readonly mapState: UnwrapRef<typeof import('pinia')['mapState']>
@@ -259,7 +254,6 @@ declare module '@vue/runtime-core' {
     readonly mapWritableState: UnwrapRef<typeof import('pinia')['mapWritableState']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
-    readonly normalizePath: UnwrapRef<typeof import('./utils/http')['normalizePath']>
     readonly objectKeys: UnwrapRef<typeof import('./utils/object')['objectKeys']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
@@ -290,7 +284,6 @@ declare module '@vue/runtime-core' {
     readonly stringReplacement: UnwrapRef<typeof import('./utils/string')['stringReplacement']>
     readonly suite: UnwrapRef<typeof import('vitest')['suite']>
     readonly test: UnwrapRef<typeof import('vitest')['test']>
-    readonly toPromise: UnwrapRef<typeof import('./utils/promise')['toPromise']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
@@ -298,7 +291,7 @@ declare module '@vue/runtime-core' {
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useAuthStore: UnwrapRef<typeof import('./stores/auth')['useAuthStore']>
+    readonly useAuthMutation: UnwrapRef<typeof import('./composables/use-auth-mutation')['useAuthMutation']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
