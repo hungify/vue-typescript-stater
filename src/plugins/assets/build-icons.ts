@@ -104,7 +104,7 @@ function organizeIconsList(icons: string[]): Record<string, string[]> {
 }
 
 async function bootstrap() {
-  let bundle = `/* eslint-disable */
+  let bundle = `
 /* prettier-ignore */
 import { addCollection } from '${component}';\n\n`
   // Create directory for output if missing
