@@ -1,7 +1,7 @@
 import { useCookies } from '@vueuse/integrations/useCookies'
 import type { AuthOutput } from '#/types/auth'
 import type { FetchStatus } from '#/types/fetching'
-import { FETCH_STATUS } from '#/enums/fetching'
+import { FETCH_STATUS } from '#/constants'
 import { client } from '#/api/client'
 
 type FormError = Record<
@@ -10,14 +10,14 @@ type FormError = Record<
 > | null
 
 export const useAuthMutation = () => {
-  const fetchStatus = ref<FetchStatus>(FETCH_STATUS.IDLE)
+  const fetchStatus = ref<FetchStatus>(FETCH_STATUS.Idle)
   const formError = ref<FormError>(null)
   const router = useRouter()
   const route = useRoute()
   const cookies = useCookies(['accessToken'])
 
   const onLogin = async ({ email, password }: AuthOutput['loginRequest']) => {
-    fetchStatus.value = FETCH_STATUS.LOADING
+    fetchStatus.value = FETCH_STATUS.Loading
 
     const { error, data } = await client.POST('/auth/login', {
       body: {
@@ -27,13 +27,13 @@ export const useAuthMutation = () => {
     })
 
     if (error) {
-      fetchStatus.value = FETCH_STATUS.ERROR
+      fetchStatus.value = FETCH_STATUS.Error
       formError.value = {
         email: 'Email or password is incorrect.',
         password: 'Email or password is incorrect.',
       }
     } else {
-      fetchStatus.value = FETCH_STATUS.SUCCESS
+      fetchStatus.value = FETCH_STATUS.Success
 
       const { accessToken } = data
 
@@ -44,7 +44,7 @@ export const useAuthMutation = () => {
       })
     }
 
-    fetchStatus.value = FETCH_STATUS.IDLE
+    fetchStatus.value = FETCH_STATUS.Idle
   }
 
   const onLogout = async () => {
@@ -53,15 +53,15 @@ export const useAuthMutation = () => {
   }
 
   const isPending = computed(() => {
-    return fetchStatus.value === FETCH_STATUS.LOADING
+    return fetchStatus.value === FETCH_STATUS.Loading
   })
 
   const isError = computed(() => {
-    return fetchStatus.value === FETCH_STATUS.ERROR
+    return fetchStatus.value === FETCH_STATUS.Error
   })
 
   const isSuccess = computed(() => {
-    return fetchStatus.value === FETCH_STATUS.SUCCESS
+    return fetchStatus.value === FETCH_STATUS.Success
   })
 
   const isAuthenticated = computed(

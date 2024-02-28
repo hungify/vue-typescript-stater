@@ -1,3 +1,3 @@
-import type { FETCH_STATUS } from '#/enums/fetching'
+import type { FETCH_STATUS } from '#/constants'
 
-export type FetchStatus = `${FETCH_STATUS}`
+export type FetchStatus = (typeof FETCH_STATUS)[keyof typeof FETCH_STATUS]
