@@ -24,6 +24,7 @@
     "@vueuse/core": "^10.7.2",
     "@vueuse/integrations": "^10.8.0",
     "openapi-fetch": "^0.9.2",
+    "openapi-typescript-helpers": "^0.0.7",
     "pinia": "^2.1.7",
     "ts-pattern": "^5.0.6",
     "universal-cookie": "^7.1.0",
