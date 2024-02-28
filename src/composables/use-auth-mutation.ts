@@ -1,6 +1,5 @@
 import { useCookies } from '@vueuse/integrations/useCookies'
 import type { AuthOutput } from '#/types/auth'
-import type { AppError } from '#/types/error'
 import type { FetchStatus } from '#/types/fetching'
 import { FETCH_STATUS } from '#/enums/fetching'
 import { client } from '#/api/client'
@@ -17,14 +16,6 @@ export const useAuthMutation = () => {
   const route = useRoute()
   const cookies = useCookies(['accessToken'])
 
-  const handleErrorResponse = (err: AppError) => {
-    console.log('### :: file: useAuthMutation.ts:20 :: err:', err)
-    formError.value = {
-      email: 'Email or password is incorrect.',
-      password: 'Email or password is incorrect.',
-    }
-  }
-
   const onLogin = async ({ email, password }: AuthOutput['loginRequest']) => {
     fetchStatus.value = FETCH_STATUS.LOADING
 
@@ -37,7 +28,10 @@ export const useAuthMutation = () => {
 
     if (error) {
       fetchStatus.value = FETCH_STATUS.ERROR
-      handleErrorResponse(error)
+      formError.value = {
+        email: 'Email or password is incorrect.',
+        password: 'Email or password is incorrect.',
+      }
     } else {
       fetchStatus.value = FETCH_STATUS.SUCCESS
 
