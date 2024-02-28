@@ -99,6 +99,7 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useImmer: typeof import('./composables/useImmer')['useImmer']
   const useLink: typeof import('vue-router')['useLink']
+  const useQuery: typeof import('./composables/use-query')['useQuery']
   const useRoute: typeof import('vue-router/auto')['useRoute']
   const useRouter: typeof import('vue-router/auto')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
@@ -200,6 +201,7 @@ declare module 'vue' {
     readonly useAuthMutation: UnwrapRef<typeof import('./composables/use-auth-mutation')['useAuthMutation']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useQuery: UnwrapRef<typeof import('./composables/use-query')['useQuery']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
@@ -294,6 +296,7 @@ declare module '@vue/runtime-core' {
     readonly useAuthMutation: UnwrapRef<typeof import('./composables/use-auth-mutation')['useAuthMutation']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useQuery: UnwrapRef<typeof import('./composables/use-query')['useQuery']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
