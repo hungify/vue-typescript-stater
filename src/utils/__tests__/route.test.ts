@@ -4,7 +4,7 @@ import { getRouteQuery } from '../route'
 describe('getRouteQuery', () => {
   it('should return an object with string values when kind is "val"', () => {
     const query = {
-      key1: 123,
+      key1: '123',
       key2: 'abc',
     }
     type Query = typeof query
@@ -18,7 +18,7 @@ describe('getRouteQuery', () => {
 
   it('should return an object with number conversion functions when kind is not "val"', () => {
     const query = {
-      key1: 123,
+      key1: '123',
       key2: 'abc',
     }
     const result = getRouteQuery(query)('fn')

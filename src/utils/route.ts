@@ -1,7 +1,10 @@
 // type LocationQueryValue = string | number | null
-// export type LocationQuery = Record<string, LocationQueryValue>
 
-import type { LocationQuery } from 'vue-router/auto'
+import type { LocationQueryValue } from 'vue-router/auto'
+
+type LocationQuery = {
+  [x: string]: LocationQueryValue | LocationQueryValue[]
+}
 
 type Kind = 'fn' | 'val'
 
