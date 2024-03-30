@@ -1,30 +1,37 @@
-name: Linting
+name: CI
 
 on:
-  push:
+  pull_request:
     branches:
-      - '**'
+      - main
 
 jobs:
   ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [18]
+    name: Eslint
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       - name: Install dependencies
-        run: yarn install
-      - name: Prettier
-        run: yarn run format
-      - name: Eslint
-        run: yarn run lint
-      - name: Type check
-        run: yarn run type:check
+        run: pnpm install
+
+      - name: Perform linting
+        run: pnpm run lint
+
+      - name: Perform prettifying
+        run: pnpm run format
+
+      - name: Perform type checking
+        run: pnpm run type:check
