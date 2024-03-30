@@ -6,7 +6,6 @@ import Components from 'unplugin-vue-components/vite'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import VueDevTools from 'vite-plugin-vue-devtools'
-import Checker from 'vite-plugin-checker'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
 import UnoCSS from 'unocss/vite'
@@ -49,10 +48,6 @@ export default defineConfig({
     }),
 
     VueDevTools(),
-
-    Checker({
-      vueTsc: true,
-    }),
 
     WebfontDownload(),
   ],
