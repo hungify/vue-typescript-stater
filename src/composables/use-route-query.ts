@@ -1,15 +1,24 @@
-import type { LocationQuery } from 'vue-router/auto'
-import { getRouteQuery } from '#/utils/route'
+import { type ParsedQuery, getQuery } from 'ufo'
 
-export const useRouteQuery = <T extends LocationQuery>() => {
+type FnRouteQuery<T extends NonNullable<unknown>> = {
+  [P in keyof T]: () => NonNullable<T[P]>
+}
+
+export const useRouteQuery = <T extends ParsedQuery>() => {
   const route = useRoute()
 
   const fnRouteQuery = computed(() => {
-    return getRouteQuery<T>(route.query as T)('fn')
+    return objectKeys(valRouteQuery.value).reduce<FnRouteQuery<T>>(
+      (acc, key) => ({
+        ...acc,
+        [key]: () => valRouteQuery.value[key]?.toString(),
+      }),
+      {} as FnRouteQuery<T>,
+    )
   })
 
   const valRouteQuery = computed(() => {
-    return getRouteQuery<T>(route.query as T)('val')
+    return getQuery<T>(route.fullPath)
   })
 
   return {
