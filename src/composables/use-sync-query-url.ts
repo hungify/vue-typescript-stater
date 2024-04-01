@@ -8,12 +8,24 @@ interface UseSyncQueryUrlOptions {
 }
 
 interface UseSyncQueryUrlReturn<QueryKeys extends string> {
-  handleSyncQueryUrl: <
+  onSyncQueryUrl: <
     T extends {
       [key in QueryKeys]?: string | number | undefined
     },
+    method extends 'replace' | 'push' = 'replace',
   >(
     queryObj: T,
+    method?: method,
+  ) => void
+
+  onSyncQueryUrlWithDebounce: <
+    T extends {
+      [key in QueryKeys]?: string | number | undefined
+    },
+    method extends 'replace' | 'push' = 'replace',
+  >(
+    queryObj: T,
+    method?: method,
   ) => void
 }
 
@@ -25,22 +37,40 @@ export function useSyncQueryUrl<QueryKeys extends string>(
 ): UseSyncQueryUrlReturn<QueryKeys> {
   const { path, timeout } =
     typeof args === 'string' ? { path: args, timeout: 500 } : args
+
   const route = useRoute(path)
   const router = useRouter()
 
-  const handleSyncQueryUrl = useDebounceFn(
+  const onSyncQueryUrl = <
+    T extends { [key in QueryKeys]?: string | number | undefined },
+  >(
+    queryObj: T,
+    method: 'replace' | 'push' = 'replace',
+  ) => {
+    const query = {
+      ...route.query,
+      ...Object.keys(queryObj).reduce((acc, key) => {
+        const value = queryObj[key as keyof T]
+
+        return {
+          ...acc,
+          [key]: value === undefined ? undefined : value,
+        }
+      }, {}),
+    }
+
+    router[method](withQuery(route.path, query))
+  }
+
+  const onSyncQueryUrlWithDebounce = useDebounceFn(
     <T extends { [key in QueryKeys]?: string | number | undefined }>(
       queryObj: T,
+      method: 'replace' | 'push' = 'replace',
     ) => {
-      const query = {
-        ...route.query,
-        ...queryObj,
-      }
-
-      router.replace(withQuery(route.path, query))
+      onSyncQueryUrl(queryObj, method)
     },
     timeout,
   )
 
-  return { handleSyncQueryUrl }
+  return { onSyncQueryUrl, onSyncQueryUrlWithDebounce }
 }
