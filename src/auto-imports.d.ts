@@ -32,6 +32,7 @@ declare global {
   const getActivePinia: typeof import('pinia')['getActivePinia']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const getRouteQuery: typeof import('./utils/route')['getRouteQuery']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']
   const install: typeof import('./plugins/pinia')['install']
@@ -101,8 +102,10 @@ declare global {
   const useLink: typeof import('vue-router')['useLink']
   const useQuery: typeof import('./composables/use-query')['useQuery']
   const useRoute: typeof import('vue-router/auto')['useRoute']
+  const useRouteQuery: typeof import('./composables/use-route-query')['useRouteQuery']
   const useRouter: typeof import('vue-router/auto')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
+  const useSyncQueryUrl: typeof import('./composables/use-sync-query-url')['useSyncQueryUrl']
   const vi: typeof import('vitest')['vi']
   const vitest: typeof import('vitest')['vitest']
   const watch: typeof import('vue')['watch']
@@ -203,8 +206,10 @@ declare module 'vue' {
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useQuery: UnwrapRef<typeof import('./composables/use-query')['useQuery']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
+    readonly useRouteQuery: UnwrapRef<typeof import('./composables/use-route-query')['useRouteQuery']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
+    readonly useSyncQueryUrl: UnwrapRef<typeof import('./composables/use-sync-query-url')['useSyncQueryUrl']>
     readonly vi: UnwrapRef<typeof import('vitest')['vi']>
     readonly vitest: UnwrapRef<typeof import('vitest')['vitest']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
@@ -298,8 +303,10 @@ declare module '@vue/runtime-core' {
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useQuery: UnwrapRef<typeof import('./composables/use-query')['useQuery']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
+    readonly useRouteQuery: UnwrapRef<typeof import('./composables/use-route-query')['useRouteQuery']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
+    readonly useSyncQueryUrl: UnwrapRef<typeof import('./composables/use-sync-query-url')['useSyncQueryUrl']>
     readonly vi: UnwrapRef<typeof import('vitest')['vi']>
     readonly vitest: UnwrapRef<typeof import('vitest')['vitest']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
