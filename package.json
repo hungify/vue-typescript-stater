@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "build:only": "vite build",
     "build:icons": "tsx src/plugins/assets/build-icons.ts",
-    "type:check": "vue-tsc --noEmit --composite false",
+    "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write src/",
