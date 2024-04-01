@@ -11,7 +11,7 @@ on:
 
 jobs:
   ci:
-    name: Eslint
+    name: Linting and Type Checking
     runs-on: ubuntu-latest
 
     steps:
