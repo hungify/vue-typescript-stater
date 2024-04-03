@@ -15,10 +15,8 @@ declare global {
   const chai: typeof import('vitest')['chai']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
-  const createImageSchema: typeof import('./utils/schema')['createImageSchema']
   const createPinia: typeof import('pinia')['createPinia']
   const createSignal: typeof import('./composables/create-signal')['createSignal']
-  const createStrictSchema: typeof import('./utils/schema')['createStrictSchema']
   const customRef: typeof import('vue')['customRef']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
@@ -32,11 +30,8 @@ declare global {
   const getActivePinia: typeof import('pinia')['getActivePinia']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
-  const getRouteQuery: typeof import('./utils/route')['getRouteQuery']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']
-  const install: typeof import('./plugins/pinia')['install']
-  const isAxiosResponse: typeof import('./utils/http')['isAxiosResponse']
   const isImageFile: typeof import('./utils/file')['isImageFile']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
@@ -44,8 +39,6 @@ declare global {
   const isRef: typeof import('vue')['isRef']
   const it: typeof import('vitest')['it']
   const loadEnvVariables: typeof import('./utils/env')['loadEnvVariables']
-  const makePathParams: typeof import('./utils/http')['makePathParams']
-  const makeResponseSchema: typeof import('./utils/schema')['makeResponseSchema']
   const mapActions: typeof import('pinia')['mapActions']
   const mapGetters: typeof import('pinia')['mapGetters']
   const mapState: typeof import('pinia')['mapState']
@@ -53,7 +46,6 @@ declare global {
   const mapWritableState: typeof import('pinia')['mapWritableState']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
-  const normalizePath: typeof import('./utils/http')['normalizePath']
   const objectKeys: typeof import('./utils/object')['objectKeys']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
@@ -75,7 +67,6 @@ declare global {
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
   const resolveComponent: typeof import('vue')['resolveComponent']
-  const resolveDirective: typeof import('vue')['resolveDirective']
   const setActivePinia: typeof import('pinia')['setActivePinia']
   const setMapStoreSuffix: typeof import('pinia')['setMapStoreSuffix']
   const shallowReactive: typeof import('vue')['shallowReactive']
@@ -85,25 +76,24 @@ declare global {
   const stringReplacement: typeof import('./utils/string')['stringReplacement']
   const suite: typeof import('vitest')['suite']
   const test: typeof import('vitest')['test']
-  const toPromise: typeof import('./utils/promise')['toPromise']
   const toRaw: typeof import('vue')['toRaw']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
   const toValue: typeof import('vue')['toValue']
   const triggerRef: typeof import('vue')['triggerRef']
   const unref: typeof import('vue')['unref']
+  const usA: typeof import('./composables/use-route-query')['usA']
+  const useA: typeof import('./composables/use-route-query')['useA']
   const useAttrs: typeof import('vue')['useAttrs']
   const useAuthMutation: typeof import('./composables/use-auth-mutation')['useAuthMutation']
-  const useAuthStore: typeof import('./stores/auth')['useAuthStore']
-  const useAxios: typeof import('./composables/use-axios')['useAxios']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
-  const useImmer: typeof import('./composables/useImmer')['useImmer']
-  const useLink: typeof import('vue-router')['useLink']
+  const useNewRouteQuery: typeof import('./composables/use-route-query')['useNewRouteQuery']
   const useQuery: typeof import('./composables/use-query')['useQuery']
   const useRoute: typeof import('vue-router/auto')['useRoute']
   const useRouteQuery: typeof import('./composables/use-route-query')['useRouteQuery']
   const useRouter: typeof import('vue-router/auto')['useRouter']
+  const useSearchParams: typeof import('./composables/use-search-params')['useSearchParams']
   const useSlots: typeof import('vue')['useSlots']
   const useSyncQueryUrl: typeof import('./composables/use-sync-query-url')['useSyncQueryUrl']
   const vi: typeof import('vitest')['vi']
@@ -209,7 +199,6 @@ declare module 'vue' {
     readonly useRouteQuery: UnwrapRef<typeof import('./composables/use-route-query')['useRouteQuery']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
-    readonly useSyncQueryUrl: UnwrapRef<typeof import('./composables/use-sync-query-url')['useSyncQueryUrl']>
     readonly vi: UnwrapRef<typeof import('vitest')['vi']>
     readonly vitest: UnwrapRef<typeof import('vitest')['vitest']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
@@ -306,7 +295,6 @@ declare module '@vue/runtime-core' {
     readonly useRouteQuery: UnwrapRef<typeof import('./composables/use-route-query')['useRouteQuery']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
-    readonly useSyncQueryUrl: UnwrapRef<typeof import('./composables/use-sync-query-url')['useSyncQueryUrl']>
     readonly vi: UnwrapRef<typeof import('vitest')['vi']>
     readonly vitest: UnwrapRef<typeof import('vitest')['vitest']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
