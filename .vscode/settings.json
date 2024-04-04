@@ -1,15 +1,14 @@
 {
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always",
-    "source.organizeImports": "never",
-    "source.fixAll": "always"
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "eslint.validate": ["javascript", "typescript"],
-  "eslint.experimental.useFlatConfig": true,
+  "eslint.useFlatConfig": true,
   "typescript.preferences.autoImportFileExcludePatterns": ["vue-router"],
   "[ignore]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
