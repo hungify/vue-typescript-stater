@@ -1,0 +1,366 @@
+openapi: 3.0.0
+paths:
+  /auth/register:
+    post:
+      operationId: AuthController_register
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterAuthDto'
+      responses:
+        '201':
+          description: The user has been successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+      tags:
+        - Auth
+  /auth/resend-email:
+    post:
+      operationId: AuthController_resendEmail
+      parameters:
+        - name: email
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The email has been successfully sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+      tags:
+        - Auth
+  /auth/verify:
+    get:
+      operationId: AuthController_verify
+      parameters:
+        - name: token
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The user has been verified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+      tags:
+        - Auth
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginAuthDto'
+      responses:
+        '200':
+          description: The user has been login successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+      tags:
+        - Auth
+  /auth/refresh-token:
+    get:
+      operationId: AuthController_refreshToken
+      parameters: []
+      responses:
+        '200':
+          description: The user has been refresh token successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+      tags:
+        - Auth
+  /auth/logout:
+    delete:
+      operationId: AuthController_logout
+      parameters: []
+      responses:
+        '200':
+          description: The user has been logout successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+      tags:
+        - Auth
+  /auth/me:
+    get:
+      operationId: AuthController_me
+      parameters: []
+      responses:
+        '200':
+          description: The user has been get successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEntity'
+        '401':
+          description: Unauthorized
+      tags:
+        - Auth
+      security:
+        - defaultBearerAuth: []
+  /users:
+    post:
+      operationId: UsersController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+    get:
+      operationId: UsersController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /posts:
+    post:
+      operationId: PostsController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostDto'
+      responses:
+        '201':
+          description: The post has been successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePostDto'
+      tags:
+        - Posts
+    get:
+      operationId: PostsController_find
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Posts
+  /posts/{postId}:
+    get:
+      operationId: PostsController_findOne
+      parameters:
+        - name: postId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Posts
+    patch:
+      operationId: PostsController_update
+      parameters:
+        - name: postId
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePostDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Posts
+  /posts/{id}:
+    delete:
+      operationId: PostsController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Posts
+info:
+  title: NestJS API Starter
+  description: NestJS APIs Documentation
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    defaultBearerAuth:
+      description: 'Please enter token in following format: Bearer <JWT>'
+      name: Authorization
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+      in: header
+  schemas:
+    RegisterAuthDto:
+      type: object
+      properties:
+        fullName:
+          type: string
+          example: example
+        email:
+          type: string
+          example: example@example.com
+        password:
+          type: string
+          example: example
+      required:
+        - fullName
+        - email
+        - password
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    LoginAuthDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@example.com
+        password:
+          type: string
+          example: example
+      required:
+        - email
+        - password
+    AuthTokenResponse:
+      type: object
+      properties:
+        idToken:
+          type: string
+          description: The JWT token
+        accessToken:
+          type: string
+          description: The access token
+        refreshToken:
+          type: string
+          description: The refresh token
+      required:
+        - idToken
+        - accessToken
+        - refreshToken
+    UserEntity:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
+          type: string
+          description: createdAt
+        updatedAt:
+          format: date-time
+          type: string
+          description: updatedAt
+        createdBy:
+          type: string
+          description: createdBy
+        fullName:
+          type: string
+          example: example
+          description: The name of User
+        email:
+          type: string
+          example: example@gmail.com
+          description: The email of User
+        password:
+          type: string
+          example: example
+          description: The password of User
+        isVerified:
+          type: boolean
+          example: example
+          description: The verify code of User
+        role:
+          type: string
+          example: user
+          description: The role of User
+          default: user
+      required:
+        - createdAt
+        - updatedAt
+        - createdBy
+        - fullName
+        - email
+        - password
+        - isVerified
+        - role
+    CreateUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@example.com
+      required:
+        - email
+    CreatePostDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: example
+          description: The name of User
+        content:
+          type: string
+          example: This is content of this post
+          description: The content of the post
+        slug:
+          type: string
+          example: ':this-is-a-post'
+          description: The slug of the post
+      required:
+        - title
+        - content
+        - slug
+    UpdatePostDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: example
+          description: The name of User
+        content:
+          type: string
+          example: This is content of this post
+          description: The content of the post
+        slug:
+          type: string
+          example: ':this-is-a-post'
+          description: The slug of the post
