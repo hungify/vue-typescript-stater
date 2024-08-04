@@ -9,9 +9,9 @@
     "baseUrl": ".",
     /* Bundler mode */
     "module": "ESNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "paths": {
-      "#/*": ["src/*"],
+      "#/*": ["src/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
@@ -24,11 +24,12 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue",
-    "typed-router.d.ts",
-  ],
+    "typed-router.d.ts"
+  ]
 }
