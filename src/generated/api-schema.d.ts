@@ -4,311 +4,595 @@
  */
 
 export interface paths {
-  '/auth/register': {
-    post: operations['AuthController_register']
-  }
-  '/auth/resend-email': {
-    post: operations['AuthController_resendEmail']
-  }
-  '/auth/verify': {
-    get: operations['AuthController_verify']
-  }
-  '/auth/login': {
-    post: operations['AuthController_login']
-  }
-  '/auth/refresh-token': {
-    get: operations['AuthController_refreshToken']
-  }
-  '/auth/logout': {
-    delete: operations['AuthController_logout']
-  }
-  '/auth/me': {
-    get: operations['AuthController_me']
-  }
-  '/posts': {
-    get: operations['PostsController_find']
-    post: operations['PostsController_create']
-  }
-  '/posts/{postId}': {
-    get: operations['PostsController_findOne']
-    patch: operations['PostsController_update']
-  }
-  '/posts/{id}': {
-    delete: operations['PostsController_remove']
-  }
+    "/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_register"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/resend-email": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_resendEmail"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AuthController_verify"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/refresh-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AuthController_refreshToken"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["AuthController_logout"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AuthController_me"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UsersController_findAll"];
+        put?: never;
+        post: operations["UsersController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PostsController_find"];
+        put?: never;
+        post: operations["PostsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/posts/{postId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PostsController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["PostsController_update"];
+        trace?: never;
+    };
+    "/posts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["PostsController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
-
-export type webhooks = Record<string, never>
-
+export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    RegisterAuthDto: {
-      /** @example example */
-      fullName: string
-      /** @example example@example.com */
-      email: string
-      /** @example example */
-      password: string
-    }
-    MessageResponse: {
-      message: string
-    }
-    LoginAuthDto: {
-      /** @example example@example.com */
-      email: string
-      /** @example example */
-      password: string
-    }
-    AuthTokenResponse: {
-      /** @description The JWT token */
-      idToken: string
-      /** @description The access token */
-      accessToken: string
-      /** @description The refresh token */
-      refreshToken: string
-    }
-    UserEntity: {
-      /**
-       * Format: date-time
-       * @description createdAt
-       */
-      createdAt: string
-      /**
-       * Format: date-time
-       * @description updatedAt
-       */
-      updatedAt: string
-      /** @description createdBy */
-      createdBy: string
-      /**
-       * @description The name of User
-       * @example example
-       */
-      fullName: string
-      /**
-       * @description The email of User
-       * @example example@gmail.com
-       */
-      email: string
-      /**
-       * @description The password of User
-       * @example example
-       */
-      password: string
-      /**
-       * @description The verify code of User
-       * @example example
-       */
-      isVerified: boolean
-      /**
-       * @description The role of User
-       * @default user
-       * @example user
-       */
-      role: string
-    }
-    CreatePostDto: {
-      /**
-       * @description The name of User
-       * @example example
-       */
-      title: string
-      /**
-       * @description The content of the post
-       * @example This is content of this post
-       */
-      content: string
-      /**
-       * @description The slug of the post
-       * @example :this-is-a-post
-       */
-      slug: string
-    }
-    UpdatePostDto: {
-      /**
-       * @description The name of User
-       * @example example
-       */
-      title?: string
-      /**
-       * @description The content of the post
-       * @example This is content of this post
-       */
-      content?: string
-      /**
-       * @description The slug of the post
-       * @example :this-is-a-post
-       */
-      slug?: string
-    }
-  }
-  responses: never
-  parameters: never
-  requestBodies: never
-  headers: never
-  pathItems: never
+    schemas: {
+        RegisterAuthDto: {
+            /** @example example */
+            fullName: string;
+            /** @example example@example.com */
+            email: string;
+            /** @example example */
+            password: string;
+        };
+        MessageResponse: {
+            message: string;
+        };
+        LoginAuthDto: {
+            /** @example example@example.com */
+            email: string;
+            /** @example example */
+            password: string;
+        };
+        AuthTokenResponse: {
+            /** @description The JWT token */
+            idToken: string;
+            /** @description The access token */
+            accessToken: string;
+            /** @description The refresh token */
+            refreshToken: string;
+        };
+        UserEntity: {
+            /**
+             * Format: date-time
+             * @description createdAt
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description updatedAt
+             */
+            updatedAt: string;
+            /** @description createdBy */
+            createdBy: string;
+            /**
+             * @description The name of User
+             * @example example
+             */
+            fullName: string;
+            /**
+             * @description The email of User
+             * @example example@gmail.com
+             */
+            email: string;
+            /**
+             * @description The password of User
+             * @example example
+             */
+            password: string;
+            /**
+             * @description The verify code of User
+             * @example example
+             */
+            isVerified: boolean;
+            /**
+             * @description The role of User
+             * @default user
+             * @example user
+             */
+            role: string;
+        };
+        CreateUserDto: {
+            /** @example example@example.com */
+            email: string;
+        };
+        CreatePostDto: {
+            /**
+             * @description The name of User
+             * @example example
+             */
+            title: string;
+            /**
+             * @description The content of the post
+             * @example This is content of this post
+             */
+            content: string;
+            /**
+             * @description The slug of the post
+             * @example :this-is-a-post
+             */
+            slug: string;
+        };
+        UpdatePostDto: {
+            /**
+             * @description The name of User
+             * @example example
+             */
+            title?: string;
+            /**
+             * @description The content of the post
+             * @example This is content of this post
+             */
+            content?: string;
+            /**
+             * @description The slug of the post
+             * @example :this-is-a-post
+             */
+            slug?: string;
+        };
+    };
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
-
-export type $defs = Record<string, never>
-
-export type external = Record<string, never>
-
+export type $defs = Record<string, never>;
 export interface operations {
-  AuthController_register: {
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['RegisterAuthDto']
-      }
-    }
-    responses: {
-      /** @description The user has been successfully created. */
-      201: {
-        content: {
-          'application/json': components['schemas']['MessageResponse']
-        }
-      }
-    }
-  }
-  AuthController_resendEmail: {
-    parameters: {
-      query: {
-        email: string
-      }
-    }
-    responses: {
-      /** @description The email has been successfully sent. */
-      200: {
-        content: {
-          'application/json': components['schemas']['MessageResponse']
-        }
-      }
-    }
-  }
-  AuthController_verify: {
-    parameters: {
-      query: {
-        token: string
-      }
-    }
-    responses: {
-      /** @description The user has been verified successfully */
-      200: {
-        content: {
-          'application/json': components['schemas']['MessageResponse']
-        }
-      }
-    }
-  }
-  AuthController_login: {
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['LoginAuthDto']
-      }
-    }
-    responses: {
-      /** @description The user has been login successfully */
-      200: {
-        content: {
-          'application/json': components['schemas']['AuthTokenResponse']
-        }
-      }
-    }
-  }
-  AuthController_refreshToken: {
-    responses: {
-      /** @description The user has been refresh token successfully */
-      200: {
-        content: {
-          'application/json': components['schemas']['AuthTokenResponse']
-        }
-      }
-    }
-  }
-  AuthController_logout: {
-    responses: {
-      /** @description The user has been logout successfully */
-      200: {
-        content: {
-          'application/json': components['schemas']['MessageResponse']
-        }
-      }
-    }
-  }
-  AuthController_me: {
-    responses: {
-      /** @description The user has been get successfully */
-      200: {
-        content: {
-          'application/json': components['schemas']['UserEntity']
-        }
-      }
-      /** @description Unauthorized */
-      401: {
-        content: never
-      }
-    }
-  }
-  PostsController_find: {
-    responses: {
-      200: {
-        content: never
-      }
-    }
-  }
-  PostsController_create: {
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CreatePostDto']
-      }
-    }
-    responses: {
-      /** @description The post has been successfully created. */
-      201: {
-        content: {
-          'application/json': components['schemas']['CreatePostDto']
-        }
-      }
-    }
-  }
-  PostsController_findOne: {
-    parameters: {
-      path: {
-        postId: number
-      }
-    }
-    responses: {
-      200: {
-        content: never
-      }
-    }
-  }
-  PostsController_update: {
-    parameters: {
-      path: {
-        postId: number
-      }
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UpdatePostDto']
-      }
-    }
-    responses: {
-      200: {
-        content: never
-      }
-    }
-  }
-  PostsController_remove: {
-    parameters: {
-      path: {
-        id: number
-      }
-    }
-    responses: {
-      200: {
-        content: never
-      }
-    }
-  }
+    AuthController_register: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterAuthDto"];
+            };
+        };
+        responses: {
+            /** @description The user has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageResponse"];
+                };
+            };
+        };
+    };
+    AuthController_resendEmail: {
+        parameters: {
+            query: {
+                email: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The email has been successfully sent. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageResponse"];
+                };
+            };
+        };
+    };
+    AuthController_verify: {
+        parameters: {
+            query: {
+                token: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The user has been verified successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageResponse"];
+                };
+            };
+        };
+    };
+    AuthController_login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginAuthDto"];
+            };
+        };
+        responses: {
+            /** @description The user has been login successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthTokenResponse"];
+                };
+            };
+        };
+    };
+    AuthController_refreshToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The user has been refresh token successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthTokenResponse"];
+                };
+            };
+        };
+    };
+    AuthController_logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The user has been logout successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageResponse"];
+                };
+            };
+        };
+    };
+    AuthController_me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The user has been get successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserEntity"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateUserDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PostsController_find: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PostsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePostDto"];
+            };
+        };
+        responses: {
+            /** @description The post has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreatePostDto"];
+                };
+            };
+        };
+    };
+    PostsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                postId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PostsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                postId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdatePostDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PostsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
 }
