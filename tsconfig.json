@@ -11,7 +11,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "#/*": ["src/*"],
+      "#/*": ["src/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
@@ -24,11 +24,12 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
+    "plugins": [{ "name": "@vue/typescript-plugin" }]
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue",
-    "typed-router.d.ts",
-  ],
+    "typed-router.d.ts"
+  ]
 }

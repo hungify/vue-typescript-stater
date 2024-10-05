@@ -1,6 +1,6 @@
-import { loadEnvVariables } from './utils/env'
 import App from './App.vue'
 import { registerPlugins } from './plugins'
+import { loadEnvVariables } from './utils/env'
 
 const bootstrap = () => {
   loadEnvVariables()
