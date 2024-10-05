@@ -1,9 +1,9 @@
 import {
+  type MaybeRefOrGetter,
   camelize,
   computed,
   getCurrentInstance,
   toRef,
-  type MaybeRefOrGetter,
 } from 'vue'
 
 interface PropOptions {

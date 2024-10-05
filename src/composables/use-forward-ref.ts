@@ -1,5 +1,5 @@
 // reference: https://github.com/vuejs/rfcs/issues/258#issuecomment-1068697672
-import { getCurrentInstance, type ComponentPublicInstance } from 'vue'
+import { type ComponentPublicInstance, getCurrentInstance } from 'vue'
 
 export function useForwardRef() {
   const instance = getCurrentInstance()!

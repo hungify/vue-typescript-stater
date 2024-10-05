@@ -19,7 +19,6 @@ interface ImportMetaEnv {
   readonly VITE_BASE_API: string
 }
 
-
 declare module 'vue-router' {
   export interface BaseRouteMeta {
     title?: string

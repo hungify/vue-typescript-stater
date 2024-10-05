@@ -2,10 +2,10 @@
 // reference: https://github.com/vuejs/rfcs/issues/258#issuecomment-1068697672
 import { unrefElement } from '@vueuse/core'
 import {
+  type ComponentPublicInstance,
   computed,
   getCurrentInstance,
   ref,
-  type ComponentPublicInstance,
 } from 'vue'
 
 export function useForwardExpose() {
